@@ -23,6 +23,7 @@ namespace FileSearch
         public MainForm()
         {
             InitializeComponent();
+
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -106,7 +107,7 @@ namespace FileSearch
                                     if (rbtnSpeed.Checked)
                                     {
                                         wordApp = new Word.Application();
-                                        wordApp.Visible = false;
+                                        //wordApp.Visible = false;
                                     }
                                     
                                     lbSearchResult.Items.Add(listPC + $": НАЧАЛО ПОИСКА НА ДИСКЕ {listDrive}:\\");
@@ -117,7 +118,7 @@ namespace FileSearch
                                     if (rbtnSpeed.Checked)
                                     {
                                         Object saveChanges = Word.WdSaveOptions.wdDoNotSaveChanges;
-                                        wordApp.Application.ActiveDocument.Close(saveChanges);
+                                        wordApp.Application.ActiveDocument?.Close(saveChanges);
                                         wordApp.Quit(ref saveChanges);
                                     }
                                 }
@@ -142,8 +143,8 @@ namespace FileSearch
             lblInFileFoundCount.Text = "0";
             lbSearchResult.Enabled = false;
             lblSearchFileInProgress.Visible = true;
+            gboxExceptionFolder.Enabled = false;
             gboxOptimization.Enabled = false;
-            chkboxWindowsFolder.Enabled = false;
             btnSelectList.Enabled = false;
             tbWhatSearch.Enabled = false;
             btnGO.Enabled = false;
@@ -153,8 +154,8 @@ namespace FileSearch
         {
             lblSearchFileInProgress.Visible = false;
             lbSearchResult.Enabled = true;
+            gboxExceptionFolder.Enabled = true;
             gboxOptimization.Enabled = true;
-            chkboxWindowsFolder.Enabled = true;
             btnSelectList.Enabled = true;
             tbWhatSearch.Enabled = true;
             btnGO.Enabled = true;
@@ -166,13 +167,13 @@ namespace FileSearch
 
             string[] fileExtension = { ".doc", ".docx", ".rtf" };
 
-            var q = SafeEnumerateFiles(namePC, /*tbWhatSearch.Text*/"*.*", SearchOption.AllDirectories);
+            var q = SafeEnumerateFiles(namePC, "*.*", SearchOption.AllDirectories);
 
             foreach (var filePath in q)
             {
                 lblActiveFileSearch.Text = filePath;
 
-                if (filePath.IndexOf(tbWhatSearch.Text) > -1)
+                if (filePath.ToLower().IndexOf(tbWhatSearch.Text.ToLower()) > -1)
                 {
                     lbSearchResult.Items.Add(filePath);
                     lblFileFolderFoundCount.Text = (Convert.ToInt32(lblFileFolderFoundCount.Text) + 1).ToString();
@@ -218,6 +219,10 @@ namespace FileSearch
                         {
                             if (subDirPath.Substring(subDirPath.Length - 8) == "\\Windows")
                                 if (chkboxWindowsFolder.Checked) continue;
+                            if (subDirPath.Substring(subDirPath.Length - 13) == "\\$Recycle.Bin")
+                                if (chkboxRecycleFolder.Checked) continue;
+                            if (subDirPath.Substring(subDirPath.Length - 5) == "\\Temp")
+                                if (chkboxTempFolder.Checked) continue;
 
                             dirs.Push(subDirPath);
                         }
@@ -256,6 +261,10 @@ namespace FileSearch
                     continue;
                 }
                 catch (DirectoryNotFoundException)
+                {
+                    continue;
+                }
+                catch (PathTooLongException)
                 {
                     continue;
                 }
@@ -357,9 +366,10 @@ namespace FileSearch
             if (rbtnSaveResources.Checked)
             {
                 wordApp = new Word.Application();
-                wordApp.Visible = false;
+                //wordApp.Visible = false;
             }
 
+            wordApp.Visible = false;
             Object saveChanges = Word.WdSaveOptions.wdDoNotSaveChanges;
             try
             {
@@ -400,6 +410,10 @@ namespace FileSearch
             if ((sender as CheckBox)?.Name == "chkboxWindowsFolder")
             {
                 ttFileSearch.SetToolTip(chkboxWindowsFolder, "Если включено, то из поиска исключается папка Windows");
+            }
+            if ((sender as CheckBox)?.Name == "chkboxRecycleFolder")
+            {
+                ttFileSearch.SetToolTip(chkboxRecycleFolder, "Если включено, то из поиска исключается папка Корзина ($Recycle.bin)");
             }
             if ((sender as GroupBox)?.Name == "gboxOptimization")
             {
