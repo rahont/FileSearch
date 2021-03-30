@@ -108,7 +108,7 @@ namespace FileSearch
                                         wordApp = new Word.Application();
                                         //wordApp.Visible = false;
                                     }
-                                    
+
                                     lbSearchResult.Items.Add(listPC + $": НАЧАЛО ПОИСКА НА ДИСКЕ {listDrive}:\\");
                                     ResultOut(listPC.ToString() + $@"\{listDrive}$");
                                     lbSearchResult.Items.Add(listPC + $": ПОИСК НА ДИСКЕ {listDrive}:\\ ЗАВЕРШЕН");
@@ -160,8 +160,10 @@ namespace FileSearch
             btnGO.Enabled = true;
         }
 
-        private void ResultOut(string namePC)
+        private void ResultOut(object PC)
         {
+            string namePC = PC.ToString();
+
             if (namePC.Substring(0, 2) != @"\\") namePC = @"\\" + namePC;
 
             string[] fileExtension = { ".doc", ".docx", ".rtf" };
@@ -216,11 +218,11 @@ namespace FileSearch
                         string[] subDirs = Directory.GetDirectories(currentDirPath);
                         foreach (string subDirPath in subDirs)
                         {
-                            if (subDirPath.Substring(subDirPath.Length - 8) == "\\Windows")
+                            if (subDirPath.Substring(subDirPath.Length - 8).ToLower() == "\\Windows".ToLower())
                                 if (chkboxWindowsFolder.Checked) continue;
-                            if (subDirPath.Substring(subDirPath.Length - 13) == "\\$Recycle.Bin")
+                            if (subDirPath.Substring(subDirPath.Length - 13).ToLower() == "\\$Recycle.Bin".ToLower())
                                 if (chkboxRecycleFolder.Checked) continue;
-                            if (subDirPath.Substring(subDirPath.Length - 5) == "\\Temp")
+                            if (subDirPath.Substring(subDirPath.Length - 5).ToLower() == "\\Temp".ToLower())
                                 if (chkboxTempFolder.Checked) continue;
 
                             dirs.Push(subDirPath);
@@ -406,6 +408,10 @@ namespace FileSearch
 
         private void FileSearch_MouseHover(object sender, EventArgs e)
         {
+            if ((sender as GroupBox)?.Name == "gboxExceptionFolder")
+            {
+                ttFileSearch.SetToolTip(gboxExceptionFolder, "Можно исключать из поиска указанные папки");
+            }
             if ((sender as CheckBox)?.Name == "chkboxWindowsFolder")
             {
                 ttFileSearch.SetToolTip(chkboxWindowsFolder, "Если включено, то из поиска исключается папка Windows");
@@ -413,6 +419,10 @@ namespace FileSearch
             if ((sender as CheckBox)?.Name == "chkboxRecycleFolder")
             {
                 ttFileSearch.SetToolTip(chkboxRecycleFolder, "Если включено, то из поиска исключается папка Корзина ($Recycle.bin)");
+            }
+            if ((sender as CheckBox)?.Name == "chkboxTempFolder")
+            {
+                ttFileSearch.SetToolTip(chkboxTempFolder, "Если включено, то из поиска исключаются все временные (Temp) папки");
             }
             if ((sender as GroupBox)?.Name == "gboxOptimization")
             {

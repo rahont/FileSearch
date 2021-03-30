@@ -43,6 +43,7 @@ namespace FileSearch
             this.cboxWhereSearch = new System.Windows.Forms.ComboBox();
             this.pnlWhereSearch = new System.Windows.Forms.Panel();
             this.pnlWhatSearch = new System.Windows.Forms.Panel();
+            this.tbWhatSearch = new ALLinONE.MyTextBox();
             this.pnlResult = new System.Windows.Forms.Panel();
             this.lblSearchFileInProgress = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
@@ -58,7 +59,6 @@ namespace FileSearch
             this.chkboxRecycleFolder = new System.Windows.Forms.CheckBox();
             this.gboxExceptionFolder = new System.Windows.Forms.GroupBox();
             this.chkboxTempFolder = new System.Windows.Forms.CheckBox();
-            this.tbWhatSearch = new ALLinONE.MyTextBox();
             this.gboxFoundList.SuspendLayout();
             this.pnlWhereSearch.SuspendLayout();
             this.pnlWhatSearch.SuspendLayout();
@@ -198,6 +198,21 @@ namespace FileSearch
             this.pnlWhatSearch.Name = "pnlWhatSearch";
             this.pnlWhatSearch.Size = new System.Drawing.Size(272, 84);
             this.pnlWhatSearch.TabIndex = 11;
+            // 
+            // tbWhatSearch
+            // 
+            this.tbWhatSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbWhatSearch.Location = new System.Drawing.Point(3, 3);
+            this.tbWhatSearch.MaximumSize = new System.Drawing.Size(10000, 20);
+            this.tbWhatSearch.MinimumSize = new System.Drawing.Size(1, 20);
+            this.tbWhatSearch.Name = "tbWhatSearch";
+            this.tbWhatSearch.PasswordChar = '\0';
+            this.tbWhatSearch.Size = new System.Drawing.Size(264, 20);
+            this.tbWhatSearch.TabIndex = 3;
+            this.tbWhatSearch.TextMaxLength = 1024;
+            this.tbWhatSearch.TextTitle = "Что ищем? Имя или часть имени файла/папки";
+            this.tbWhatSearch.KeyDownEvent += new System.Windows.Forms.KeyEventHandler(this.tbWhatSearch_KeyDownEvent);
             // 
             // pnlResult
             // 
@@ -356,6 +371,7 @@ namespace FileSearch
             this.gboxExceptionFolder.TabIndex = 4;
             this.gboxExceptionFolder.TabStop = false;
             this.gboxExceptionFolder.Text = "Исключить папки";
+            this.gboxExceptionFolder.MouseHover += new System.EventHandler(this.FileSearch_MouseHover);
             // 
             // chkboxTempFolder
             // 
@@ -368,21 +384,7 @@ namespace FileSearch
             this.chkboxTempFolder.TabIndex = 2;
             this.chkboxTempFolder.Text = "Temp\'ы";
             this.chkboxTempFolder.UseVisualStyleBackColor = true;
-            // 
-            // tbWhatSearch
-            // 
-            this.tbWhatSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbWhatSearch.Location = new System.Drawing.Point(3, 3);
-            this.tbWhatSearch.MaximumSize = new System.Drawing.Size(10000, 20);
-            this.tbWhatSearch.MinimumSize = new System.Drawing.Size(1, 20);
-            this.tbWhatSearch.Name = "tbWhatSearch";
-            this.tbWhatSearch.PasswordChar = '\0';
-            this.tbWhatSearch.Size = new System.Drawing.Size(264, 20);
-            this.tbWhatSearch.TabIndex = 3;
-            this.tbWhatSearch.TextMaxLength = 1024;
-            this.tbWhatSearch.TextTitle = "Что ищем? Имя или часть имени файла/папки";
-            this.tbWhatSearch.KeyDownEvent += new System.Windows.Forms.KeyEventHandler(this.tbWhatSearch_KeyDownEvent);
+            this.chkboxTempFolder.MouseHover += new System.EventHandler(this.FileSearch_MouseHover);
             // 
             // MainForm
             // 
