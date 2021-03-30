@@ -402,8 +402,8 @@ namespace FileSearch
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             Object saveChanges = Word.WdSaveOptions.wdDoNotSaveChanges;
-            //wordApp?.Application.ActiveDocument.Close(saveChanges);
-            //wordApp?.Quit(ref saveChanges);
+            wordApp?.Application.ActiveDocument?.Close(saveChanges);
+            wordApp?.Quit(ref saveChanges);
         }
 
         private void FileSearch_MouseHover(object sender, EventArgs e)
