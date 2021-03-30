@@ -29,6 +29,7 @@ namespace FileSearch
         {
             Text += " -v.1.2";
             lblUserName.Text = Environment.UserName;
+            MessageBox.Show("Test");
         }
 
         private void btnSelectList_Click(object sender, EventArgs e)
