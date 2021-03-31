@@ -117,8 +117,13 @@ namespace FileSearch
                                     if (rbtnSpeed.Checked)
                                     {
                                         Object saveChanges = Word.WdSaveOptions.wdDoNotSaveChanges;
-                                        wordApp.Application.ActiveDocument?.Close(saveChanges);
-                                        wordApp.Application.ActiveWindow?.Close(saveChanges);
+                                        try
+                                        {
+                                            wordApp.Application.ActiveDocument?.Close(saveChanges);
+                                            wordApp.Application.ActiveWindow?.Close(saveChanges);
+                                        }
+                                        catch (Exception) { }
+
                                         wordApp?.Quit(ref saveChanges);
                                     }
                                 }
@@ -202,9 +207,11 @@ namespace FileSearch
 
             string[] str = Properties.Settings.Default.anyFolders.Split(';');
 
-            foreach (var item in str)
+            var sxcd = Path.GetFileName(@"C:\Windows\System32");
+
+            foreach (var item in Directory.GetDirectories(@"C:\Windows\System32"))
             {
-                MessageBox.Show(item);
+
             }
         }
 
@@ -230,16 +237,26 @@ namespace FileSearch
                         string[] subDirs = Directory.GetDirectories(currentDirPath);
                         foreach (string subDirPath in subDirs)
                         {
-                            if (subDirPath.Substring(subDirPath.Length - 8).ToLower() == "\\Windows".ToLower())
-                                if (Properties.Settings.Default.chkbWindows) continue;
-                            if (subDirPath.Substring(subDirPath.Length - 13).ToLower() == "\\$Recycle.Bin".ToLower())
-                                if (Properties.Settings.Default.chkbRecycle) continue;
-                            if (subDirPath.Substring(subDirPath.Length - 5).ToLower() == "\\Temp".ToLower())
-                                if (Properties.Settings.Default.chkbTemp) continue;
-                            if (subDirPath.Substring(subDirPath.Length - 14).ToLower() == "\\Program Files".ToLower())
-                                if (Properties.Settings.Default.chkbProgram) continue;
-                            if (subDirPath.Substring(subDirPath.Length - 20).ToLower() == "\\Program Files (x86)".ToLower())
-                                if (Properties.Settings.Default.chkbProgram86) continue;
+                            ////Исключает из поиска указанные папки
+                            //if (subDirPath.Substring(subDirPath.Length - 8).ToLower() == "\\Windows".ToLower())
+                            //    if (Properties.Settings.Default.chkbWindows) continue;
+                            //if (subDirPath.Substring(subDirPath.Length - 13).ToLower() == "\\$Recycle.Bin".ToLower())
+                            //    if (Properties.Settings.Default.chkbRecycle) continue;
+                            //if (subDirPath.Substring(subDirPath.Length - 5).ToLower() == "\\Temp".ToLower())
+                            //    if (Properties.Settings.Default.chkbTemp) continue;
+                            //if (subDirPath.Substring(subDirPath.Length - 14).ToLower() == "\\Program Files".ToLower())
+                            //    if (Properties.Settings.Default.chkbProgram) continue;
+                            //if (subDirPath.Substring(subDirPath.Length - 20).ToLower() == "\\Program Files (x86)".ToLower())
+                            //    if (Properties.Settings.Default.chkbProgram86) continue;
+
+                            ////Исключает из поиска указанные пользователем папки
+                            //string[] excepFolders = Properties.Settings.Default.anyFolders.Split(';');
+                            //foreach (var item in excepFolders)
+                            //{
+
+                            //}
+
+                            if (SkipFolder(subDirPath)) continue;
 
                             dirs.Push(subDirPath);
                         }
@@ -291,6 +308,35 @@ namespace FileSearch
                     yield return filePath;
                 }
             }
+        }
+
+        private bool SkipFolder(string subDirPath)
+        {
+            bool result = false;
+
+            //Исключает из поиска указанные папки
+            if (subDirPath.Substring(subDirPath.Length - 8).ToLower() == "\\Windows".ToLower())
+                if (Properties.Settings.Default.chkbWindows) result = true;
+            if (subDirPath.Substring(subDirPath.Length - 13).ToLower() == "\\$Recycle.Bin".ToLower())
+                if (Properties.Settings.Default.chkbRecycle) result = true;
+            if (subDirPath.Substring(subDirPath.Length - 5).ToLower() == "\\Temp".ToLower())
+                if (Properties.Settings.Default.chkbTemp) result = true;
+            if (subDirPath.Substring(subDirPath.Length - 14).ToLower() == "\\Program Files".ToLower())
+                if (Properties.Settings.Default.chkbProgram) result = true;
+            if (subDirPath.Substring(subDirPath.Length - 20).ToLower() == "\\Program Files (x86)".ToLower())
+                if (Properties.Settings.Default.chkbProgram86) result = true;
+
+            //Исключает из поиска указанные пользователем папки
+            string[] excepFolders = Properties.Settings.Default.anyFolders.Split(';');
+            foreach (var item in excepFolders)
+            {
+                if (Directory.EnumerateDirectories(subDirPath).Contains("df"))
+                {
+
+                }
+            }
+
+            return result;
         }
 
         private void lbSearchResult_DoubleClick(object sender, EventArgs e)
@@ -419,27 +465,31 @@ namespace FileSearch
         {
             Object saveChanges = Word.WdSaveOptions.wdDoNotSaveChanges;
             //wordApp?.Application.ActiveDocument?.Close(saveChanges);
-            wordApp?.Quit(ref saveChanges);
+            try
+            {
+                wordApp?.Quit(ref saveChanges);
+            }
+            catch (Exception) { }
         }
 
         private void FileSearch_MouseHover(object sender, EventArgs e)
         {
-            if ((sender as GroupBox)?.Name == "gboxExceptionFolder")
-            {
-                ttFileSearch.SetToolTip(gboxExceptionFolder, "Можно исключать из поиска указанные папки");
-            }
-            if ((sender as CheckBox)?.Name == "chkboxWindowsFolder")
-            {
-                ttFileSearch.SetToolTip(chkboxWindowsFolder, "Если включено, то из поиска исключается папка Windows");
-            }
-            if ((sender as CheckBox)?.Name == "chkboxRecycleFolder")
-            {
-                ttFileSearch.SetToolTip(chkboxRecycleFolder, "Если включено, то из поиска исключается папка Корзина ($Recycle.bin)");
-            }
-            if ((sender as CheckBox)?.Name == "chkboxTempFolder")
-            {
-                ttFileSearch.SetToolTip(chkboxTempFolder, "Если включено, то из поиска исключаются все временные (Temp) папки");
-            }
+            //if ((sender as GroupBox)?.Name == "gboxExceptionFolder")
+            //{
+            //    ttFileSearch.SetToolTip(gboxExceptionFolder, "Можно исключать из поиска указанные папки");
+            //}
+            //if ((sender as CheckBox)?.Name == "chkboxWindowsFolder")
+            //{
+            //    ttFileSearch.SetToolTip(chkboxWindowsFolder, "Если включено, то из поиска исключается папка Windows");
+            //}
+            //if ((sender as CheckBox)?.Name == "chkboxRecycleFolder")
+            //{
+            //    ttFileSearch.SetToolTip(chkboxRecycleFolder, "Если включено, то из поиска исключается папка Корзина ($Recycle.bin)");
+            //}
+            //if ((sender as CheckBox)?.Name == "chkboxTempFolder")
+            //{
+            //    ttFileSearch.SetToolTip(chkboxTempFolder, "Если включено, то из поиска исключаются все временные (Temp) папки");
+            //}
             if ((sender as GroupBox)?.Name == "gboxOptimization")
             {
                 ttFileSearch.SetToolTip(gboxOptimization, "Скорость: Значительно ускоряет поиск, но может потреблять много ОЗУ\r\n" +
