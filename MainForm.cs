@@ -27,7 +27,7 @@ namespace FileSearch
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            Text += " -v.1.2";
+            Text += " -v.1.3";
             lblUserName.Text = Environment.UserName;
         }
 
@@ -118,7 +118,8 @@ namespace FileSearch
                                     {
                                         Object saveChanges = Word.WdSaveOptions.wdDoNotSaveChanges;
                                         wordApp.Application.ActiveDocument?.Close(saveChanges);
-                                        wordApp.Quit(ref saveChanges);
+                                        wordApp.Application.ActiveWindow?.Close(saveChanges);
+                                        wordApp?.Quit(ref saveChanges);
                                     }
                                 }
                             }
@@ -142,22 +143,26 @@ namespace FileSearch
             lblInFileFoundCount.Text = "0";
             lbSearchResult.Enabled = false;
             lblSearchFileInProgress.Visible = true;
-            gboxExceptionFolder.Enabled = false;
+            //gboxExceptionFolder.Enabled = false;
             gboxOptimization.Enabled = false;
             btnSelectList.Enabled = false;
             tbWhatSearch.Enabled = false;
             btnGO.Enabled = false;
+            btnSettings.Enabled = false;
         }
 
         private void AfterSearch()
         {
             lblSearchFileInProgress.Visible = false;
             lbSearchResult.Enabled = true;
-            gboxExceptionFolder.Enabled = true;
+            //gboxExceptionFolder.Enabled = true;
             gboxOptimization.Enabled = true;
             btnSelectList.Enabled = true;
             tbWhatSearch.Enabled = true;
             btnGO.Enabled = true;
+            btnSettings.Enabled = true;
+            lblActiveFileSearch.Text = "ПОИСК ЗАВЕРШЕН!";
+
         }
 
         private void ResultOut(object PC)
@@ -194,6 +199,13 @@ namespace FileSearch
         {
             //MessageBox.Show(Directory.Exists(tbWhatSearch.Text).ToString());
             //CheckInFile("qwe", "ewq");
+
+            string[] str = Properties.Settings.Default.anyFolders.Split(';');
+
+            foreach (var item in str)
+            {
+                MessageBox.Show(item);
+            }
         }
 
         /// <summary>
@@ -219,11 +231,15 @@ namespace FileSearch
                         foreach (string subDirPath in subDirs)
                         {
                             if (subDirPath.Substring(subDirPath.Length - 8).ToLower() == "\\Windows".ToLower())
-                                if (chkboxWindowsFolder.Checked) continue;
+                                if (Properties.Settings.Default.chkbWindows) continue;
                             if (subDirPath.Substring(subDirPath.Length - 13).ToLower() == "\\$Recycle.Bin".ToLower())
-                                if (chkboxRecycleFolder.Checked) continue;
+                                if (Properties.Settings.Default.chkbRecycle) continue;
                             if (subDirPath.Substring(subDirPath.Length - 5).ToLower() == "\\Temp".ToLower())
-                                if (chkboxTempFolder.Checked) continue;
+                                if (Properties.Settings.Default.chkbTemp) continue;
+                            if (subDirPath.Substring(subDirPath.Length - 14).ToLower() == "\\Program Files".ToLower())
+                                if (Properties.Settings.Default.chkbProgram) continue;
+                            if (subDirPath.Substring(subDirPath.Length - 20).ToLower() == "\\Program Files (x86)".ToLower())
+                                if (Properties.Settings.Default.chkbProgram86) continue;
 
                             dirs.Push(subDirPath);
                         }
@@ -402,7 +418,7 @@ namespace FileSearch
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             Object saveChanges = Word.WdSaveOptions.wdDoNotSaveChanges;
-            wordApp?.Application.ActiveDocument?.Close(saveChanges);
+            //wordApp?.Application.ActiveDocument?.Close(saveChanges);
             wordApp?.Quit(ref saveChanges);
         }
 
@@ -443,6 +459,12 @@ namespace FileSearch
         {
             if (e.KeyData == Keys.Enter)
                 btnGO.PerformClick();
+        }
+
+        private void btnSettings_Click(object sender, EventArgs e)
+        {
+            SettingsForm sf = new SettingsForm();
+            sf.ShowDialog();
         }
     }
 }

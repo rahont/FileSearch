@@ -59,6 +59,7 @@ namespace FileSearch
             this.chkboxRecycleFolder = new System.Windows.Forms.CheckBox();
             this.gboxExceptionFolder = new System.Windows.Forms.GroupBox();
             this.chkboxTempFolder = new System.Windows.Forms.CheckBox();
+            this.btnSettings = new System.Windows.Forms.Button();
             this.gboxFoundList.SuspendLayout();
             this.pnlWhereSearch.SuspendLayout();
             this.pnlWhatSearch.SuspendLayout();
@@ -371,6 +372,7 @@ namespace FileSearch
             this.gboxExceptionFolder.TabIndex = 4;
             this.gboxExceptionFolder.TabStop = false;
             this.gboxExceptionFolder.Text = "Исключить папки";
+            this.gboxExceptionFolder.Visible = false;
             this.gboxExceptionFolder.MouseHover += new System.EventHandler(this.FileSearch_MouseHover);
             // 
             // chkboxTempFolder
@@ -386,11 +388,23 @@ namespace FileSearch
             this.chkboxTempFolder.UseVisualStyleBackColor = true;
             this.chkboxTempFolder.MouseHover += new System.EventHandler(this.FileSearch_MouseHover);
             // 
+            // btnSettings
+            // 
+            this.btnSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSettings.Location = new System.Drawing.Point(268, 170);
+            this.btnSettings.Name = "btnSettings";
+            this.btnSettings.Size = new System.Drawing.Size(84, 75);
+            this.btnSettings.TabIndex = 3;
+            this.btnSettings.Text = "Настройки";
+            this.btnSettings.UseVisualStyleBackColor = true;
+            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(368, 346);
+            this.Controls.Add(this.btnSettings);
             this.Controls.Add(this.gboxExceptionFolder);
             this.Controls.Add(this.lblUserName);
             this.Controls.Add(this.gboxOptimization);
@@ -452,6 +466,7 @@ namespace FileSearch
         private System.Windows.Forms.CheckBox chkboxRecycleFolder;
         private System.Windows.Forms.GroupBox gboxExceptionFolder;
         private System.Windows.Forms.CheckBox chkboxTempFolder;
+        private System.Windows.Forms.Button btnSettings;
     }
 }
 
