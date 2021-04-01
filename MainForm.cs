@@ -148,7 +148,6 @@ namespace FileSearch
             lblInFileFoundCount.Text = "0";
             lbSearchResult.Enabled = false;
             lblSearchFileInProgress.Visible = true;
-            //gboxExceptionFolder.Enabled = false;
             gboxOptimization.Enabled = false;
             btnSelectList.Enabled = false;
             tbWhatSearch.Enabled = false;
@@ -160,7 +159,6 @@ namespace FileSearch
         {
             lblSearchFileInProgress.Visible = false;
             lbSearchResult.Enabled = true;
-            //gboxExceptionFolder.Enabled = true;
             gboxOptimization.Enabled = true;
             btnSelectList.Enabled = true;
             tbWhatSearch.Enabled = true;
@@ -206,9 +204,17 @@ namespace FileSearch
         {
             bool result = false;
 
-            if (Properties.Settings.Default.chkbDoc) result = true;
-            if (Properties.Settings.Default.chkbDocx) result = true;
-            if (Properties.Settings.Default.chkbRtf) result = true;
+            if (fileExtension == ".doc")
+                if (Properties.Settings.Default.chkbDoc) 
+                    result = true;
+
+            if (fileExtension == ".docx")
+                if (Properties.Settings.Default.chkbDocx) 
+                    result = true;
+
+            if (fileExtension == ".rtf")
+                if (Properties.Settings.Default.chkbRtf) 
+                    result = true;
 
             return result;
         }
