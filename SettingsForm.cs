@@ -31,18 +31,6 @@ namespace FileSearch
             chkboxRtf.Checked = Properties.Settings.Default.chkbRtf;
         }
 
-        private void chkbox_CheckedChanged(object sender, EventArgs e)
-        {
-            //if ((sender as CheckBox)?.Name == "chkboxWindowsFolder")
-            //    Properties.Settings.Default.chkbWindows = (chkboxWindowsFolder.Checked);
-
-            //if ((sender as CheckBox)?.Name == "chkboxRecycleFolder")
-            //    Properties.Settings.Default.chkbRecycle = (chkboxRecycleFolder.Checked);
-
-            //if ((sender as CheckBox)?.Name == "chkboxTempFolder")
-            //    Properties.Settings.Default.chkbTemp = (chkboxTempFolder.Checked);
-        }
-
         private void SettingsForm_FormClosed(object sender, FormClosedEventArgs e)
         {
 

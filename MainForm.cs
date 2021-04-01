@@ -454,7 +454,7 @@ namespace FileSearch
             Object saveChanges = Word.WdSaveOptions.wdDoNotSaveChanges;
             try
             {
-                var doc = wordApp.Application.Documents.Open(pathFile, ReadOnly: true);
+                var doc = wordApp.Application.Documents.OpenNoRepairDialog(pathFile, ReadOnly: true);
                 doc.Activate();
                 foreach (Word.Range range in doc.StoryRanges)
                 {

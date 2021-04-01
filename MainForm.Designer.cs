@@ -48,7 +48,6 @@ namespace FileSearch
             this.lblSearchFileInProgress = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.fdOpenPCList = new System.Windows.Forms.OpenFileDialog();
-            this.chkboxWindowsFolder = new System.Windows.Forms.CheckBox();
             this.pnlActiveFileSearch = new System.Windows.Forms.Panel();
             this.lblActiveFileSearch = new System.Windows.Forms.Label();
             this.gboxOptimization = new System.Windows.Forms.GroupBox();
@@ -56,9 +55,6 @@ namespace FileSearch
             this.rbtnSpeed = new System.Windows.Forms.RadioButton();
             this.ttFileSearch = new System.Windows.Forms.ToolTip(this.components);
             this.lblUserName = new System.Windows.Forms.Label();
-            this.chkboxRecycleFolder = new System.Windows.Forms.CheckBox();
-            this.gboxExceptionFolder = new System.Windows.Forms.GroupBox();
-            this.chkboxTempFolder = new System.Windows.Forms.CheckBox();
             this.btnSettings = new System.Windows.Forms.Button();
             this.gboxFoundList.SuspendLayout();
             this.pnlWhereSearch.SuspendLayout();
@@ -66,7 +62,6 @@ namespace FileSearch
             this.pnlResult.SuspendLayout();
             this.pnlActiveFileSearch.SuspendLayout();
             this.gboxOptimization.SuspendLayout();
-            this.gboxExceptionFolder.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnSelectList
@@ -251,6 +246,7 @@ namespace FileSearch
             this.button1.TabStop = false;
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // fdOpenPCList
@@ -259,19 +255,6 @@ namespace FileSearch
             this.fdOpenPCList.FileName = "Список ПК.txt";
             this.fdOpenPCList.Filter = "txt file|*.txt|All Files|*.*";
             this.fdOpenPCList.Title = "Выбери файл со списком ПК";
-            // 
-            // chkboxWindowsFolder
-            // 
-            this.chkboxWindowsFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkboxWindowsFolder.Checked = true;
-            this.chkboxWindowsFolder.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkboxWindowsFolder.Location = new System.Drawing.Point(6, 29);
-            this.chkboxWindowsFolder.Name = "chkboxWindowsFolder";
-            this.chkboxWindowsFolder.Size = new System.Drawing.Size(83, 17);
-            this.chkboxWindowsFolder.TabIndex = 0;
-            this.chkboxWindowsFolder.Text = "Windows";
-            this.chkboxWindowsFolder.UseVisualStyleBackColor = true;
-            this.chkboxWindowsFolder.MouseHover += new System.EventHandler(this.FileSearch_MouseHover);
             // 
             // pnlActiveFileSearch
             // 
@@ -346,47 +329,6 @@ namespace FileSearch
             this.lblUserName.TabIndex = 15;
             this.lblUserName.Text = "UserName";
             // 
-            // chkboxRecycleFolder
-            // 
-            this.chkboxRecycleFolder.AutoSize = true;
-            this.chkboxRecycleFolder.Checked = true;
-            this.chkboxRecycleFolder.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkboxRecycleFolder.Location = new System.Drawing.Point(6, 52);
-            this.chkboxRecycleFolder.Name = "chkboxRecycleFolder";
-            this.chkboxRecycleFolder.Size = new System.Drawing.Size(69, 17);
-            this.chkboxRecycleFolder.TabIndex = 1;
-            this.chkboxRecycleFolder.Text = "Корзина";
-            this.chkboxRecycleFolder.UseVisualStyleBackColor = true;
-            this.chkboxRecycleFolder.MouseHover += new System.EventHandler(this.FileSearch_MouseHover);
-            // 
-            // gboxExceptionFolder
-            // 
-            this.gboxExceptionFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.gboxExceptionFolder.Controls.Add(this.chkboxTempFolder);
-            this.gboxExceptionFolder.Controls.Add(this.chkboxWindowsFolder);
-            this.gboxExceptionFolder.Controls.Add(this.chkboxRecycleFolder);
-            this.gboxExceptionFolder.Location = new System.Drawing.Point(264, 158);
-            this.gboxExceptionFolder.Name = "gboxExceptionFolder";
-            this.gboxExceptionFolder.Size = new System.Drawing.Size(93, 97);
-            this.gboxExceptionFolder.TabIndex = 4;
-            this.gboxExceptionFolder.TabStop = false;
-            this.gboxExceptionFolder.Text = "Исключить папки";
-            this.gboxExceptionFolder.Visible = false;
-            this.gboxExceptionFolder.MouseHover += new System.EventHandler(this.FileSearch_MouseHover);
-            // 
-            // chkboxTempFolder
-            // 
-            this.chkboxTempFolder.AutoSize = true;
-            this.chkboxTempFolder.Checked = true;
-            this.chkboxTempFolder.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkboxTempFolder.Location = new System.Drawing.Point(6, 75);
-            this.chkboxTempFolder.Name = "chkboxTempFolder";
-            this.chkboxTempFolder.Size = new System.Drawing.Size(63, 17);
-            this.chkboxTempFolder.TabIndex = 2;
-            this.chkboxTempFolder.Text = "Temp\'ы";
-            this.chkboxTempFolder.UseVisualStyleBackColor = true;
-            this.chkboxTempFolder.MouseHover += new System.EventHandler(this.FileSearch_MouseHover);
-            // 
             // btnSettings
             // 
             this.btnSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -404,7 +346,6 @@ namespace FileSearch
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(368, 346);
             this.Controls.Add(this.btnSettings);
-            this.Controls.Add(this.gboxExceptionFolder);
             this.Controls.Add(this.lblUserName);
             this.Controls.Add(this.gboxOptimization);
             this.Controls.Add(this.pnlActiveFileSearch);
@@ -428,8 +369,6 @@ namespace FileSearch
             this.pnlActiveFileSearch.ResumeLayout(false);
             this.gboxOptimization.ResumeLayout(false);
             this.gboxOptimization.PerformLayout();
-            this.gboxExceptionFolder.ResumeLayout(false);
-            this.gboxExceptionFolder.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -454,7 +393,6 @@ namespace FileSearch
         private System.Windows.Forms.Label lblFile;
         private System.Windows.Forms.Label lblInFileFoundCount;
         private System.Windows.Forms.Label lblSearchFileInProgress;
-        private System.Windows.Forms.CheckBox chkboxWindowsFolder;
         private System.Windows.Forms.Panel pnlActiveFileSearch;
         private System.Windows.Forms.Label lblActiveFileSearch;
         private System.Windows.Forms.GroupBox gboxOptimization;
@@ -462,9 +400,6 @@ namespace FileSearch
         private System.Windows.Forms.RadioButton rbtnSpeed;
         private System.Windows.Forms.ToolTip ttFileSearch;
         private System.Windows.Forms.Label lblUserName;
-        private System.Windows.Forms.CheckBox chkboxRecycleFolder;
-        private System.Windows.Forms.GroupBox gboxExceptionFolder;
-        private System.Windows.Forms.CheckBox chkboxTempFolder;
         private System.Windows.Forms.Button btnSettings;
     }
 }

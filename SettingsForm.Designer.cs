@@ -34,6 +34,7 @@ namespace FileSearch
             this.gboxFolders = new System.Windows.Forms.GroupBox();
             this.chkboxProgram86Folder = new System.Windows.Forms.CheckBox();
             this.chkboxProgramFolder = new System.Windows.Forms.CheckBox();
+            this.tbAnyFolders = new ALLinONE.MyTextBox();
             this.chkboxTempFolder = new System.Windows.Forms.CheckBox();
             this.chkboxRecycleFolder = new System.Windows.Forms.CheckBox();
             this.chkboxWindowsFolder = new System.Windows.Forms.CheckBox();
@@ -44,7 +45,6 @@ namespace FileSearch
             this.chkboxDocx = new System.Windows.Forms.CheckBox();
             this.chkboxDoc = new System.Windows.Forms.CheckBox();
             this.ttSettings = new System.Windows.Forms.ToolTip(this.components);
-            this.tbAnyFolders = new ALLinONE.MyTextBox();
             this.gboxFolders.SuspendLayout();
             this.gboxFiles.SuspendLayout();
             this.SuspendLayout();
@@ -88,6 +88,19 @@ namespace FileSearch
             this.chkboxProgramFolder.Text = "Program Files";
             this.chkboxProgramFolder.UseVisualStyleBackColor = true;
             // 
+            // tbAnyFolders
+            // 
+            this.tbAnyFolders.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tbAnyFolders.Location = new System.Drawing.Point(3, 93);
+            this.tbAnyFolders.MaximumSize = new System.Drawing.Size(10000, 20);
+            this.tbAnyFolders.MinimumSize = new System.Drawing.Size(1, 20);
+            this.tbAnyFolders.Name = "tbAnyFolders";
+            this.tbAnyFolders.PasswordChar = '\0';
+            this.tbAnyFolders.Size = new System.Drawing.Size(224, 20);
+            this.tbAnyFolders.TabIndex = 3;
+            this.tbAnyFolders.TextMaxLength = 1024;
+            this.tbAnyFolders.TextTitle = "Доп. папки через ; (точка с запятой)";
+            // 
             // chkboxTempFolder
             // 
             this.chkboxTempFolder.AutoSize = true;
@@ -99,7 +112,6 @@ namespace FileSearch
             this.chkboxTempFolder.TabIndex = 2;
             this.chkboxTempFolder.Text = "Temp\'ы";
             this.chkboxTempFolder.UseVisualStyleBackColor = true;
-            this.chkboxTempFolder.CheckedChanged += new System.EventHandler(this.chkbox_CheckedChanged);
             // 
             // chkboxRecycleFolder
             // 
@@ -112,7 +124,6 @@ namespace FileSearch
             this.chkboxRecycleFolder.TabIndex = 1;
             this.chkboxRecycleFolder.Text = "Корзина";
             this.chkboxRecycleFolder.UseVisualStyleBackColor = true;
-            this.chkboxRecycleFolder.CheckedChanged += new System.EventHandler(this.chkbox_CheckedChanged);
             // 
             // chkboxWindowsFolder
             // 
@@ -125,7 +136,6 @@ namespace FileSearch
             this.chkboxWindowsFolder.TabIndex = 0;
             this.chkboxWindowsFolder.Text = "Windows";
             this.chkboxWindowsFolder.UseVisualStyleBackColor = true;
-            this.chkboxWindowsFolder.CheckedChanged += new System.EventHandler(this.chkbox_CheckedChanged);
             // 
             // btnSaveAll
             // 
@@ -159,7 +169,7 @@ namespace FileSearch
             this.gboxFiles.Size = new System.Drawing.Size(230, 42);
             this.gboxFiles.TabIndex = 3;
             this.gboxFiles.TabStop = false;
-            this.gboxFiles.Text = "Исключить результаты поиска в файлах:";
+            this.gboxFiles.Text = "Не производить поиск в файлах:";
             // 
             // chkboxRtf
             // 
@@ -196,19 +206,6 @@ namespace FileSearch
             this.ttSettings.AutoPopDelay = 20000;
             this.ttSettings.InitialDelay = 500;
             this.ttSettings.ReshowDelay = 100;
-            // 
-            // tbAnyFolders
-            // 
-            this.tbAnyFolders.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tbAnyFolders.Location = new System.Drawing.Point(3, 93);
-            this.tbAnyFolders.MaximumSize = new System.Drawing.Size(10000, 20);
-            this.tbAnyFolders.MinimumSize = new System.Drawing.Size(1, 20);
-            this.tbAnyFolders.Name = "tbAnyFolders";
-            this.tbAnyFolders.PasswordChar = '\0';
-            this.tbAnyFolders.Size = new System.Drawing.Size(224, 20);
-            this.tbAnyFolders.TabIndex = 3;
-            this.tbAnyFolders.TextMaxLength = 1024;
-            this.tbAnyFolders.TextTitle = "Доп. папки через ; (точка с запятой)";
             // 
             // SettingsForm
             // 
