@@ -59,6 +59,7 @@ namespace ALLinONE
         //Событие Click для UserControl
         public event EventHandler _ClickEvent;
         public event EventHandler _TextChanged;
+        public event EventHandler _MouseHover;
 
         private void tb_TextChanged(object sender, EventArgs e)
         {
@@ -82,6 +83,11 @@ namespace ALLinONE
         private void tb_Click(object sender, EventArgs e)
         {
             _ClickEvent?.Invoke(sender, e);
+        }
+
+        private void tb_MouseHover(object sender, EventArgs e)
+        {
+            _MouseHover?.Invoke(sender, e);
         }
     }
 }

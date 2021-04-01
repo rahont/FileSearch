@@ -192,12 +192,25 @@ namespace FileSearch
 
                 foreach (var fileExt in fileExtension)
                 {
+                    if (SkipCheckInFile(fileExt)) continue;
+                    
                     if (Path.GetExtension(filePath) == fileExt)
                     {
                         CheckInFile(filePath, tbWhatSearch.Text);
                     }
                 }
             }
+        }
+
+        private bool SkipCheckInFile(string fileExtension)
+        {
+            bool result = false;
+
+            if (Properties.Settings.Default.chkbDoc) result = true;
+            if (Properties.Settings.Default.chkbDocx) result = true;
+            if (Properties.Settings.Default.chkbRtf) result = true;
+
+            return result;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -330,10 +343,9 @@ namespace FileSearch
             string[] excepFolders = Properties.Settings.Default.anyFolders.Split(';');
             foreach (var item in excepFolders)
             {
-                if (Directory.EnumerateDirectories(subDirPath).Contains("df"))
-                {
-
-                }
+                string tmpItem = item.Trim();
+                if (Path.GetFileName(subDirPath).ToLower() == tmpItem.ToLower())
+                    result = true;
             }
 
             return result;

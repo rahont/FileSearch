@@ -43,6 +43,7 @@
             this.tb.Click += new System.EventHandler(this.tb_Click);
             this.tb.TextChanged += new System.EventHandler(this.tb_TextChanged);
             this.tb.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tb_KeyDown);
+            this.tb.MouseHover += new System.EventHandler(this.tb_MouseHover);
             // 
             // lbl
             // 
@@ -57,6 +58,7 @@
             this.lbl.TabIndex = 1;
             this.lbl.Text = "Your Text";
             this.lbl.Click += new System.EventHandler(this.lbl_Click);
+            this.lbl.MouseHover += new System.EventHandler(this.tb_MouseHover);
             // 
             // MyTextBox
             // 

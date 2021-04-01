@@ -19,10 +19,16 @@ namespace FileSearch
 
         private void SettingsForm_Load(object sender, EventArgs e)
         {
+            tbAnyFolders.Text = Properties.Settings.Default.anyFolders;
             chkboxWindowsFolder.Checked = Properties.Settings.Default.chkbWindows;
             chkboxRecycleFolder.Checked = Properties.Settings.Default.chkbRecycle;
             chkboxTempFolder.Checked = Properties.Settings.Default.chkbTemp;
-            tbAnyFolders.Text = Properties.Settings.Default.anyFolders;
+            chkboxProgramFolder.Checked = Properties.Settings.Default.chkbProgram;
+            chkboxProgram86Folder.Checked = Properties.Settings.Default.chkbProgram86;
+
+            chkboxDoc.Checked = Properties.Settings.Default.chkbDoc;
+            chkboxDocx.Checked = Properties.Settings.Default.chkbDocx;
+            chkboxRtf.Checked = Properties.Settings.Default.chkbRtf;
         }
 
         private void chkbox_CheckedChanged(object sender, EventArgs e)
@@ -71,6 +77,15 @@ namespace FileSearch
             chkboxDoc.Checked = false;
             chkboxDocx.Checked = false;
             chkboxRtf.Checked = false;
+        }
+
+        private void Settings__MouseHover(object sender, EventArgs e)
+        {
+            //if((sender as TextBox)?.Name == "tb")
+            //{
+            //    ttSettings.SetToolTip(tbAnyFolders, "Скорость: Значительно ускоряет поиск, но может потреблять много ОЗУ\r\n" +
+            //        "Ресурсы: Потребляет мало ОЗУ, но уходит очень много времени на поиск в файле");
+            //}
         }
     }
 }
