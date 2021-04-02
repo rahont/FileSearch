@@ -153,6 +153,7 @@ namespace FileSearch
             tbWhatSearch.Enabled = false;
             btnGO.Enabled = false;
             btnSettings.Enabled = false;
+            btnUnload.Enabled = false;
         }
 
         private void AfterSearch()
@@ -165,6 +166,7 @@ namespace FileSearch
             btnGO.Enabled = true;
             btnSettings.Enabled = true;
             lblActiveFileSearch.Text = "ПОИСК ЗАВЕРШЕН!";
+            btnUnload.Enabled = true;
 
         }
 
@@ -282,6 +284,8 @@ namespace FileSearch
                     }
                     catch (UnauthorizedAccessException)
                     {
+                        if (dirs.Count == 1)
+                            lbSearchResult.Items.Add("Нет доступа к " + currentDirPath);
                         continue;
                     }
                     catch (DirectoryNotFoundException)
@@ -290,7 +294,7 @@ namespace FileSearch
                     }
                     catch (ArgumentException ex)
                     {
-                        MessageBox.Show(ex.Message);
+                        MessageBox.Show(ex.Message, "ArgumentException (SafeEnumerateFiles)");
                         break;
                     }
                     catch (IOException)
@@ -299,7 +303,7 @@ namespace FileSearch
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.ToString(), "SafeEnumerateFiles");
+                        MessageBox.Show(ex.Message, "Exception (SafeEnumerateFiles)");
                         break;
                     }
                 }
@@ -533,6 +537,21 @@ namespace FileSearch
         {
             SettingsForm sf = new SettingsForm();
             sf.ShowDialog();
+        }
+
+        private void btnUnload_Click(object sender, EventArgs e)
+        {
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                StreamWriter sw = new StreamWriter(saveFileDialog.OpenFile());
+
+                foreach (var item in lbSearchResult.Items)
+                {
+                    sw.WriteLine(item);
+                }
+
+                sw.Close();
+            }
         }
     }
 }
