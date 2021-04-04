@@ -29,6 +29,9 @@ namespace FileSearch
             chkboxDoc.Checked = Properties.Settings.Default.chkbDoc;
             chkboxDocx.Checked = Properties.Settings.Default.chkbDocx;
             chkboxRtf.Checked = Properties.Settings.Default.chkbRtf;
+
+            if (Properties.Settings.Default.rbtnOptimizationSpeed) rbtnSpeed.Checked = true;
+            else rbtnSaveResources.Checked = true;
         }
 
         private void SettingsForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -49,6 +52,8 @@ namespace FileSearch
             Properties.Settings.Default.chkbDocx = (chkboxDocx.Checked);
             Properties.Settings.Default.chkbRtf = (chkboxRtf.Checked);
 
+            Properties.Settings.Default.rbtnOptimizationSpeed = (rbtnSpeed.Checked);
+
             Properties.Settings.Default.Save();
             this.Close();
         }
@@ -65,15 +70,25 @@ namespace FileSearch
             chkboxDoc.Checked = false;
             chkboxDocx.Checked = false;
             chkboxRtf.Checked = false;
+
+            rbtnSpeed.Checked = true;
         }
 
         private void Settings__MouseHover(object sender, EventArgs e)
         {
-            //if((sender as TextBox)?.Name == "tb")
-            //{
-            //    ttSettings.SetToolTip(tbAnyFolders, "Скорость: Значительно ускоряет поиск, но может потреблять много ОЗУ\r\n" +
-            //        "Ресурсы: Потребляет мало ОЗУ, но уходит очень много времени на поиск в файле");
-            //}
+            if ((sender as GroupBox)?.Name == "gboxOptimization")
+            {
+                ttSettings.SetToolTip(gboxOptimization, "Скорость: Значительно ускоряет поиск, но может потреблять много ОЗУ\r\n" +
+                    "Ресурсы: Потребляет мало ОЗУ, но уходит очень много времени на поиск в файле");
+            }
+            if ((sender as RadioButton)?.Name == "rbtnSpeed")
+            {
+                ttSettings.SetToolTip(rbtnSpeed, "Значительно ускоряет поиск, но может потреблять много ОЗУ");
+            }
+            if ((sender as RadioButton)?.Name == "rbtnSaveResources")
+            {
+                ttSettings.SetToolTip(rbtnSaveResources, "Потребляет мало ОЗУ, но уходит очень много времени на поиск в файле");
+            }
         }
     }
 }

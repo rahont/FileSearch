@@ -45,8 +45,12 @@ namespace FileSearch
             this.chkboxDocx = new System.Windows.Forms.CheckBox();
             this.chkboxDoc = new System.Windows.Forms.CheckBox();
             this.ttSettings = new System.Windows.Forms.ToolTip(this.components);
+            this.gboxOptimization = new System.Windows.Forms.GroupBox();
+            this.rbtnSaveResources = new System.Windows.Forms.RadioButton();
+            this.rbtnSpeed = new System.Windows.Forms.RadioButton();
             this.gboxFolders.SuspendLayout();
             this.gboxFiles.SuspendLayout();
+            this.gboxOptimization.SuspendLayout();
             this.SuspendLayout();
             // 
             // gboxFolders
@@ -72,7 +76,7 @@ namespace FileSearch
             this.chkboxProgram86Folder.Location = new System.Drawing.Point(94, 42);
             this.chkboxProgram86Folder.Name = "chkboxProgram86Folder";
             this.chkboxProgram86Folder.Size = new System.Drawing.Size(115, 17);
-            this.chkboxProgram86Folder.TabIndex = 5;
+            this.chkboxProgram86Folder.TabIndex = 4;
             this.chkboxProgram86Folder.Text = "Program Files (x86)";
             this.chkboxProgram86Folder.UseVisualStyleBackColor = true;
             // 
@@ -84,7 +88,7 @@ namespace FileSearch
             this.chkboxProgramFolder.Location = new System.Drawing.Point(94, 19);
             this.chkboxProgramFolder.Name = "chkboxProgramFolder";
             this.chkboxProgramFolder.Size = new System.Drawing.Size(89, 17);
-            this.chkboxProgramFolder.TabIndex = 4;
+            this.chkboxProgramFolder.TabIndex = 3;
             this.chkboxProgramFolder.Text = "Program Files";
             this.chkboxProgramFolder.UseVisualStyleBackColor = true;
             // 
@@ -97,7 +101,7 @@ namespace FileSearch
             this.tbAnyFolders.Name = "tbAnyFolders";
             this.tbAnyFolders.PasswordChar = '\0';
             this.tbAnyFolders.Size = new System.Drawing.Size(224, 20);
-            this.tbAnyFolders.TabIndex = 3;
+            this.tbAnyFolders.TabIndex = 5;
             this.tbAnyFolders.TextMaxLength = 1024;
             this.tbAnyFolders.TextTitle = "Доп. папки через ; (точка с запятой)";
             // 
@@ -140,10 +144,10 @@ namespace FileSearch
             // btnSaveAll
             // 
             this.btnSaveAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnSaveAll.Location = new System.Drawing.Point(113, 183);
+            this.btnSaveAll.Location = new System.Drawing.Point(113, 233);
             this.btnSaveAll.Name = "btnSaveAll";
             this.btnSaveAll.Size = new System.Drawing.Size(130, 23);
-            this.btnSaveAll.TabIndex = 1;
+            this.btnSaveAll.TabIndex = 3;
             this.btnSaveAll.Text = "Сохранить и закрыть";
             this.btnSaveAll.UseVisualStyleBackColor = true;
             this.btnSaveAll.Click += new System.EventHandler(this.btnSaveAll_Click);
@@ -151,7 +155,7 @@ namespace FileSearch
             // btnDefault
             // 
             this.btnDefault.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnDefault.Location = new System.Drawing.Point(12, 183);
+            this.btnDefault.Location = new System.Drawing.Point(12, 233);
             this.btnDefault.Name = "btnDefault";
             this.btnDefault.Size = new System.Drawing.Size(95, 23);
             this.btnDefault.TabIndex = 2;
@@ -167,7 +171,7 @@ namespace FileSearch
             this.gboxFiles.Location = new System.Drawing.Point(12, 134);
             this.gboxFiles.Name = "gboxFiles";
             this.gboxFiles.Size = new System.Drawing.Size(230, 42);
-            this.gboxFiles.TabIndex = 3;
+            this.gboxFiles.TabIndex = 1;
             this.gboxFiles.TabStop = false;
             this.gboxFiles.Text = "Не производить поиск в файлах:";
             // 
@@ -207,11 +211,49 @@ namespace FileSearch
             this.ttSettings.InitialDelay = 500;
             this.ttSettings.ReshowDelay = 100;
             // 
+            // gboxOptimization
+            // 
+            this.gboxOptimization.Controls.Add(this.rbtnSaveResources);
+            this.gboxOptimization.Controls.Add(this.rbtnSpeed);
+            this.gboxOptimization.Location = new System.Drawing.Point(12, 182);
+            this.gboxOptimization.Name = "gboxOptimization";
+            this.gboxOptimization.Size = new System.Drawing.Size(230, 43);
+            this.gboxOptimization.TabIndex = 4;
+            this.gboxOptimization.TabStop = false;
+            this.gboxOptimization.Text = "Оптимизация";
+            this.gboxOptimization.Visible = false;
+            this.gboxOptimization.MouseHover += new System.EventHandler(this.Settings__MouseHover);
+            // 
+            // rbtnSaveResources
+            // 
+            this.rbtnSaveResources.AutoSize = true;
+            this.rbtnSaveResources.Location = new System.Drawing.Point(131, 19);
+            this.rbtnSaveResources.Name = "rbtnSaveResources";
+            this.rbtnSaveResources.Size = new System.Drawing.Size(69, 17);
+            this.rbtnSaveResources.TabIndex = 3;
+            this.rbtnSaveResources.Text = "Ресурсы";
+            this.rbtnSaveResources.UseVisualStyleBackColor = true;
+            this.rbtnSaveResources.MouseHover += new System.EventHandler(this.Settings__MouseHover);
+            // 
+            // rbtnSpeed
+            // 
+            this.rbtnSpeed.AutoSize = true;
+            this.rbtnSpeed.Checked = true;
+            this.rbtnSpeed.Location = new System.Drawing.Point(22, 19);
+            this.rbtnSpeed.Name = "rbtnSpeed";
+            this.rbtnSpeed.Size = new System.Drawing.Size(73, 17);
+            this.rbtnSpeed.TabIndex = 2;
+            this.rbtnSpeed.TabStop = true;
+            this.rbtnSpeed.Text = "Скорость";
+            this.rbtnSpeed.UseVisualStyleBackColor = true;
+            this.rbtnSpeed.MouseHover += new System.EventHandler(this.Settings__MouseHover);
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(254, 218);
+            this.ClientSize = new System.Drawing.Size(254, 268);
+            this.Controls.Add(this.gboxOptimization);
             this.Controls.Add(this.gboxFiles);
             this.Controls.Add(this.btnDefault);
             this.Controls.Add(this.btnSaveAll);
@@ -227,6 +269,8 @@ namespace FileSearch
             this.gboxFolders.PerformLayout();
             this.gboxFiles.ResumeLayout(false);
             this.gboxFiles.PerformLayout();
+            this.gboxOptimization.ResumeLayout(false);
+            this.gboxOptimization.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -247,5 +291,8 @@ namespace FileSearch
         private System.Windows.Forms.CheckBox chkboxDocx;
         private System.Windows.Forms.CheckBox chkboxDoc;
         private System.Windows.Forms.ToolTip ttSettings;
+        private System.Windows.Forms.GroupBox gboxOptimization;
+        private System.Windows.Forms.RadioButton rbtnSaveResources;
+        private System.Windows.Forms.RadioButton rbtnSpeed;
     }
 }

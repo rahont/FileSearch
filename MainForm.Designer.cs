@@ -43,33 +43,30 @@ namespace FileSearch
             this.cboxWhereSearch = new System.Windows.Forms.ComboBox();
             this.pnlWhereSearch = new System.Windows.Forms.Panel();
             this.pnlWhatSearch = new System.Windows.Forms.Panel();
-            this.tbWhatSearch = new ALLinONE.MyTextBox();
             this.pnlResult = new System.Windows.Forms.Panel();
+            this.button2 = new System.Windows.Forms.Button();
             this.lblSearchFileInProgress = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.fdOpenPCList = new System.Windows.Forms.OpenFileDialog();
             this.pnlActiveFileSearch = new System.Windows.Forms.Panel();
             this.lblActiveFileSearch = new System.Windows.Forms.Label();
-            this.gboxOptimization = new System.Windows.Forms.GroupBox();
-            this.rbtnSaveResources = new System.Windows.Forms.RadioButton();
-            this.rbtnSpeed = new System.Windows.Forms.RadioButton();
             this.ttFileSearch = new System.Windows.Forms.ToolTip(this.components);
             this.lblUserName = new System.Windows.Forms.Label();
             this.btnSettings = new System.Windows.Forms.Button();
             this.btnUnload = new System.Windows.Forms.Button();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.tbWhatSearch = new ALLinONE.MyTextBox();
             this.gboxFoundList.SuspendLayout();
             this.pnlWhereSearch.SuspendLayout();
             this.pnlWhatSearch.SuspendLayout();
             this.pnlResult.SuspendLayout();
             this.pnlActiveFileSearch.SuspendLayout();
-            this.gboxOptimization.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnSelectList
             // 
             this.btnSelectList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSelectList.Location = new System.Drawing.Point(156, 3);
+            this.btnSelectList.Location = new System.Drawing.Point(144, 3);
             this.btnSelectList.Name = "btnSelectList";
             this.btnSelectList.Size = new System.Drawing.Size(111, 21);
             this.btnSelectList.TabIndex = 1;
@@ -80,9 +77,9 @@ namespace FileSearch
             // btnGO
             // 
             this.btnGO.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnGO.Location = new System.Drawing.Point(290, 11);
+            this.btnGO.Location = new System.Drawing.Point(278, 32);
             this.btnGO.Name = "btnGO";
-            this.btnGO.Size = new System.Drawing.Size(67, 121);
+            this.btnGO.Size = new System.Drawing.Size(79, 39);
             this.btnGO.TabIndex = 2;
             this.btnGO.Text = "Запустить поиск";
             this.btnGO.UseVisualStyleBackColor = true;
@@ -96,9 +93,8 @@ namespace FileSearch
             this.lbSearchResult.FormattingEnabled = true;
             this.lbSearchResult.Location = new System.Drawing.Point(5, 16);
             this.lbSearchResult.Name = "lbSearchResult";
-            this.lbSearchResult.Size = new System.Drawing.Size(234, 199);
-            this.lbSearchResult.TabIndex = 3;
-            this.lbSearchResult.TabStop = false;
+            this.lbSearchResult.Size = new System.Drawing.Size(333, 199);
+            this.lbSearchResult.TabIndex = 6;
             this.lbSearchResult.DoubleClick += new System.EventHandler(this.lbSearchResult_DoubleClick);
             // 
             // lblSearchResult
@@ -120,7 +116,7 @@ namespace FileSearch
             this.gboxFoundList.Controls.Add(this.lblFileFolderFoundCount);
             this.gboxFoundList.Location = new System.Drawing.Point(3, 25);
             this.gboxFoundList.Name = "gboxFoundList";
-            this.gboxFoundList.Size = new System.Drawing.Size(264, 54);
+            this.gboxFoundList.Size = new System.Drawing.Size(252, 54);
             this.gboxFoundList.TabIndex = 8;
             this.gboxFoundList.TabStop = false;
             // 
@@ -169,7 +165,7 @@ namespace FileSearch
             this.cboxWhereSearch.FormattingEnabled = true;
             this.cboxWhereSearch.Location = new System.Drawing.Point(3, 3);
             this.cboxWhereSearch.Name = "cboxWhereSearch";
-            this.cboxWhereSearch.Size = new System.Drawing.Size(150, 21);
+            this.cboxWhereSearch.Size = new System.Drawing.Size(138, 21);
             this.cboxWhereSearch.TabIndex = 0;
             this.cboxWhereSearch.Text = "Список ПК пуст";
             // 
@@ -182,8 +178,8 @@ namespace FileSearch
             this.pnlWhereSearch.Controls.Add(this.btnSelectList);
             this.pnlWhereSearch.Location = new System.Drawing.Point(12, 12);
             this.pnlWhereSearch.Name = "pnlWhereSearch";
-            this.pnlWhereSearch.Size = new System.Drawing.Size(272, 29);
-            this.pnlWhereSearch.TabIndex = 10;
+            this.pnlWhereSearch.Size = new System.Drawing.Size(260, 29);
+            this.pnlWhereSearch.TabIndex = 0;
             // 
             // pnlWhatSearch
             // 
@@ -194,23 +190,8 @@ namespace FileSearch
             this.pnlWhatSearch.Controls.Add(this.gboxFoundList);
             this.pnlWhatSearch.Location = new System.Drawing.Point(12, 47);
             this.pnlWhatSearch.Name = "pnlWhatSearch";
-            this.pnlWhatSearch.Size = new System.Drawing.Size(272, 84);
-            this.pnlWhatSearch.TabIndex = 11;
-            // 
-            // tbWhatSearch
-            // 
-            this.tbWhatSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbWhatSearch.Location = new System.Drawing.Point(3, 3);
-            this.tbWhatSearch.MaximumSize = new System.Drawing.Size(10000, 20);
-            this.tbWhatSearch.MinimumSize = new System.Drawing.Size(1, 20);
-            this.tbWhatSearch.Name = "tbWhatSearch";
-            this.tbWhatSearch.PasswordChar = '\0';
-            this.tbWhatSearch.Size = new System.Drawing.Size(264, 20);
-            this.tbWhatSearch.TabIndex = 3;
-            this.tbWhatSearch.TextMaxLength = 1024;
-            this.tbWhatSearch.TextTitle = "Что ищем? Имя или часть имени файла/папки";
-            this.tbWhatSearch.KeyDownEvent += new System.Windows.Forms.KeyEventHandler(this.tbWhatSearch_KeyDownEvent);
+            this.pnlWhatSearch.Size = new System.Drawing.Size(260, 84);
+            this.pnlWhatSearch.TabIndex = 1;
             // 
             // pnlResult
             // 
@@ -218,30 +199,44 @@ namespace FileSearch
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlResult.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlResult.Controls.Add(this.button2);
             this.pnlResult.Controls.Add(this.lblSearchFileInProgress);
             this.pnlResult.Controls.Add(this.button1);
             this.pnlResult.Controls.Add(this.lbSearchResult);
             this.pnlResult.Controls.Add(this.lblSearchResult);
             this.pnlResult.Location = new System.Drawing.Point(12, 158);
             this.pnlResult.Name = "pnlResult";
-            this.pnlResult.Size = new System.Drawing.Size(246, 225);
-            this.pnlResult.TabIndex = 12;
+            this.pnlResult.Size = new System.Drawing.Size(345, 225);
+            this.pnlResult.TabIndex = 5;
+            this.pnlResult.TabStop = true;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(265, 32);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 14;
+            this.button2.Text = "button2";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Visible = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // lblSearchFileInProgress
             // 
             this.lblSearchFileInProgress.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblSearchFileInProgress.AutoSize = true;
             this.lblSearchFileInProgress.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblSearchFileInProgress.Location = new System.Drawing.Point(19, 95);
+            this.lblSearchFileInProgress.Location = new System.Drawing.Point(68, 95);
             this.lblSearchFileInProgress.Name = "lblSearchFileInProgress";
             this.lblSearchFileInProgress.Size = new System.Drawing.Size(206, 31);
             this.lblSearchFileInProgress.TabIndex = 13;
             this.lblSearchFileInProgress.Text = "ИДЕТ ПОИСК";
+            this.lblSearchFileInProgress.UseWaitCursor = true;
             this.lblSearchFileInProgress.Visible = false;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(164, 2);
+            this.button1.Location = new System.Drawing.Point(265, 3);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 5;
@@ -277,43 +272,6 @@ namespace FileSearch
             this.lblActiveFileSearch.Size = new System.Drawing.Size(343, 13);
             this.lblActiveFileSearch.TabIndex = 0;
             // 
-            // gboxOptimization
-            // 
-            this.gboxOptimization.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.gboxOptimization.Controls.Add(this.rbtnSaveResources);
-            this.gboxOptimization.Controls.Add(this.rbtnSpeed);
-            this.gboxOptimization.Location = new System.Drawing.Point(264, 261);
-            this.gboxOptimization.Name = "gboxOptimization";
-            this.gboxOptimization.Size = new System.Drawing.Size(93, 62);
-            this.gboxOptimization.TabIndex = 5;
-            this.gboxOptimization.TabStop = false;
-            this.gboxOptimization.Text = "Оптимизация";
-            this.gboxOptimization.MouseHover += new System.EventHandler(this.FileSearch_MouseHover);
-            // 
-            // rbtnSaveResources
-            // 
-            this.rbtnSaveResources.AutoSize = true;
-            this.rbtnSaveResources.Location = new System.Drawing.Point(6, 42);
-            this.rbtnSaveResources.Name = "rbtnSaveResources";
-            this.rbtnSaveResources.Size = new System.Drawing.Size(69, 17);
-            this.rbtnSaveResources.TabIndex = 1;
-            this.rbtnSaveResources.Text = "Ресурсы";
-            this.rbtnSaveResources.UseVisualStyleBackColor = true;
-            this.rbtnSaveResources.MouseHover += new System.EventHandler(this.FileSearch_MouseHover);
-            // 
-            // rbtnSpeed
-            // 
-            this.rbtnSpeed.AutoSize = true;
-            this.rbtnSpeed.Checked = true;
-            this.rbtnSpeed.Location = new System.Drawing.Point(6, 19);
-            this.rbtnSpeed.Name = "rbtnSpeed";
-            this.rbtnSpeed.Size = new System.Drawing.Size(73, 17);
-            this.rbtnSpeed.TabIndex = 0;
-            this.rbtnSpeed.TabStop = true;
-            this.rbtnSpeed.Text = "Скорость";
-            this.rbtnSpeed.UseVisualStyleBackColor = true;
-            this.rbtnSpeed.MouseHover += new System.EventHandler(this.FileSearch_MouseHover);
-            // 
             // ttFileSearch
             // 
             this.ttFileSearch.AutoPopDelay = 20000;
@@ -323,9 +281,9 @@ namespace FileSearch
             // 
             // lblUserName
             // 
-            this.lblUserName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblUserName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblUserName.AutoSize = true;
-            this.lblUserName.Location = new System.Drawing.Point(267, 370);
+            this.lblUserName.Location = new System.Drawing.Point(278, 12);
             this.lblUserName.Name = "lblUserName";
             this.lblUserName.Size = new System.Drawing.Size(57, 13);
             this.lblUserName.TabIndex = 15;
@@ -334,9 +292,9 @@ namespace FileSearch
             // btnSettings
             // 
             this.btnSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSettings.Location = new System.Drawing.Point(268, 170);
+            this.btnSettings.Location = new System.Drawing.Point(278, 77);
             this.btnSettings.Name = "btnSettings";
-            this.btnSettings.Size = new System.Drawing.Size(84, 75);
+            this.btnSettings.Size = new System.Drawing.Size(79, 21);
             this.btnSettings.TabIndex = 3;
             this.btnSettings.Text = "Настройки...";
             this.btnSettings.UseVisualStyleBackColor = true;
@@ -345,10 +303,10 @@ namespace FileSearch
             // btnUnload
             // 
             this.btnUnload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnUnload.Location = new System.Drawing.Point(264, 329);
+            this.btnUnload.Location = new System.Drawing.Point(278, 97);
             this.btnUnload.Name = "btnUnload";
-            this.btnUnload.Size = new System.Drawing.Size(92, 34);
-            this.btnUnload.TabIndex = 16;
+            this.btnUnload.Size = new System.Drawing.Size(79, 34);
+            this.btnUnload.TabIndex = 4;
             this.btnUnload.Text = "Выгрузить в файл...";
             this.btnUnload.UseVisualStyleBackColor = true;
             this.btnUnload.Click += new System.EventHandler(this.btnUnload_Click);
@@ -359,6 +317,21 @@ namespace FileSearch
             this.saveFileDialog.FileName = "Результат поиска";
             this.saveFileDialog.Filter = "Текстовый файл|*.txt";
             // 
+            // tbWhatSearch
+            // 
+            this.tbWhatSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbWhatSearch.Location = new System.Drawing.Point(3, 3);
+            this.tbWhatSearch.MaximumSize = new System.Drawing.Size(10000, 20);
+            this.tbWhatSearch.MinimumSize = new System.Drawing.Size(1, 20);
+            this.tbWhatSearch.Name = "tbWhatSearch";
+            this.tbWhatSearch.PasswordChar = '\0';
+            this.tbWhatSearch.Size = new System.Drawing.Size(252, 20);
+            this.tbWhatSearch.TabIndex = 2;
+            this.tbWhatSearch.TextMaxLength = 1024;
+            this.tbWhatSearch.TextTitle = "Что ищем? Имя или часть имени файла/папки";
+            this.tbWhatSearch.KeyDownEvent += new System.Windows.Forms.KeyEventHandler(this.tbWhatSearch_KeyDownEvent);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -367,7 +340,6 @@ namespace FileSearch
             this.Controls.Add(this.btnUnload);
             this.Controls.Add(this.btnSettings);
             this.Controls.Add(this.lblUserName);
-            this.Controls.Add(this.gboxOptimization);
             this.Controls.Add(this.pnlActiveFileSearch);
             this.Controls.Add(this.pnlResult);
             this.Controls.Add(this.pnlWhatSearch);
@@ -377,7 +349,6 @@ namespace FileSearch
             this.MinimumSize = new System.Drawing.Size(384, 424);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Поисковик3000";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.gboxFoundList.ResumeLayout(false);
@@ -387,8 +358,6 @@ namespace FileSearch
             this.pnlResult.ResumeLayout(false);
             this.pnlResult.PerformLayout();
             this.pnlActiveFileSearch.ResumeLayout(false);
-            this.gboxOptimization.ResumeLayout(false);
-            this.gboxOptimization.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -415,14 +384,12 @@ namespace FileSearch
         private System.Windows.Forms.Label lblSearchFileInProgress;
         private System.Windows.Forms.Panel pnlActiveFileSearch;
         private System.Windows.Forms.Label lblActiveFileSearch;
-        private System.Windows.Forms.GroupBox gboxOptimization;
-        private System.Windows.Forms.RadioButton rbtnSaveResources;
-        private System.Windows.Forms.RadioButton rbtnSpeed;
         private System.Windows.Forms.ToolTip ttFileSearch;
         private System.Windows.Forms.Label lblUserName;
         private System.Windows.Forms.Button btnSettings;
         private System.Windows.Forms.Button btnUnload;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
+        private System.Windows.Forms.Button button2;
     }
 }
 
