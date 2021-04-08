@@ -103,14 +103,16 @@ namespace FileSearch
                                 }
                                 else
                                 {
-                                    lbSearchResult.Items.Add(listPC + $": НАЧАЛО ПОИСКА НА ДИСКЕ {listDrive}:\\");
+                                    string dt1 = DateTime.Now.ToLongTimeString();
+                                    lbSearchResult.Items.Add(listPC + $": НАЧАЛО ПОИСКА НА ДИСКЕ {listDrive}:\\ В {dt1}");
 
                                     await foreach (var item in SearchResults(listPC.ToString() + $@"\{listDrive}$"))
                                     {
                                         lbSearchResult.Items.Add(item);
                                     }
 
-                                    lbSearchResult.Items.Add(listPC + $": ПОИСК НА ДИСКЕ {listDrive}:\\ ЗАВЕРШЕН");
+                                    DateTime dt2 = DateTime.Parse(DateTime.Now.ToLongTimeString());
+                                    lbSearchResult.Items.Add(listPC + $": ПОИСК НА ДИСКЕ {listDrive}:\\ ЗАВЕРШЕН ЗА {dt2 - DateTime.Parse(dt1)}");
                                     lbSearchResult.Items.Add("-------------------------------------------------------");
                                     CountFoundResult();
                                 }
@@ -544,15 +546,10 @@ namespace FileSearch
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //Проверка на каталог
-            if (Directory.Exists(tbWhatSearch.Text))
-            {
-                string tmp;
-
-                tmp = Path.GetFullPath(tbWhatSearch.Text);
-
-                Process.Start("explorer", tmp);
-            }
+            string dt1 = DateTime.Now.ToLongTimeString();
+            DateTime dt11 = DateTime.Parse("00:25:00");
+            DateTime dt2 = DateTime.Parse("00:30:00");
+            MessageBox.Show((dt11 - dt2).ToString());
         }
 
         private void button2_Click(object sender, EventArgs e)
