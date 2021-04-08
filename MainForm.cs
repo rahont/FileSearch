@@ -376,20 +376,26 @@ namespace FileSearch
 
         private void lbSearchResult_DoubleClick(object sender, EventArgs e)
         {
-            if ((lbSearchResult.SelectedItem != null) && (lbSearchResult.SelectedIndex != 0) && (lbSearchResult.SelectedIndex != lbSearchResult.Items.Count - 1))
+            if ((lbSearchResult.SelectedItem != null)/* && (lbSearchResult.SelectedIndex != 0) && (lbSearchResult.SelectedIndex != lbSearchResult.Items.Count - 1)*/)
             {
-                //Проверка на каталог
-                if (Directory.Exists(lbSearchResult.SelectedItem.ToString()))
-                {
-                    string tmp;
+                string selectedItem = lbSearchResult.SelectedItem.ToString();
 
-                    tmp = Path.GetFullPath(lbSearchResult.SelectedItem.ToString());
-
-                    Process.Start("explorer", tmp);
-                }
-                else
+                if (selectedItem.Substring(0, 2) == @"\\" || selectedItem.Contains("НАЙДЕНО СОВПАДЕНИЕ В ФАЙЛЕ"))
                 {
-                    Process.Start("explorer", Path.GetDirectoryName(lbSearchResult.SelectedItem.ToString()));
+                    //string selectedItemPath = selectedItem.Substring(selectedItem.IndexOf("\\\\"), selectedItem.Length);
+                    //Проверка на каталог
+                    if (Directory.Exists(selectedItem))
+                    {
+                        string tmp;
+
+                        tmp = Path.GetFullPath(selectedItem);
+
+                        Process.Start("explorer", tmp);
+                    }
+                    else
+                    {
+                        Process.Start("explorer", Path.GetDirectoryName(selectedItem));
+                    }
                 }
             }
         }
@@ -546,10 +552,11 @@ namespace FileSearch
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string dt1 = DateTime.Now.ToLongTimeString();
-            DateTime dt11 = DateTime.Parse("00:25:00");
-            DateTime dt2 = DateTime.Parse("00:30:00");
-            MessageBox.Show((dt11 - dt2).ToString());
+            if (lbSearchResult.SelectedItem.ToString().Contains("НАЙДЕНО СОВПАДЕНИЕ В ФАЙЛЕ"))
+            {
+                MessageBox.Show(lbSearchResult.SelectedItem.ToString().IndexOf("\\\\").ToString());
+                
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
