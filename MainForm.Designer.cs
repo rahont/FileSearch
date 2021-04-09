@@ -43,6 +43,7 @@ namespace FileSearch
             this.cboxWhereSearch = new System.Windows.Forms.ComboBox();
             this.pnlWhereSearch = new System.Windows.Forms.Panel();
             this.pnlWhatSearch = new System.Windows.Forms.Panel();
+            this.tbWhatSearch = new ALLinONE.MyTextBox();
             this.pnlResult = new System.Windows.Forms.Panel();
             this.button2 = new System.Windows.Forms.Button();
             this.lblSearchFileInProgress = new System.Windows.Forms.Label();
@@ -55,7 +56,6 @@ namespace FileSearch
             this.btnSettings = new System.Windows.Forms.Button();
             this.btnUnload = new System.Windows.Forms.Button();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.tbWhatSearch = new ALLinONE.MyTextBox();
             this.gboxFoundList.SuspendLayout();
             this.pnlWhereSearch.SuspendLayout();
             this.pnlWhatSearch.SuspendLayout();
@@ -91,9 +91,11 @@ namespace FileSearch
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lbSearchResult.FormattingEnabled = true;
+            this.lbSearchResult.HorizontalScrollbar = true;
+            this.lbSearchResult.IntegralHeight = false;
             this.lbSearchResult.Location = new System.Drawing.Point(5, 16);
             this.lbSearchResult.Name = "lbSearchResult";
-            this.lbSearchResult.Size = new System.Drawing.Size(333, 199);
+            this.lbSearchResult.Size = new System.Drawing.Size(333, 202);
             this.lbSearchResult.TabIndex = 6;
             this.lbSearchResult.DoubleClick += new System.EventHandler(this.lbSearchResult_DoubleClick);
             // 
@@ -193,6 +195,21 @@ namespace FileSearch
             this.pnlWhatSearch.Size = new System.Drawing.Size(260, 84);
             this.pnlWhatSearch.TabIndex = 1;
             // 
+            // tbWhatSearch
+            // 
+            this.tbWhatSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbWhatSearch.Location = new System.Drawing.Point(3, 3);
+            this.tbWhatSearch.MaximumSize = new System.Drawing.Size(10000, 20);
+            this.tbWhatSearch.MinimumSize = new System.Drawing.Size(1, 20);
+            this.tbWhatSearch.Name = "tbWhatSearch";
+            this.tbWhatSearch.PasswordChar = '\0';
+            this.tbWhatSearch.Size = new System.Drawing.Size(252, 20);
+            this.tbWhatSearch.TabIndex = 2;
+            this.tbWhatSearch.TextMaxLength = 1024;
+            this.tbWhatSearch.TextTitle = "Что ищем? Имя или часть имени файла/папки";
+            this.tbWhatSearch.KeyDownEvent += new System.Windows.Forms.KeyEventHandler(this.tbWhatSearch_KeyDownEvent);
+            // 
             // pnlResult
             // 
             this.pnlResult.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -245,6 +262,7 @@ namespace FileSearch
             this.button1.TabStop = false;
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // fdOpenPCList
@@ -317,21 +335,6 @@ namespace FileSearch
             this.saveFileDialog.DefaultExt = "txt";
             this.saveFileDialog.FileName = "Результат поиска";
             this.saveFileDialog.Filter = "Текстовый файл|*.txt";
-            // 
-            // tbWhatSearch
-            // 
-            this.tbWhatSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbWhatSearch.Location = new System.Drawing.Point(3, 3);
-            this.tbWhatSearch.MaximumSize = new System.Drawing.Size(10000, 20);
-            this.tbWhatSearch.MinimumSize = new System.Drawing.Size(1, 20);
-            this.tbWhatSearch.Name = "tbWhatSearch";
-            this.tbWhatSearch.PasswordChar = '\0';
-            this.tbWhatSearch.Size = new System.Drawing.Size(252, 20);
-            this.tbWhatSearch.TabIndex = 2;
-            this.tbWhatSearch.TextMaxLength = 1024;
-            this.tbWhatSearch.TextTitle = "Что ищем? Имя или часть имени файла/папки";
-            this.tbWhatSearch.KeyDownEvent += new System.Windows.Forms.KeyEventHandler(this.tbWhatSearch_KeyDownEvent);
             // 
             // MainForm
             // 
