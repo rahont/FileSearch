@@ -293,7 +293,7 @@ namespace FileSearch
                     }
                     catch (UnauthorizedAccessException)
                     {
-                        //if (dirs.Count == 1)
+                        if (dirs.Count == 1)
                             files.Add("Нет доступа к " + currentDirPath);
                         continue;
                     }
@@ -382,20 +382,18 @@ namespace FileSearch
 
                 if (selectedItem.Substring(0, 2) == @"\\" || selectedItem.Contains("НАЙДЕНО СОВПАДЕНИЕ В ФАЙЛЕ"))
                 {
-                    //string selectedItemPath = selectedItem.Substring(selectedItem.IndexOf("\\\\"), selectedItem.Length);
+                    int tmpStart = selectedItem.IndexOf("\\\\");
+                    string selectedItemPath = selectedItem.Substring(tmpStart, selectedItem.Length - tmpStart);
                     //Проверка на каталог
-                    if (Directory.Exists(selectedItem))
+                    if (Directory.Exists(selectedItemPath))
                     {
-                        string tmp;
-
-                        tmp = Path.GetFullPath(selectedItem);
-
-                        Process.Start("explorer", tmp);
+                        Process.Start("explorer", Path.GetFullPath(selectedItemPath));
                     }
-                    else
+                    else if (File.Exists(selectedItemPath))
                     {
-                        Process.Start("explorer", Path.GetDirectoryName(selectedItem));
+                        Process.Start("explorer", Path.GetDirectoryName(selectedItemPath));
                     }
+                    
                 }
             }
         }
