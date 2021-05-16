@@ -18,6 +18,7 @@ namespace FileSearch
     public partial class MainForm : Form
     {
         const string FormText = "Поисковик3000 -v.2.0";
+        private SearchResultsClass RefSearchResultsClass;
 
         public MainForm()
         {
@@ -88,6 +89,7 @@ namespace FileSearch
                     BeforeSearch(); //Действия до начала поиска
 
                     SearchResultsClass src = new SearchResultsClass(lblActiveFileSearch, FindForm(), tbWhatSearch.Text);
+                    RefSearchResultsClass = src;
 
                     foreach (var listPC in cboxWhereSearch.Items) //Перебираем все ПК по списку
                     {
@@ -154,6 +156,8 @@ namespace FileSearch
             btnUnload.Enabled = false;
 
             Text = "Идет поиск...";
+
+            btnStop.Visible = true;
         }
 
         private void AfterSearch()
@@ -599,10 +603,10 @@ namespace FileSearch
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void btnStop_Click(object sender, EventArgs e)
         {
-           
-            //MessageBox.Show(FindForm());
+            RefSearchResultsClass.IsStopSearch = true;
+            btnStop.Visible = false;
         }
     }
 }

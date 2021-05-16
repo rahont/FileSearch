@@ -13,6 +13,7 @@ namespace FileSearch
         private Label lblActiveFileSearch;
         private Form mainForm;
         private string tbWhatSearchText;
+        public bool IsStopSearch = false;
 
         delegate void DelActiveFileSearch(string filePath);
 
@@ -52,15 +53,13 @@ namespace FileSearch
             {
                 foreach (var filePath in q)
                 {
-                    //
+                    if (IsStopSearch) break;
+
+                    //Устанавливает в Label текущий файл поиска
                     mainForm.Invoke(delAFS, filePath);
 
                     if (filePath.ToLower().IndexOf(tbWhatSearchText.ToLower()) > -1)
-                    {
                         result.Add(filePath);
-                        //lbSearchResult.Items.Add(filePath);
-                        //lblFileFolderFoundCount.Text = (Convert.ToInt32(lblFileFolderFoundCount.Text) + 1).ToString();
-                    }
 
                     foreach (var fileExt in fileExtension)
                     {
