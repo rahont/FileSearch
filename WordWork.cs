@@ -1,36 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Word = Microsoft.Office.Interop.Word;
+using Aspose.Words;
 
 namespace FileSearch
 {
     class WordWork
     {
-        private Word.Application wordApp;
-        private Object saveChanges = Word.WdSaveOptions.wdDoNotSaveChanges;
-        private readonly string filePath;
+        //private readonly string filePath;
 
         /// <summary>
-        /// Запускает экземпляр winword.exe для последующей работы в классе
-        /// </summary>
-        public WordWork()
-        {
-            wordApp = new Word.Application();
-            wordApp.Visible = false;
-        }
-
-        /// <summary>
-        /// Запускает экземпляр winword.exe для последующей работы в классе
+        /// ctor
         /// </summary>
         /// <param name="filePath">Полный путь к файлу.</param>
-        public WordWork(string filePath)
+        public WordWork()
         {
-            this.filePath = filePath;
-            wordApp = new Word.Application();
-            wordApp.Visible = false;
+            //this.filePath = filePath;
         }
 
         /// <summary>
@@ -45,46 +33,32 @@ namespace FileSearch
             bool result = false;
             exception = null;
 
-            Word.Document doc;
             try
             {
-                doc = wordApp.Application.Documents.OpenNoRepairDialog(filePath, ReadOnly: true);
+                Document doc = new Document(filePath);
 
-                foreach (Word.Range range in doc.StoryRanges)
-                {
-                    Word.Find find = range.Find;
-                    if (find.Execute(ref findText))
-                    {
-                        result = true;
-                    }
-                }
+                string strSearch = findText.ToString();
+
+                string docText = doc.GetText().Substring(80);
+                docText = docText.Substring(0, docText.Length - 142);
+
+                result = docText.IndexOf(strSearch, StringComparison.OrdinalIgnoreCase) > -1;
             }
-            catch (NullReferenceException)
-            {
-                exception = "Скорее всего этот файл недоступен, возможно не хватает прав";
-            }
+            //catch (IOException ex)
+            //{
+            //    //HResult == -2147024864 - файл используется в другом процессе
+            //    if (ex.HResult == -2147024864) exception = ex.Message;
+            //}
             catch (Exception ex)
             {
-                if (ex.GetType().ToString() != "System.Runtime.InteropServices.COMException")
-                    exception = ex.Message;
+                //HResult == -2147024864 - файл используется в другом процессе
+                if (ex.HResult == -2147024864) exception = ex.Message;
+
+                //HResult == -2146233088 - файл используется в другом процессе
+                //if (ex.HResult == -2146233088) ;
             }
 
             return result;
-        }
-
-        public void WordQuit()
-        {
-            try
-            {
-                wordApp?.Quit(ref saveChanges);
-            }
-            catch (Exception ex)
-            {
-                string mes = "При закрытии процесса WINWORD.EXE произошла ошибка.\n" +
-                    "После завершения поиска закрой процесс вручную (или не закрывай, как хочешь).";
-                System.Windows.Forms.MessageBox.Show(ex.GetType().ToString() + "\r\n" + mes, ex.GetType().ToString(), System.Windows.Forms.MessageBoxButtons.OK);
-            }
-            
         }
     }
 }

@@ -133,13 +133,25 @@ namespace FileSearch.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool rbtnOptimizationSpeed {
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool chkbDocm {
             get {
-                return ((bool)(this["rbtnOptimizationSpeed"]));
+                return ((bool)(this["chkbDocm"]));
             }
             set {
-                this["rbtnOptimizationSpeed"] = value;
+                this["chkbDocm"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool chkb123 {
+            get {
+                return ((bool)(this["chkb123"]));
+            }
+            set {
+                this["chkb123"] = value;
             }
         }
     }

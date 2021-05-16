@@ -43,7 +43,6 @@ namespace FileSearch
             this.cboxWhereSearch = new System.Windows.Forms.ComboBox();
             this.pnlWhereSearch = new System.Windows.Forms.Panel();
             this.pnlWhatSearch = new System.Windows.Forms.Panel();
-            this.tbWhatSearch = new ALLinONE.MyTextBox();
             this.pnlResult = new System.Windows.Forms.Panel();
             this.button2 = new System.Windows.Forms.Button();
             this.lblSearchFileInProgress = new System.Windows.Forms.Label();
@@ -56,6 +55,7 @@ namespace FileSearch
             this.btnSettings = new System.Windows.Forms.Button();
             this.btnUnload = new System.Windows.Forms.Button();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.tbWhatSearch = new ALLinONE.MyTextBox();
             this.gboxFoundList.SuspendLayout();
             this.pnlWhereSearch.SuspendLayout();
             this.pnlWhatSearch.SuspendLayout();
@@ -195,21 +195,6 @@ namespace FileSearch
             this.pnlWhatSearch.Size = new System.Drawing.Size(260, 84);
             this.pnlWhatSearch.TabIndex = 1;
             // 
-            // tbWhatSearch
-            // 
-            this.tbWhatSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbWhatSearch.Location = new System.Drawing.Point(3, 3);
-            this.tbWhatSearch.MaximumSize = new System.Drawing.Size(10000, 20);
-            this.tbWhatSearch.MinimumSize = new System.Drawing.Size(1, 20);
-            this.tbWhatSearch.Name = "tbWhatSearch";
-            this.tbWhatSearch.PasswordChar = '\0';
-            this.tbWhatSearch.Size = new System.Drawing.Size(252, 20);
-            this.tbWhatSearch.TabIndex = 2;
-            this.tbWhatSearch.TextMaxLength = 1024;
-            this.tbWhatSearch.TextTitle = "Что ищем? Имя или часть имени файла/папки";
-            this.tbWhatSearch.KeyDownEvent += new System.Windows.Forms.KeyEventHandler(this.tbWhatSearch_KeyDownEvent);
-            // 
             // pnlResult
             // 
             this.pnlResult.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -336,6 +321,21 @@ namespace FileSearch
             this.saveFileDialog.FileName = "Результат поиска";
             this.saveFileDialog.Filter = "Текстовый файл|*.txt";
             // 
+            // tbWhatSearch
+            // 
+            this.tbWhatSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbWhatSearch.Location = new System.Drawing.Point(3, 3);
+            this.tbWhatSearch.MaximumSize = new System.Drawing.Size(10000, 20);
+            this.tbWhatSearch.MinimumSize = new System.Drawing.Size(1, 20);
+            this.tbWhatSearch.Name = "tbWhatSearch";
+            this.tbWhatSearch.PasswordChar = '\0';
+            this.tbWhatSearch.Size = new System.Drawing.Size(252, 20);
+            this.tbWhatSearch.TabIndex = 2;
+            this.tbWhatSearch.TextMaxLength = 1024;
+            this.tbWhatSearch.TextTitle = "Что ищем? Имя или часть имени файла/папки";
+            this.tbWhatSearch.KeyDownEvent += new System.Windows.Forms.KeyEventHandler(this.tbWhatSearch_KeyDownEvent);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -353,7 +353,6 @@ namespace FileSearch
             this.MinimumSize = new System.Drawing.Size(384, 424);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.gboxFoundList.ResumeLayout(false);
             this.gboxFoundList.PerformLayout();

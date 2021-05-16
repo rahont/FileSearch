@@ -9,7 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Management;
-using Word = Microsoft.Office.Interop.Word;
 using System.Diagnostics;
 using System.Net.NetworkInformation;
 using System.Threading;
@@ -18,7 +17,7 @@ namespace FileSearch
 {
     public partial class MainForm : Form
     {
-        const string FormText = "Поисковик3000 -v.1.4";
+        const string FormText = "Поисковик3000 -v.2.0";
 
         public MainForm()
         {
@@ -27,6 +26,9 @@ namespace FileSearch
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            //Проверяем наличие всех нужных DLL
+            if (StaticMethods.CheckDLL().Count > 0) Application.Exit();
+
             Text = FormText;
             lblUserName.Text = Environment.UserName;
         }
@@ -78,12 +80,14 @@ namespace FileSearch
         private async void btnGO_Click(object sender, EventArgs e)
         {
             lbSearchResult.Items.Clear();
-            
+
             if (cboxWhereSearch.Items.Count > 0) //Проверяем, что список ПК не пуст
             {
                 if (tbWhatSearch.Text.Length > 0) //Проверяем, что указан критерий поиска
                 {
                     BeforeSearch(); //Действия до начала поиска
+
+                    SearchResultsClass src = new SearchResultsClass(lblActiveFileSearch, FindForm(), tbWhatSearch.Text);
 
                     foreach (var listPC in cboxWhereSearch.Items) //Перебираем все ПК по списку
                     {
@@ -96,7 +100,7 @@ namespace FileSearch
                                     lbSearchResult.Items.Add($"При переборе дисков на ПК {listPC} произошла какая-то ошибка");
                                     continue;
                                 }
-                                else if(listDrive == '9') //Если пришел символ 9, то в переборе дисков нет доступа
+                                else if (listDrive == '9') //Если пришел символ 9, то в переборе дисков нет доступа
                                 {
                                     lbSearchResult.Items.Add($"К дискам на ПК {listPC} нету доступа");
                                     continue;
@@ -106,7 +110,7 @@ namespace FileSearch
                                     string dt1 = DateTime.Now.ToLongTimeString();
                                     lbSearchResult.Items.Add(listPC + $": НАЧАЛО ПОИСКА НА ДИСКЕ {listDrive}:\\ В {dt1}");
 
-                                    await foreach (var item in SearchResults(listPC.ToString() + $@"\{listDrive}$"))
+                                    await foreach (var item in src.SearchResults(listPC.ToString() + $@"\{listDrive}$"))
                                     {
                                         lbSearchResult.Items.Add(item);
                                     }
@@ -183,196 +187,240 @@ namespace FileSearch
                 string lbItem = item.ToString();
 
                 //if (lbItem.Contains("НА ДИСКЕ") || lbItem.Contains("----------")) continue;
-                /*else*/ if (lbItem.Substring(0, 2) == @"\\")
+                /*else*/
+                if (lbItem.Substring(0, 2) == @"\\")
                     lblFileFolderFoundCount.Text = (Convert.ToInt32(lblFileFolderFoundCount.Text) + 1).ToString();
                 else if (lbItem.Contains("НАЙДЕНО СОВПАДЕНИЕ"))
                     lblInFileFoundCount.Text = (Convert.ToInt32(lblInFileFoundCount.Text) + 1).ToString();
             }
         }
 
-        private async IAsyncEnumerable<string> SearchResults(string namePC)
-        {
-            List<string> result = new List<string>();
-            WordWork wordW = new WordWork();
+        #region SearchResults
+        //delegate void testDel(string filePath);
+        //private void testMeth(string filePath)
+        //{
+        //    lblActiveFileSearch.Text = filePath;
+        //}
 
-            //Если первые 2 символа не \\, то добавить
-            if (namePC.Substring(0, 2) != @"\\") namePC = @"\\" + namePC;
+        //private async IAsyncEnumerable<string> SearchResults(string namePC)
+        //{
+        //    List<string> result = new List<string>();
+        //    WordWork wordW = new WordWork();
 
-            string[] fileExtension = { ".doc", ".docx", ".rtf" };
+        //    //Если первые 2 символа не \\, то добавить
+        //    if (namePC.Substring(0, 2) != @"\\") namePC = @"\\" + namePC;
 
-            var q = SafeEnumerateFiles(namePC, "*.*", SearchOption.AllDirectories);
+        //    string[] fileExtension = { ".doc", ".docx", ".docm", ".rtf" };
 
-            await Task.Run(() =>
-            {
-                foreach (var filePath in q)
-                {
-                    //lblActiveFileSearch.Text = filePath;
+        //    var q = SafeEnumerateFiles(namePC, "*.*", SearchOption.AllDirectories);
 
-                    if (filePath.ToLower().IndexOf(tbWhatSearch.Text.ToLower()) > -1)
-                    {
-                        result.Add(filePath);
-                        //lbSearchResult.Items.Add(filePath);
-                        //lblFileFolderFoundCount.Text = (Convert.ToInt32(lblFileFolderFoundCount.Text) + 1).ToString();
-                    }
+        //    //myDelegate = new AddListItem(AddListItemMethod);
+        //    testDel td = new testDel(testMeth);
 
-                    foreach (var fileExt in fileExtension)
-                    {
-                        //Если вернется true, то пропустить поиск в файле
-                        if (SkipCheckInFile(fileExt)) continue;
+        //    await Task.Run(() =>
+        //    {
+        //        foreach (var filePath in q)
+        //        {
+        //            this.Invoke(td, filePath);
+        //            //Task.Run(() => { lblActiveFileSearch.Text = filePath; });
+        //            //lblActiveFileSearch.Text = filePath;
 
-                        //Если расширение файла = расширение цикла
-                        if (Path.GetExtension(filePath) == fileExt)
-                        {
-                            //Если вернется true, то добавить путь файла в List
-                            if (wordW.CheckInWordFile(filePath ,tbWhatSearch.Text, out string exception))
-                                result.Add("НАЙДЕНО СОВПАДЕНИЕ В ФАЙЛЕ: " + filePath);
-                            //Если возвращается false, то проверяем на наличие исключения
-                            else if (exception != null)
-                                result.Add(exception + ": " + filePath);
-                        }
-                    }
-                }
-            });
+        //            if (filePath.ToLower().IndexOf(tbWhatSearch.Text.ToLower()) > -1)
+        //            {
+        //                result.Add(filePath);
+        //                //lbSearchResult.Items.Add(filePath);
+        //                //lblFileFolderFoundCount.Text = (Convert.ToInt32(lblFileFolderFoundCount.Text) + 1).ToString();
+        //            }
 
-            wordW.WordQuit();
+        //            foreach (var fileExt in fileExtension)
+        //            {
+        //                //Если вернется true, то пропустить поиск в файле
+        //                if (SkipCheckInFile(fileExt)) continue;
 
-            //return result;
-            foreach (string item in result.Reverse<string>())
-            {
-                yield return item;
-            }
-        }
+        //                //Если расширение файла = расширение цикла
+        //                if (Path.GetExtension(filePath) == fileExt)
+        //                {
+        //                    //Если вернется true, то добавить путь файла в List
+        //                    if (wordW.CheckInWordFile(filePath, tbWhatSearch.Text, out string exception))
+        //                        result.Add("НАЙДЕНО СОВПАДЕНИЕ В ФАЙЛЕ: " + filePath);
+        //                    //Если возвращается false, то проверяем на наличие исключения
+        //                    else if (exception != null)
+        //                        result.Add(exception);
+        //                }
+        //            }
+        //        }
+        //    });
 
-        private bool SkipCheckInFile(string fileExtension)
-        {
-            bool result = false;
+        //    //return result;
+        //    foreach (string item in result.Reverse<string>())
+        //    {
+        //        yield return item;
+        //    }
+        //}
+        #endregion
 
-            if (fileExtension == ".doc")
-                if (Properties.Settings.Default.chkbDoc) 
-                    result = true;
+        #region SkipCheckInFile
+        //private bool SkipCheckInFile(string fileExtension)
+        //{
+        //    bool result = false;
 
-            if (fileExtension == ".docx")
-                if (Properties.Settings.Default.chkbDocx) 
-                    result = true;
+        //    if (fileExtension == ".doc")
+        //        if (Properties.Settings.Default.chkbDoc)
+        //            result = true;
 
-            if (fileExtension == ".rtf")
-                if (Properties.Settings.Default.chkbRtf) 
-                    result = true;
+        //    if (fileExtension == ".docx")
+        //        if (Properties.Settings.Default.chkbDocx)
+        //            result = true;
 
-            return result;
-        }
+        //    if (fileExtension == ".docm")
+        //        if (Properties.Settings.Default.chkbDocm)
+        //            result = true;
 
-        /// <summary>
-        /// Возвращает перечисляемую коллекцию имен файлов которые соответствуют шаблону в указанном каталоге, с дополнительным просмотром вложенных каталогов
-        /// </summary>
-        /// <param name="path">Полный или относительный путь катага в котором выполняется поиск</param>
-        /// <param name="searchPattern">Шаблон поиска файлов</param>
-        /// <param name="searchOption">Одно из значений перечисления SearchOption указывающее нужно ли выполнять поиск во вложенных каталогах или только в указанном каталоге</param>
-        /// <returns>Возвращает перечисляемую коллекцию полных имен файлов</returns>
-        private IEnumerable<string> SafeEnumerateFiles(string path, string searchPattern = "*.*", SearchOption searchOption = SearchOption.TopDirectoryOnly)
-        {
-            var dirs = new Stack<string>();
-            dirs.Push(path);
+        //    if (fileExtension == ".rtf")
+        //        if (Properties.Settings.Default.chkbRtf)
+        //            result = true;
 
-            while (dirs.Count > 0)
-            {
-                var files = new List<string>();
+        //    return result;
+        //}
+        #endregion
 
-                string currentDirPath = dirs.Pop();
-                if (searchOption == SearchOption.AllDirectories)
-                {
-                    try
-                    {
-                        string[] subDirs = Directory.GetDirectories(currentDirPath);
-                        foreach (string subDirPath in subDirs)
-                        {
-                            if (SkipFolder(subDirPath)) continue;
+        #region SafeEnumerateFiles
+        ///// <summary>
+        ///// Возвращает перечисляемую коллекцию имен файлов которые соответствуют шаблону в указанном каталоге, с дополнительным просмотром вложенных каталогов
+        ///// </summary>
+        ///// <param name="path">Полный или относительный путь катага в котором выполняется поиск</param>
+        ///// <param name="searchPattern">Шаблон поиска файлов</param>
+        ///// <param name="searchOption">Одно из значений перечисления SearchOption указывающее нужно ли выполнять поиск во вложенных каталогах или только в указанном каталоге</param>
+        ///// <returns>Возвращает перечисляемую коллекцию полных имен файлов</returns>
+        //private IEnumerable<string> SafeEnumerateFiles(string path, string searchPattern = "*.*", SearchOption searchOption = SearchOption.TopDirectoryOnly)
+        //{
+        //    var dirs = new Stack<string>();
+        //    dirs.Push(path);
 
-                            dirs.Push(subDirPath);
-                        }
-                    }
-                    catch (UnauthorizedAccessException)
-                    {
-                        if (dirs.Count == 1)
-                            files.Add("Нет доступа к " + currentDirPath);
-                        continue;
-                    }
-                    catch (DirectoryNotFoundException)
-                    {
-                        continue;
-                    }
-                    catch (ArgumentException ex)
-                    {
-                        MessageBox.Show(ex.Message, "ArgumentException (SafeEnumerateFiles)");
-                        break;
-                    }
-                    catch (IOException)
-                    {
-                        continue;
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message, "Exception (SafeEnumerateFiles)");
-                        break;
-                    }
-                }
+        //    while (dirs.Count > 0)
+        //    {
+        //        var files = new List<string>();
 
-                //string[] files = null;
-                try
-                {
-                    foreach (var item in Directory.GetFileSystemEntries(currentDirPath, $"*{searchPattern}*"))
-                    {
-                        files.Add(item);
-                    }
-                    //files = Directory.GetFileSystemEntries(currentDirPath, $"*{searchPattern}*");
-                }
-                catch (UnauthorizedAccessException)
-                {
-                    continue;
-                }
-                catch (DirectoryNotFoundException)
-                {
-                    continue;
-                }
-                catch (PathTooLongException)
-                {
-                    continue;
-                }
+        //        string currentDirPath = dirs.Pop();
+        //        if (searchOption == SearchOption.AllDirectories)
+        //        {
+        //            try
+        //            {
+        //                string[] subDirs = Directory.GetDirectories(currentDirPath);
+        //                foreach (string subDirPath in subDirs)
+        //                {
+        //                    if (SkipFolder(subDirPath)) continue;
 
-                foreach (string filePath in files)
-                {
-                    yield return filePath;
-                }
-            }
-        }
+        //                    dirs.Push(subDirPath);
+        //                }
+        //            }
+        //            catch (UnauthorizedAccessException)
+        //            {
+        //                //if (dirs.Count == 1)
+        //                //    files.Add("Нет доступа к " + currentDirPath);
+        //                continue;
+        //            }
+        //            catch (DirectoryNotFoundException)
+        //            {
+        //                continue;
+        //            }
+        //            catch (ArgumentException ex)
+        //            {
+        //                //MessageBox.Show(ex.ToString(), "ArgumentException (SafeEnumerateFiles)");
+        //                break;
+        //            }
+        //            catch (IOException)
+        //            {
+        //                continue;
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                //MessageBox.Show(ex.Message, "Exception (SafeEnumerateFiles)");
+        //                break;
+        //            }
+        //        }
 
-        private bool SkipFolder(string subDirPath)
-        {
-            bool result = false;
+        //        //string[] files = null;
+        //        try
+        //        {
+        //            foreach (var item in Directory.GetFileSystemEntries(currentDirPath, $"*{searchPattern}*"))
+        //            {
+        //                files.Add(item);
+        //            }
+        //            //files = Directory.GetFileSystemEntries(currentDirPath, $"*{searchPattern}*");
+        //        }
+        //        catch (UnauthorizedAccessException)
+        //        {
+        //            continue;
+        //        }
+        //        catch (DirectoryNotFoundException)
+        //        {
+        //            continue;
+        //        }
+        //        catch (PathTooLongException)
+        //        {
+        //            continue;
+        //        }
 
-            //Исключает из поиска указанные папки
-            if (subDirPath.Substring(subDirPath.Length - 8).ToLower() == "\\Windows".ToLower())
-                if (Properties.Settings.Default.chkbWindows) result = true;
-            if (subDirPath.Substring(subDirPath.Length - 13).ToLower() == "\\$Recycle.Bin".ToLower())
-                if (Properties.Settings.Default.chkbRecycle) result = true;
-            if (subDirPath.Substring(subDirPath.Length - 5).ToLower() == "\\Temp".ToLower())
-                if (Properties.Settings.Default.chkbTemp) result = true;
-            if (subDirPath.Substring(subDirPath.Length - 14).ToLower() == "\\Program Files".ToLower())
-                if (Properties.Settings.Default.chkbProgram) result = true;
-            if (subDirPath.Substring(subDirPath.Length - 20).ToLower() == "\\Program Files (x86)".ToLower())
-                if (Properties.Settings.Default.chkbProgram86) result = true;
+        //        foreach (string filePath in files)
+        //        {
+        //            yield return filePath;
+        //        }
+        //    }
+        //}
+        #endregion
 
-            //Исключает из поиска указанные пользователем папки
-            string[] excepFolders = Properties.Settings.Default.anyFolders.Split(';');
-            foreach (var item in excepFolders)
-            {
-                string tmpItem = item.Trim();
-                if (Path.GetFileName(subDirPath).ToLower() == tmpItem.ToLower())
-                    result = true;
-            }
+        #region SkipFolder
+        //private bool SkipFolder(string subDirPath)
+        //{
+        //    bool result = false;
 
-            return result;
-        }
+        //    //string[] excepSystemFolders = 
+        //    //{ 
+        //    //    "Windows",
+        //    //    "$Recycle.Bin",
+        //    //    "Temp",
+        //    //    "Program Files",
+        //    //    "Program Files (x86)" 
+        //    //};
+
+        //    //Исключает из поиска указанные папки
+        //    if (Path.GetFileName(subDirPath).ToLower() == "Windows".ToLower())
+        //        if (Properties.Settings.Default.chkbWindows) return true;
+        //    if (Path.GetFileName(subDirPath).ToLower() == "$Recycle.Bin".ToLower())
+        //        if (Properties.Settings.Default.chkbRecycle) return true;
+        //    if (Path.GetFileName(subDirPath).ToLower() == "Temp".ToLower())
+        //        if (Properties.Settings.Default.chkbTemp) return true;
+        //    if (Path.GetFileName(subDirPath).ToLower() == "Program Files".ToLower())
+        //        if (Properties.Settings.Default.chkbProgram) return true;
+        //    if (Path.GetFileName(subDirPath).ToLower() == "Program Files (x86)".ToLower())
+        //        if (Properties.Settings.Default.chkbProgram86) return true;
+
+        //    //if (subDirPath.Substring(subDirPath.Length - 8).ToLower() == "\\Windows".ToLower())
+        //    //    if (Properties.Settings.Default.chkbWindows) result = true;
+        //    //if (subDirPath.Substring(subDirPath.Length - 13).ToLower() == "\\$Recycle.Bin".ToLower())
+        //    //    if (Properties.Settings.Default.chkbRecycle) result = true;
+        //    //if (subDirPath.Substring(subDirPath.Length - 5).ToLower() == "\\Temp".ToLower())
+        //    //    if (Properties.Settings.Default.chkbTemp) result = true;
+        //    //if (subDirPath.Substring(subDirPath.Length - 14).ToLower() == "\\Program Files".ToLower())
+        //    //    if (Properties.Settings.Default.chkbProgram) result = true;
+        //    //if (subDirPath.Substring(subDirPath.Length - 20).ToLower() == "\\Program Files (x86)".ToLower())
+        //    //    if (Properties.Settings.Default.chkbProgram86) result = true;
+
+        //    //Исключает из поиска указанные пользователем папки
+        //    string[] excepFolders = Properties.Settings.Default.anyFolders.Split(';');
+        //    if (excepFolders[0] == string.Empty) return false;
+        //    foreach (var item in excepFolders)
+        //    {
+        //        string tmpItem = item.Trim();
+        //        if (Path.GetFileName(subDirPath).ToLower() == tmpItem.ToLower())
+        //            return true;
+        //    }
+        //    return false;
+        //    //return result;
+        //}
+        #endregion
+
 
         private void lbSearchResult_DoubleClick(object sender, EventArgs e)
         {
@@ -393,7 +441,6 @@ namespace FileSearch
                     {
                         Process.Start("explorer", Path.GetDirectoryName(selectedItemPath));
                     }
-                    
                 }
             }
         }
@@ -499,11 +546,6 @@ namespace FileSearch
         //    if (rbtnSaveResources.Checked) wordApp?.Quit(ref saveChanges);
         //}
 
-        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
-        {
-
-        }
-
         private void FileSearch_MouseHover(object sender, EventArgs e)
         {
             //if ((sender as GroupBox)?.Name == "gboxOptimization")
@@ -559,7 +601,8 @@ namespace FileSearch
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+           
+            //MessageBox.Show(FindForm());
         }
     }
 }

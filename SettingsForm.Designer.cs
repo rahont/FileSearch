@@ -45,16 +45,15 @@ namespace FileSearch
             this.chkboxDocx = new System.Windows.Forms.CheckBox();
             this.chkboxDoc = new System.Windows.Forms.CheckBox();
             this.ttSettings = new System.Windows.Forms.ToolTip(this.components);
-            this.gboxOptimization = new System.Windows.Forms.GroupBox();
-            this.rbtnSaveResources = new System.Windows.Forms.RadioButton();
-            this.rbtnSpeed = new System.Windows.Forms.RadioButton();
+            this.chkboxDocm = new System.Windows.Forms.CheckBox();
+            this.chkbox123 = new System.Windows.Forms.CheckBox();
             this.gboxFolders.SuspendLayout();
             this.gboxFiles.SuspendLayout();
-            this.gboxOptimization.SuspendLayout();
             this.SuspendLayout();
             // 
             // gboxFolders
             // 
+            this.gboxFolders.Controls.Add(this.chkbox123);
             this.gboxFolders.Controls.Add(this.chkboxProgram86Folder);
             this.gboxFolders.Controls.Add(this.chkboxProgramFolder);
             this.gboxFolders.Controls.Add(this.tbAnyFolders);
@@ -144,7 +143,7 @@ namespace FileSearch
             // btnSaveAll
             // 
             this.btnSaveAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnSaveAll.Location = new System.Drawing.Point(113, 233);
+            this.btnSaveAll.Location = new System.Drawing.Point(113, 186);
             this.btnSaveAll.Name = "btnSaveAll";
             this.btnSaveAll.Size = new System.Drawing.Size(130, 23);
             this.btnSaveAll.TabIndex = 3;
@@ -155,9 +154,9 @@ namespace FileSearch
             // btnDefault
             // 
             this.btnDefault.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnDefault.Location = new System.Drawing.Point(12, 233);
+            this.btnDefault.Location = new System.Drawing.Point(11, 186);
             this.btnDefault.Name = "btnDefault";
-            this.btnDefault.Size = new System.Drawing.Size(95, 23);
+            this.btnDefault.Size = new System.Drawing.Size(96, 23);
             this.btnDefault.TabIndex = 2;
             this.btnDefault.Text = "По умолчанию";
             this.btnDefault.UseVisualStyleBackColor = true;
@@ -165,6 +164,7 @@ namespace FileSearch
             // 
             // gboxFiles
             // 
+            this.gboxFiles.Controls.Add(this.chkboxDocm);
             this.gboxFiles.Controls.Add(this.chkboxRtf);
             this.gboxFiles.Controls.Add(this.chkboxDocx);
             this.gboxFiles.Controls.Add(this.chkboxDoc);
@@ -178,7 +178,7 @@ namespace FileSearch
             // chkboxRtf
             // 
             this.chkboxRtf.AutoSize = true;
-            this.chkboxRtf.Location = new System.Drawing.Point(119, 19);
+            this.chkboxRtf.Location = new System.Drawing.Point(180, 19);
             this.chkboxRtf.Name = "chkboxRtf";
             this.chkboxRtf.Size = new System.Drawing.Size(38, 17);
             this.chkboxRtf.TabIndex = 2;
@@ -211,49 +211,32 @@ namespace FileSearch
             this.ttSettings.InitialDelay = 500;
             this.ttSettings.ReshowDelay = 100;
             // 
-            // gboxOptimization
+            // chkboxDocm
             // 
-            this.gboxOptimization.Controls.Add(this.rbtnSaveResources);
-            this.gboxOptimization.Controls.Add(this.rbtnSpeed);
-            this.gboxOptimization.Location = new System.Drawing.Point(12, 182);
-            this.gboxOptimization.Name = "gboxOptimization";
-            this.gboxOptimization.Size = new System.Drawing.Size(230, 43);
-            this.gboxOptimization.TabIndex = 4;
-            this.gboxOptimization.TabStop = false;
-            this.gboxOptimization.Text = "Оптимизация";
-            this.gboxOptimization.Visible = false;
-            this.gboxOptimization.MouseHover += new System.EventHandler(this.Settings__MouseHover);
+            this.chkboxDocm.AutoSize = true;
+            this.chkboxDocm.Location = new System.Drawing.Point(119, 19);
+            this.chkboxDocm.Name = "chkboxDocm";
+            this.chkboxDocm.Size = new System.Drawing.Size(55, 17);
+            this.chkboxDocm.TabIndex = 3;
+            this.chkboxDocm.Text = ".docm";
+            this.chkboxDocm.UseVisualStyleBackColor = true;
             // 
-            // rbtnSaveResources
+            // chkbox123
             // 
-            this.rbtnSaveResources.AutoSize = true;
-            this.rbtnSaveResources.Location = new System.Drawing.Point(131, 19);
-            this.rbtnSaveResources.Name = "rbtnSaveResources";
-            this.rbtnSaveResources.Size = new System.Drawing.Size(69, 17);
-            this.rbtnSaveResources.TabIndex = 3;
-            this.rbtnSaveResources.Text = "Ресурсы";
-            this.rbtnSaveResources.UseVisualStyleBackColor = true;
-            this.rbtnSaveResources.MouseHover += new System.EventHandler(this.Settings__MouseHover);
-            // 
-            // rbtnSpeed
-            // 
-            this.rbtnSpeed.AutoSize = true;
-            this.rbtnSpeed.Checked = true;
-            this.rbtnSpeed.Location = new System.Drawing.Point(22, 19);
-            this.rbtnSpeed.Name = "rbtnSpeed";
-            this.rbtnSpeed.Size = new System.Drawing.Size(73, 17);
-            this.rbtnSpeed.TabIndex = 2;
-            this.rbtnSpeed.TabStop = true;
-            this.rbtnSpeed.Text = "Скорость";
-            this.rbtnSpeed.UseVisualStyleBackColor = true;
-            this.rbtnSpeed.MouseHover += new System.EventHandler(this.Settings__MouseHover);
+            this.chkbox123.AutoSize = true;
+            this.chkbox123.Enabled = false;
+            this.chkbox123.Location = new System.Drawing.Point(94, 65);
+            this.chkbox123.Name = "chkbox123";
+            this.chkbox123.Size = new System.Drawing.Size(107, 17);
+            this.chkbox123.TabIndex = 6;
+            this.chkbox123.Text = "А что тут будет?";
+            this.chkbox123.UseVisualStyleBackColor = true;
             // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(254, 268);
-            this.Controls.Add(this.gboxOptimization);
+            this.ClientSize = new System.Drawing.Size(254, 221);
             this.Controls.Add(this.gboxFiles);
             this.Controls.Add(this.btnDefault);
             this.Controls.Add(this.btnSaveAll);
@@ -263,14 +246,11 @@ namespace FileSearch
             this.Name = "SettingsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Настройки";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.SettingsForm_FormClosed);
             this.Load += new System.EventHandler(this.SettingsForm_Load);
             this.gboxFolders.ResumeLayout(false);
             this.gboxFolders.PerformLayout();
             this.gboxFiles.ResumeLayout(false);
             this.gboxFiles.PerformLayout();
-            this.gboxOptimization.ResumeLayout(false);
-            this.gboxOptimization.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -291,8 +271,7 @@ namespace FileSearch
         private System.Windows.Forms.CheckBox chkboxDocx;
         private System.Windows.Forms.CheckBox chkboxDoc;
         private System.Windows.Forms.ToolTip ttSettings;
-        private System.Windows.Forms.GroupBox gboxOptimization;
-        private System.Windows.Forms.RadioButton rbtnSaveResources;
-        private System.Windows.Forms.RadioButton rbtnSpeed;
+        private System.Windows.Forms.CheckBox chkboxDocm;
+        private System.Windows.Forms.CheckBox chkbox123;
     }
 }
