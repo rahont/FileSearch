@@ -42,22 +42,12 @@ namespace FileSearch
                     $"В списке {cboxWhereSearch.Items.Count} ПК" : "Список ПК пуст";
         }
 
-        private bool IsReadyListPC()
-        {
-            bool result;
-            string fileName = fdOpenPCList.FileName;
-            string txtFile = fileName.Substring(fileName.Length - 3);
-
-            result = (txtFile == "txt");
-
-            return result;
-        }
-
         private void LoadListPC()
         {
             if (fdOpenPCList.ShowDialog() == DialogResult.OK)
             {
-                if (IsReadyListPC())
+                //Проверяем расширение файла
+                if (Path.GetExtension(fdOpenPCList.FileName) == ".txt")
                 {
                     //Read the contents of the file into a stream
                     var fileStream = fdOpenPCList.OpenFile();
