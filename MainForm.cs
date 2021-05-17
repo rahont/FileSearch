@@ -168,6 +168,8 @@ namespace FileSearch
             btnUnload.Enabled = true;
 
             Text = FormText;
+
+            btnStop.Visible = false;
         }
 
         private void CountFoundResult()
@@ -596,7 +598,6 @@ namespace FileSearch
         private void btnStop_Click(object sender, EventArgs e)
         {
             RefSearchResultsClass.IsStopSearch = true;
-            btnStop.Visible = false;
         }
     }
 }
