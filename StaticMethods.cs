@@ -36,5 +36,41 @@ namespace FileSearch
 
             return result;
         }
+
+        /// <summary>
+        /// Возвращает номер версии приложения
+        /// </summary>
+        /// <param name="amount"></param>
+        /// <returns>1: Major, 2: Major + Minor, 3: Major + Minor + Build, 4: Major + Minor + Build + Revision</returns>
+        public static string AppVersion(short amount = 2)
+        {
+            //Присваиваем Major
+            string result = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Major.ToString();
+
+            if (amount < 1)
+                result = ".!. :P";
+            else
+            {
+                if (amount > 1)
+                {
+                    //Присваиваем Minor
+                    result += "." + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Minor.ToString();
+
+                    if (amount > 2)
+                    {
+                        //Присваиваем Build
+                        result += "." + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Build.ToString();
+
+                        if (amount > 3)
+                        {
+                            //Присваиваем Revision
+                            result += "." + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Revision.ToString();
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
     }
 }

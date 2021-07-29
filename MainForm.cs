@@ -12,12 +12,13 @@ using System.Management;
 using System.Diagnostics;
 using System.Net.NetworkInformation;
 using System.Threading;
+using NLog;
 
 namespace FileSearch
 {
     public partial class MainForm : Form
     {
-        const string FormText = "Поисковик3000 -v.2.0";
+        private string FormText = $"Поисковик3000 -v.{StaticMethods.AppVersion()}";
         private SearchResultsClass RefSearchResultsClass;
 
         public MainForm()
@@ -31,7 +32,10 @@ namespace FileSearch
             if (StaticMethods.CheckDLL().Count > 0) Application.Exit();
 
             Text = FormText;
-            lblUserName.Text = Environment.UserName;
+            toolStripMenuItemUserName.Text = Environment.UserName;
+
+            Logger logger = LogManager.GetCurrentClassLogger();
+            logger.Info("Запуск ПО");
         }
 
         private void btnSelectList_Click(object sender, EventArgs e)
@@ -70,8 +74,6 @@ namespace FileSearch
 
         private async void btnGO_Click(object sender, EventArgs e)
         {
-            lbSearchResult.Items.Clear();
-
             if (cboxWhereSearch.Items.Count > 0) //Проверяем, что список ПК не пуст
             {
                 if (tbWhatSearch.Text.Length > 0) //Проверяем, что указан критерий поиска
@@ -99,6 +101,8 @@ namespace FileSearch
                                 }
                                 else
                                 {
+                                    if (RefSearchResultsClass.IsStopSearch) break;
+
                                     string dt1 = DateTime.Now.ToLongTimeString();
                                     lbSearchResult.Items.Add(listPC + $": НАЧАЛО ПОИСКА НА ДИСКЕ {listDrive}:\\ В {dt1}");
 
@@ -113,6 +117,8 @@ namespace FileSearch
                                     CountFoundResult();
                                 }
                             }
+                            
+                            AfterSearch(); //Действия после поиска
                         }
                         else
                         {
@@ -124,12 +130,13 @@ namespace FileSearch
             }
             else MessageBox.Show("Где ищем?");
 
-            AfterSearch(); //Действия после поиска
-
+            //AfterSearch(); //Действия после поиска
         }
 
         private void BeforeSearch()
         {
+            lbSearchResult.Items.Clear();
+
             lblFileFolderFoundCount.Text = "0";
             lblInFileFoundCount.Text = "0";
             lblSearchFileInProgress.Visible = true;
@@ -492,14 +499,19 @@ namespace FileSearch
 
                 return result;
             }
-            catch (UnauthorizedAccessException)
+            catch (UnauthorizedAccessException ex)
             {
+                Logger logger = LogManager.GetCurrentClassLogger();
+                logger.Error("DriveName | " + namePC + " : " + ex.ToString());
+
                 char[] res = { '9' };
                 return res;
             }
             catch (Exception ex)
             {
-                MessageBox.Show(namePC + "\r\n" + ex.ToString(), "DriveName");
+                Logger logger = LogManager.GetCurrentClassLogger();
+                logger.Error("DriveName | " + namePC + " : " + ex.ToString());
+
                 char[] res = { '0' };
                 return res;
             }
@@ -598,6 +610,23 @@ namespace FileSearch
         private void btnStop_Click(object sender, EventArgs e)
         {
             RefSearchResultsClass.IsStopSearch = true;
+        }
+
+        private void ToolStripMenuItemAbout_Click(object sender, EventArgs e)
+        {
+            AboutBox ab = new AboutBox();
+            ab.ShowDialog();
+        }
+
+        private void ToolStripMenuItemSettings_Click(object sender, EventArgs e)
+        {
+            SettingsForm sf = new SettingsForm();
+            sf.ShowDialog();
+        }
+
+        private void ToolStripMenuItemExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
