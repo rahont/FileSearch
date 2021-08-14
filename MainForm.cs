@@ -18,7 +18,7 @@ namespace FileSearch
 {
     public partial class MainForm : Form
     {
-        private string FormText = $"Поисковик3000 -v.{StaticMethods.AppVersion()}";
+        private string FormText;
         private SearchResultsClass RefSearchResultsClass;
 
         public MainForm()
@@ -28,14 +28,22 @@ namespace FileSearch
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            Methods met = new Methods();
             //Проверяем наличие всех нужных DLL
-            if (StaticMethods.CheckDLL().Count > 0) Application.Exit();
+            if (met.CheckDLL().Count > 0)
+            {
+                MessageBox.Show("Отсутсвует 1 или более библиотек, необходимых для работы.\r\nСмотри логи.",
+                    "Отсутствует dll", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
+            }
 
+            FormText = $"Поисковик3000 -v.{met.AppVersion()}";
             Text = FormText;
+
             toolStripMenuItemUserName.Text = Environment.UserName;
 
             Logger logger = LogManager.GetCurrentClassLogger();
-            logger.Info("Запуск ПО");
+            //logger.Info("Запуск ПО");
         }
 
         private void btnSelectList_Click(object sender, EventArgs e)
@@ -101,7 +109,7 @@ namespace FileSearch
                                 }
                                 else
                                 {
-                                    if (RefSearchResultsClass.IsStopSearch) break;
+                                    if (RefSearchResultsClass.IsStopSearch) break; //Если true, то останавливаем поиск
 
                                     string dt1 = DateTime.Now.ToLongTimeString();
                                     lbSearchResult.Items.Add(listPC + $": НАЧАЛО ПОИСКА НА ДИСКЕ {listDrive}:\\ В {dt1}");
@@ -155,6 +163,9 @@ namespace FileSearch
             Text = "Идет поиск...";
 
             btnStop.Visible = true;
+
+            ErrorLogMethods.ErrorList.Clear();
+            ErrorLogMethods.errorNumber = 0;
         }
 
         private void AfterSearch()
@@ -503,6 +514,9 @@ namespace FileSearch
             {
                 Logger logger = LogManager.GetCurrentClassLogger();
                 logger.Error("DriveName | " + namePC + " : " + ex.ToString());
+                ErrorLogMethods.SetErrorLog("DriveName | " + namePC + " : " + ex.ToString(), btnErrorLog);
+                //ErrorLogMethods.ErrorList.Add("DriveName | " + namePC + " : " + ex.ToString());
+                //ErrorLogMethods.ErrorList.Add("-----------------------------------------------");
 
                 char[] res = { '9' };
                 return res;
@@ -511,6 +525,9 @@ namespace FileSearch
             {
                 Logger logger = LogManager.GetCurrentClassLogger();
                 logger.Error("DriveName | " + namePC + " : " + ex.ToString());
+                ErrorLogMethods.SetErrorLog("DriveName | " + namePC + " : " + ex.ToString(), btnErrorLog);
+                //ErrorLogMethods.ErrorList.Add("DriveName | " + namePC + " : " + ex.ToString());
+                //ErrorLogMethods.ErrorList.Add("-----------------------------------------------");
 
                 char[] res = { '0' };
                 return res;
@@ -598,15 +615,6 @@ namespace FileSearch
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (lbSearchResult.SelectedItem.ToString().Contains("НАЙДЕНО СОВПАДЕНИЕ В ФАЙЛЕ"))
-            {
-                MessageBox.Show(lbSearchResult.SelectedItem.ToString().IndexOf("\\\\").ToString());
-                
-            }
-        }
-
         private void btnStop_Click(object sender, EventArgs e)
         {
             RefSearchResultsClass.IsStopSearch = true;
@@ -627,6 +635,27 @@ namespace FileSearch
         private void ToolStripMenuItemExit_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void btnErrorLog_Click(object sender, EventArgs e)
+        {
+            ErrorLog el = new ErrorLog();
+            el.StartPosition = FormStartPosition.CenterParent;
+            el.Show();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //ErrorLogMethods.SetErrorLog("teetete", btnErrorLog);
+
+            //ExcelWork ew = new ExcelWork();
+            //if (ew.CheckInExcelFile("E:\\test.xlsx", cboxWhereSearch.Text, out string exception)) 
+            //{
+            //    MessageBox.Show("Test");
+            //}
+
+            SearchInFiles.ArchiveWork aw = new SearchInFiles.ArchiveWork();
+            aw.CheckInArchive("E:\\ExcelTestWord\\ExcelTestWord.rar", tbWhatSearch.Text, out string exception);
         }
     }
 }

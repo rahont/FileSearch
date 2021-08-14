@@ -32,6 +32,7 @@ namespace FileSearch
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             this.gboxFolders = new System.Windows.Forms.GroupBox();
+            this.chkbox123 = new System.Windows.Forms.CheckBox();
             this.chkboxProgram86Folder = new System.Windows.Forms.CheckBox();
             this.chkboxProgramFolder = new System.Windows.Forms.CheckBox();
             this.tbAnyFolders = new ALLinONE.MyTextBox();
@@ -41,12 +42,15 @@ namespace FileSearch
             this.btnSaveAll = new System.Windows.Forms.Button();
             this.btnDefault = new System.Windows.Forms.Button();
             this.gboxFiles = new System.Windows.Forms.GroupBox();
+            this.chkboxDocm = new System.Windows.Forms.CheckBox();
             this.chkboxRtf = new System.Windows.Forms.CheckBox();
             this.chkboxDocx = new System.Windows.Forms.CheckBox();
             this.chkboxDoc = new System.Windows.Forms.CheckBox();
             this.ttSettings = new System.Windows.Forms.ToolTip(this.components);
-            this.chkboxDocm = new System.Windows.Forms.CheckBox();
-            this.chkbox123 = new System.Windows.Forms.CheckBox();
+            this.chkboxXlsm = new System.Windows.Forms.CheckBox();
+            this.chkboxXlsb = new System.Windows.Forms.CheckBox();
+            this.chkboxXlsx = new System.Windows.Forms.CheckBox();
+            this.chkboxXls = new System.Windows.Forms.CheckBox();
             this.gboxFolders.SuspendLayout();
             this.gboxFiles.SuspendLayout();
             this.SuspendLayout();
@@ -66,6 +70,17 @@ namespace FileSearch
             this.gboxFolders.TabIndex = 0;
             this.gboxFolders.TabStop = false;
             this.gboxFolders.Text = "Исключить из поиска папки:";
+            // 
+            // chkbox123
+            // 
+            this.chkbox123.AutoSize = true;
+            this.chkbox123.Enabled = false;
+            this.chkbox123.Location = new System.Drawing.Point(94, 65);
+            this.chkbox123.Name = "chkbox123";
+            this.chkbox123.Size = new System.Drawing.Size(107, 17);
+            this.chkbox123.TabIndex = 6;
+            this.chkbox123.Text = "А что тут будет?";
+            this.chkbox123.UseVisualStyleBackColor = true;
             // 
             // chkboxProgram86Folder
             // 
@@ -143,7 +158,7 @@ namespace FileSearch
             // btnSaveAll
             // 
             this.btnSaveAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnSaveAll.Location = new System.Drawing.Point(113, 186);
+            this.btnSaveAll.Location = new System.Drawing.Point(113, 202);
             this.btnSaveAll.Name = "btnSaveAll";
             this.btnSaveAll.Size = new System.Drawing.Size(130, 23);
             this.btnSaveAll.TabIndex = 3;
@@ -154,7 +169,7 @@ namespace FileSearch
             // btnDefault
             // 
             this.btnDefault.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnDefault.Location = new System.Drawing.Point(11, 186);
+            this.btnDefault.Location = new System.Drawing.Point(11, 202);
             this.btnDefault.Name = "btnDefault";
             this.btnDefault.Size = new System.Drawing.Size(96, 23);
             this.btnDefault.TabIndex = 2;
@@ -164,16 +179,30 @@ namespace FileSearch
             // 
             // gboxFiles
             // 
+            this.gboxFiles.Controls.Add(this.chkboxXlsm);
+            this.gboxFiles.Controls.Add(this.chkboxXlsb);
+            this.gboxFiles.Controls.Add(this.chkboxXlsx);
+            this.gboxFiles.Controls.Add(this.chkboxXls);
             this.gboxFiles.Controls.Add(this.chkboxDocm);
             this.gboxFiles.Controls.Add(this.chkboxRtf);
             this.gboxFiles.Controls.Add(this.chkboxDocx);
             this.gboxFiles.Controls.Add(this.chkboxDoc);
             this.gboxFiles.Location = new System.Drawing.Point(12, 134);
             this.gboxFiles.Name = "gboxFiles";
-            this.gboxFiles.Size = new System.Drawing.Size(230, 42);
+            this.gboxFiles.Size = new System.Drawing.Size(230, 62);
             this.gboxFiles.TabIndex = 1;
             this.gboxFiles.TabStop = false;
             this.gboxFiles.Text = "Не производить поиск в файлах:";
+            // 
+            // chkboxDocm
+            // 
+            this.chkboxDocm.AutoSize = true;
+            this.chkboxDocm.Location = new System.Drawing.Point(119, 19);
+            this.chkboxDocm.Name = "chkboxDocm";
+            this.chkboxDocm.Size = new System.Drawing.Size(55, 17);
+            this.chkboxDocm.TabIndex = 3;
+            this.chkboxDocm.Text = ".docm";
+            this.chkboxDocm.UseVisualStyleBackColor = true;
             // 
             // chkboxRtf
             // 
@@ -211,38 +240,58 @@ namespace FileSearch
             this.ttSettings.InitialDelay = 500;
             this.ttSettings.ReshowDelay = 100;
             // 
-            // chkboxDocm
+            // chkboxXlsm
             // 
-            this.chkboxDocm.AutoSize = true;
-            this.chkboxDocm.Location = new System.Drawing.Point(119, 19);
-            this.chkboxDocm.Name = "chkboxDocm";
-            this.chkboxDocm.Size = new System.Drawing.Size(55, 17);
-            this.chkboxDocm.TabIndex = 3;
-            this.chkboxDocm.Text = ".docm";
-            this.chkboxDocm.UseVisualStyleBackColor = true;
+            this.chkboxXlsm.AutoSize = true;
+            this.chkboxXlsm.Location = new System.Drawing.Point(119, 42);
+            this.chkboxXlsm.Name = "chkboxXlsm";
+            this.chkboxXlsm.Size = new System.Drawing.Size(49, 17);
+            this.chkboxXlsm.TabIndex = 7;
+            this.chkboxXlsm.Text = ".xlsm";
+            this.chkboxXlsm.UseVisualStyleBackColor = true;
             // 
-            // chkbox123
+            // chkboxXlsb
             // 
-            this.chkbox123.AutoSize = true;
-            this.chkbox123.Enabled = false;
-            this.chkbox123.Location = new System.Drawing.Point(94, 65);
-            this.chkbox123.Name = "chkbox123";
-            this.chkbox123.Size = new System.Drawing.Size(107, 17);
-            this.chkbox123.TabIndex = 6;
-            this.chkbox123.Text = "А что тут будет?";
-            this.chkbox123.UseVisualStyleBackColor = true;
+            this.chkboxXlsb.AutoSize = true;
+            this.chkboxXlsb.Location = new System.Drawing.Point(180, 42);
+            this.chkboxXlsb.Name = "chkboxXlsb";
+            this.chkboxXlsb.Size = new System.Drawing.Size(47, 17);
+            this.chkboxXlsb.TabIndex = 6;
+            this.chkboxXlsb.Text = ".xlsb";
+            this.chkboxXlsb.UseVisualStyleBackColor = true;
+            // 
+            // chkboxXlsx
+            // 
+            this.chkboxXlsx.AutoSize = true;
+            this.chkboxXlsx.Location = new System.Drawing.Point(61, 42);
+            this.chkboxXlsx.Name = "chkboxXlsx";
+            this.chkboxXlsx.Size = new System.Drawing.Size(46, 17);
+            this.chkboxXlsx.TabIndex = 5;
+            this.chkboxXlsx.Text = ".xlsx";
+            this.chkboxXlsx.UseVisualStyleBackColor = true;
+            // 
+            // chkboxXls
+            // 
+            this.chkboxXls.AutoSize = true;
+            this.chkboxXls.Location = new System.Drawing.Point(8, 42);
+            this.chkboxXls.Name = "chkboxXls";
+            this.chkboxXls.Size = new System.Drawing.Size(41, 17);
+            this.chkboxXls.TabIndex = 4;
+            this.chkboxXls.Text = ".xls";
+            this.chkboxXls.UseVisualStyleBackColor = true;
             // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(254, 221);
+            this.ClientSize = new System.Drawing.Size(254, 237);
             this.Controls.Add(this.gboxFiles);
             this.Controls.Add(this.btnDefault);
             this.Controls.Add(this.btnSaveAll);
             this.Controls.Add(this.gboxFolders);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(270, 276);
             this.Name = "SettingsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Настройки";
@@ -273,5 +322,9 @@ namespace FileSearch
         private System.Windows.Forms.ToolTip ttSettings;
         private System.Windows.Forms.CheckBox chkboxDocm;
         private System.Windows.Forms.CheckBox chkbox123;
+        private System.Windows.Forms.CheckBox chkboxXlsm;
+        private System.Windows.Forms.CheckBox chkboxXlsb;
+        private System.Windows.Forms.CheckBox chkboxXlsx;
+        private System.Windows.Forms.CheckBox chkboxXls;
     }
 }

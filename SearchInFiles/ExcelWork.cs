@@ -1,54 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Aspose.Words;
 
 namespace FileSearch
 {
-    class WordWork
+    class ExcelWork
     {
-        //private readonly string filePath;
-
         /// <summary>
-        /// ctor
-        /// </summary>
-        /// <param name="filePath">Полный путь к файлу.</param>
-        public WordWork()
-        {
-            //this.filePath = filePath;
-        }
-
-        /// <summary>
-        /// Ищет совпадение в Word файле. 
+        /// Ищет совпадение в Excel файле. 
         /// </summary>
         /// <param name="findText">Искомое слово/фраза в файле.</param>
         /// <param name="exception">Возвращает исключение. Изначально = null.</param>
         /// <param name="filePath">Полный путь к файлу.</param>
         /// <returns>Возвращает true если находит совпадение. out - возвращает исключение.</returns>
-        public bool CheckInWordFile(string filePath, Object findText, out string exception)
+        public bool CheckInExcelFile(string filePath, Object findText, out string exception)
         {
             bool result = false;
             exception = null;
 
             try
             {
-                Document doc = new Document(filePath);
+                Aspose.Cells.Workbook wb = new Aspose.Cells.Workbook(filePath);
 
-                string strSearch = findText.ToString();
-
-                string docText = doc.GetText().Substring(80);
-                docText = docText.Substring(0, docText.Length - 142);
-
-                result = docText.IndexOf(strSearch, StringComparison.OrdinalIgnoreCase) > -1;
+                for (int i = 0; i < wb.Worksheets.Count; i++)
+                {
+                    if (wb.Worksheets[i].Cells.Find(findText, null) != null)
+                        result = true;
+                    //var ewq = wb.Worksheets[i].Cells.Find(findText, null);
+                }
             }
-            //catch (IOException ex)
-            //{
-            //    //HResult == -2147024864 - файл используется в другом процессе
-            //    if (ex.HResult == -2147024864) exception = ex.Message;
-            //}
             catch (Exception ex)
             {
                 //HResult == -2147024864 - файл используется в другом процессе

@@ -36,6 +36,8 @@ namespace FileSearch
             this.lbSearchResult = new System.Windows.Forms.ListBox();
             this.lblSearchResult = new System.Windows.Forms.Label();
             this.gboxFoundList = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.btnSettings = new System.Windows.Forms.Button();
             this.lblFile = new System.Windows.Forms.Label();
             this.lblInFileFoundCount = new System.Windows.Forms.Label();
             this.lblFileFolder = new System.Windows.Forms.Label();
@@ -46,22 +48,21 @@ namespace FileSearch
             this.pnlResult = new System.Windows.Forms.Panel();
             this.lblSearchFileInProgress = new System.Windows.Forms.Label();
             this.btnStop = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnErrorLog = new System.Windows.Forms.Button();
             this.fdOpenPCList = new System.Windows.Forms.OpenFileDialog();
             this.pnlActiveFileSearch = new System.Windows.Forms.Panel();
             this.lblActiveFileSearch = new System.Windows.Forms.Label();
-            this.btnSettings = new System.Windows.Forms.Button();
             this.btnUnload = new System.Windows.Forms.Button();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.ToolStripMenuItemFile = new System.Windows.Forms.ToolStripMenuItem();
-            this.ToolStripMenuItemInfo = new System.Windows.Forms.ToolStripMenuItem();
-            this.ToolStripMenuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemSettings = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.ToolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItemInfo = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemUserName = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.tbWhatSearch = new ALLinONE.MyTextBox();
             this.gboxFoundList.SuspendLayout();
             this.pnlWhereSearch.SuspendLayout();
@@ -74,7 +75,7 @@ namespace FileSearch
             // btnSelectList
             // 
             this.btnSelectList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSelectList.Location = new System.Drawing.Point(144, 3);
+            this.btnSelectList.Location = new System.Drawing.Point(307, 3);
             this.btnSelectList.Name = "btnSelectList";
             this.btnSelectList.Size = new System.Drawing.Size(111, 21);
             this.btnSelectList.TabIndex = 1;
@@ -85,7 +86,7 @@ namespace FileSearch
             // btnGO
             // 
             this.btnGO.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnGO.Location = new System.Drawing.Point(278, 29);
+            this.btnGO.Location = new System.Drawing.Point(441, 29);
             this.btnGO.Name = "btnGO";
             this.btnGO.Size = new System.Drawing.Size(79, 34);
             this.btnGO.TabIndex = 2;
@@ -103,7 +104,7 @@ namespace FileSearch
             this.lbSearchResult.IntegralHeight = false;
             this.lbSearchResult.Location = new System.Drawing.Point(5, 16);
             this.lbSearchResult.Name = "lbSearchResult";
-            this.lbSearchResult.Size = new System.Drawing.Size(333, 182);
+            this.lbSearchResult.Size = new System.Drawing.Size(496, 285);
             this.lbSearchResult.TabIndex = 6;
             this.lbSearchResult.DoubleClick += new System.EventHandler(this.lbSearchResult_DoubleClick);
             // 
@@ -120,15 +121,40 @@ namespace FileSearch
             // 
             this.gboxFoundList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.gboxFoundList.Controls.Add(this.button1);
+            this.gboxFoundList.Controls.Add(this.btnSettings);
             this.gboxFoundList.Controls.Add(this.lblFile);
             this.gboxFoundList.Controls.Add(this.lblInFileFoundCount);
             this.gboxFoundList.Controls.Add(this.lblFileFolder);
             this.gboxFoundList.Controls.Add(this.lblFileFolderFoundCount);
             this.gboxFoundList.Location = new System.Drawing.Point(3, 25);
             this.gboxFoundList.Name = "gboxFoundList";
-            this.gboxFoundList.Size = new System.Drawing.Size(252, 54);
+            this.gboxFoundList.Size = new System.Drawing.Size(415, 54);
             this.gboxFoundList.TabIndex = 8;
             this.gboxFoundList.TabStop = false;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(255, 29);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 4;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // btnSettings
+            // 
+            this.btnSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSettings.Location = new System.Drawing.Point(330, 29);
+            this.btnSettings.Name = "btnSettings";
+            this.btnSettings.Size = new System.Drawing.Size(79, 21);
+            this.btnSettings.TabIndex = 3;
+            this.btnSettings.Text = "Настройки...";
+            this.btnSettings.UseVisualStyleBackColor = true;
+            this.btnSettings.Visible = false;
+            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
             // 
             // lblFile
             // 
@@ -179,7 +205,7 @@ namespace FileSearch
             this.cboxWhereSearch.FormattingEnabled = true;
             this.cboxWhereSearch.Location = new System.Drawing.Point(3, 3);
             this.cboxWhereSearch.Name = "cboxWhereSearch";
-            this.cboxWhereSearch.Size = new System.Drawing.Size(138, 21);
+            this.cboxWhereSearch.Size = new System.Drawing.Size(301, 21);
             this.cboxWhereSearch.TabIndex = 0;
             this.cboxWhereSearch.Text = "Список ПК пуст";
             // 
@@ -192,7 +218,7 @@ namespace FileSearch
             this.pnlWhereSearch.Controls.Add(this.btnSelectList);
             this.pnlWhereSearch.Location = new System.Drawing.Point(12, 30);
             this.pnlWhereSearch.Name = "pnlWhereSearch";
-            this.pnlWhereSearch.Size = new System.Drawing.Size(260, 29);
+            this.pnlWhereSearch.Size = new System.Drawing.Size(423, 29);
             this.pnlWhereSearch.TabIndex = 0;
             // 
             // pnlWhatSearch
@@ -204,7 +230,7 @@ namespace FileSearch
             this.pnlWhatSearch.Controls.Add(this.gboxFoundList);
             this.pnlWhatSearch.Location = new System.Drawing.Point(12, 65);
             this.pnlWhatSearch.Name = "pnlWhatSearch";
-            this.pnlWhatSearch.Size = new System.Drawing.Size(260, 84);
+            this.pnlWhatSearch.Size = new System.Drawing.Size(423, 84);
             this.pnlWhatSearch.TabIndex = 1;
             // 
             // pnlResult
@@ -218,7 +244,7 @@ namespace FileSearch
             this.pnlResult.Controls.Add(this.lblSearchResult);
             this.pnlResult.Location = new System.Drawing.Point(12, 176);
             this.pnlResult.Name = "pnlResult";
-            this.pnlResult.Size = new System.Drawing.Size(345, 205);
+            this.pnlResult.Size = new System.Drawing.Size(508, 308);
             this.pnlResult.TabIndex = 5;
             this.pnlResult.TabStop = true;
             // 
@@ -227,7 +253,7 @@ namespace FileSearch
             this.lblSearchFileInProgress.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblSearchFileInProgress.AutoSize = true;
             this.lblSearchFileInProgress.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblSearchFileInProgress.Location = new System.Drawing.Point(68, 85);
+            this.lblSearchFileInProgress.Location = new System.Drawing.Point(150, 137);
             this.lblSearchFileInProgress.Name = "lblSearchFileInProgress";
             this.lblSearchFileInProgress.Size = new System.Drawing.Size(206, 31);
             this.lblSearchFileInProgress.TabIndex = 13;
@@ -238,7 +264,7 @@ namespace FileSearch
             // btnStop
             // 
             this.btnStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnStop.Location = new System.Drawing.Point(278, 29);
+            this.btnStop.Location = new System.Drawing.Point(441, 29);
             this.btnStop.Name = "btnStop";
             this.btnStop.Size = new System.Drawing.Size(79, 34);
             this.btnStop.TabIndex = 14;
@@ -247,18 +273,18 @@ namespace FileSearch
             this.btnStop.Visible = false;
             this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
-            // button1
+            // btnErrorLog
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(278, 69);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 5;
-            this.button1.TabStop = false;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Visible = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnErrorLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnErrorLog.Location = new System.Drawing.Point(441, 69);
+            this.btnErrorLog.Name = "btnErrorLog";
+            this.btnErrorLog.Size = new System.Drawing.Size(79, 34);
+            this.btnErrorLog.TabIndex = 5;
+            this.btnErrorLog.TabStop = false;
+            this.btnErrorLog.Text = "Количество ошибок: 0";
+            this.btnErrorLog.UseVisualStyleBackColor = true;
+            this.btnErrorLog.Visible = false;
+            this.btnErrorLog.Click += new System.EventHandler(this.btnErrorLog_Click);
             // 
             // fdOpenPCList
             // 
@@ -275,7 +301,7 @@ namespace FileSearch
             this.pnlActiveFileSearch.Controls.Add(this.lblActiveFileSearch);
             this.pnlActiveFileSearch.Location = new System.Drawing.Point(12, 155);
             this.pnlActiveFileSearch.Name = "pnlActiveFileSearch";
-            this.pnlActiveFileSearch.Size = new System.Drawing.Size(345, 15);
+            this.pnlActiveFileSearch.Size = new System.Drawing.Size(508, 15);
             this.pnlActiveFileSearch.TabIndex = 14;
             // 
             // lblActiveFileSearch
@@ -283,25 +309,13 @@ namespace FileSearch
             this.lblActiveFileSearch.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblActiveFileSearch.Location = new System.Drawing.Point(0, 0);
             this.lblActiveFileSearch.Name = "lblActiveFileSearch";
-            this.lblActiveFileSearch.Size = new System.Drawing.Size(343, 13);
+            this.lblActiveFileSearch.Size = new System.Drawing.Size(506, 13);
             this.lblActiveFileSearch.TabIndex = 0;
-            // 
-            // btnSettings
-            // 
-            this.btnSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSettings.Location = new System.Drawing.Point(277, 91);
-            this.btnSettings.Name = "btnSettings";
-            this.btnSettings.Size = new System.Drawing.Size(79, 21);
-            this.btnSettings.TabIndex = 3;
-            this.btnSettings.Text = "Настройки...";
-            this.btnSettings.UseVisualStyleBackColor = true;
-            this.btnSettings.Visible = false;
-            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
             // 
             // btnUnload
             // 
             this.btnUnload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnUnload.Location = new System.Drawing.Point(278, 116);
+            this.btnUnload.Location = new System.Drawing.Point(441, 116);
             this.btnUnload.Name = "btnUnload";
             this.btnUnload.Size = new System.Drawing.Size(79, 34);
             this.btnUnload.TabIndex = 4;
@@ -323,7 +337,7 @@ namespace FileSearch
             this.toolStripMenuItemUserName});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(368, 24);
+            this.menuStrip.Size = new System.Drawing.Size(531, 24);
             this.menuStrip.TabIndex = 16;
             this.menuStrip.Text = "menuStrip";
             // 
@@ -336,21 +350,6 @@ namespace FileSearch
             this.ToolStripMenuItemFile.Name = "ToolStripMenuItemFile";
             this.ToolStripMenuItemFile.Size = new System.Drawing.Size(48, 20);
             this.ToolStripMenuItemFile.Text = "Файл";
-            // 
-            // ToolStripMenuItemInfo
-            // 
-            this.ToolStripMenuItemInfo.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToolStripMenuItemAbout});
-            this.ToolStripMenuItemInfo.Name = "ToolStripMenuItemInfo";
-            this.ToolStripMenuItemInfo.Size = new System.Drawing.Size(65, 20);
-            this.ToolStripMenuItemInfo.Text = "Справка";
-            // 
-            // ToolStripMenuItemAbout
-            // 
-            this.ToolStripMenuItemAbout.Name = "ToolStripMenuItemAbout";
-            this.ToolStripMenuItemAbout.Size = new System.Drawing.Size(149, 22);
-            this.ToolStripMenuItemAbout.Text = "О программе";
-            this.ToolStripMenuItemAbout.Click += new System.EventHandler(this.ToolStripMenuItemAbout_Click);
             // 
             // ToolStripMenuItemSettings
             // 
@@ -371,6 +370,21 @@ namespace FileSearch
             this.ToolStripMenuItemExit.Text = "Выход";
             this.ToolStripMenuItemExit.Click += new System.EventHandler(this.ToolStripMenuItemExit_Click);
             // 
+            // ToolStripMenuItemInfo
+            // 
+            this.ToolStripMenuItemInfo.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripMenuItemAbout});
+            this.ToolStripMenuItemInfo.Name = "ToolStripMenuItemInfo";
+            this.ToolStripMenuItemInfo.Size = new System.Drawing.Size(65, 20);
+            this.ToolStripMenuItemInfo.Text = "Справка";
+            // 
+            // ToolStripMenuItemAbout
+            // 
+            this.ToolStripMenuItemAbout.Name = "ToolStripMenuItemAbout";
+            this.ToolStripMenuItemAbout.Size = new System.Drawing.Size(149, 22);
+            this.ToolStripMenuItemAbout.Text = "О программе";
+            this.ToolStripMenuItemAbout.Click += new System.EventHandler(this.ToolStripMenuItemAbout_Click);
+            // 
             // toolStripMenuItemUserName
             // 
             this.toolStripMenuItemUserName.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
@@ -389,7 +403,7 @@ namespace FileSearch
             this.tbWhatSearch.MinimumSize = new System.Drawing.Size(1, 20);
             this.tbWhatSearch.Name = "tbWhatSearch";
             this.tbWhatSearch.PasswordChar = '\0';
-            this.tbWhatSearch.Size = new System.Drawing.Size(252, 20);
+            this.tbWhatSearch.Size = new System.Drawing.Size(415, 20);
             this.tbWhatSearch.TabIndex = 2;
             this.tbWhatSearch.TextMaxLength = 1024;
             this.tbWhatSearch.TextTitle = "Что ищем? Имя или часть имени файла/папки";
@@ -399,11 +413,10 @@ namespace FileSearch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(368, 385);
-            this.Controls.Add(this.btnSettings);
+            this.ClientSize = new System.Drawing.Size(531, 488);
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.btnUnload);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnErrorLog);
             this.Controls.Add(this.pnlActiveFileSearch);
             this.Controls.Add(this.pnlResult);
             this.Controls.Add(this.pnlWhatSearch);
@@ -443,7 +456,7 @@ namespace FileSearch
         private System.Windows.Forms.Panel pnlWhatSearch;
         private System.Windows.Forms.Panel pnlResult;
         private System.Windows.Forms.OpenFileDialog fdOpenPCList;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnErrorLog;
         private System.Windows.Forms.Label lblFileFolderFoundCount;
         private System.Windows.Forms.Label lblFileFolder;
         private System.Windows.Forms.Label lblFile;
@@ -464,6 +477,7 @@ namespace FileSearch
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemExit;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemUserName;
+        private System.Windows.Forms.Button button1;
     }
 }
 

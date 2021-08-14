@@ -39,11 +39,15 @@ namespace FileSearch
         {
             List<string> result = new List<string>();
             WordWork wordW = new WordWork();
+            ExcelWork excelW = new ExcelWork();
+            SearchInFiles.ArchiveWork archiveW = new SearchInFiles.ArchiveWork();
 
             //Если первые 2 символа не \\, то добавить
             if (namePC.Substring(0, 2) != @"\\") namePC = @"\\" + namePC;
 
-            string[] fileExtension = { ".doc", ".docx", ".docm", ".rtf" };
+            string[] wordFileExtension = { ".doc", ".docx", ".docm", ".rtf" };
+            string[] excelFileExtension = { ".xls", ".xlsx", ".xlsm", ".xlsb" };
+            string[] archiveFileExtension = { ".rar", ".zip", ".7z" };
 
             var q = SafeEnumerateFiles(namePC, "*.*", SearchOption.AllDirectories);
 
@@ -58,13 +62,15 @@ namespace FileSearch
                     //Устанавливает в Label текущий файл поиска
                     mainForm.Invoke(delAFS, filePath);
 
+                    //Поиск текста в имени файла/папки
                     if (filePath.ToLower().IndexOf(tbWhatSearchText.ToLower()) > -1)
                         result.Add(filePath);
 
-                    foreach (var fileExt in fileExtension)
+                    //Поиск внутри Word файла
+                    foreach (var fileExt in wordFileExtension)
                     {
                         //Если вернется true, то пропустить поиск в файле
-                        if (SkipCheckInFile(fileExt)) continue;
+                        if (SkipCheckInFile(fileExt)) break;
 
                         //Если расширение файла = расширение цикла
                         if (Path.GetExtension(filePath) == fileExt)
@@ -75,6 +81,52 @@ namespace FileSearch
                             //Если возвращается false, то проверяем на наличие исключения
                             else if (exception != null)
                                 result.Add(exception);
+
+                            break;
+                        }
+                    }
+
+                    //Поиск внутри Excel файла
+                    foreach (var fileExt in excelFileExtension)
+                    {
+                        //Если вернется true, то пропустить поиск в файле
+                        if (SkipCheckInFile(fileExt)) break;
+
+                        //Если расширение файла = расширение цикла
+                        if (Path.GetExtension(filePath) == fileExt)
+                        {
+                            //Если вернется true, то добавить путь файла в List
+                            if (excelW.CheckInExcelFile(filePath, tbWhatSearchText, out string exception))
+                                result.Add("НАЙДЕНО СОВПАДЕНИЕ В ФАЙЛЕ: " + filePath);
+                            //Если возвращается false, то проверяем на наличие исключения
+                            else if (exception != null)
+                                result.Add(exception);
+
+                            break;
+                        }
+                    }
+
+                    //Поиск внутри архива
+                    foreach (var fileExt in archiveFileExtension)
+                    {
+                        //Если вернется true, то пропустить поиск в файле
+                        //if (SkipCheckInFile(fileExt)) break;
+                        if (true) break;
+
+                        //Если вернется true, то пропустить поиск в файле
+                        if (SkipCheckInFile(fileExt)) continue;
+
+                        //Если расширение файла = расширение цикла
+                        if (Path.GetExtension(filePath) == fileExt)
+                        {
+                            ////Если вернется true, то добавить путь файла в List
+                            //if (archiveW.CheckInArchive(filePath, out string exception))
+                            //    result.Add("НАЙДЕНО СОВПАДЕНИЕ В ФАЙЛЕ: " + filePath);
+                            ////Если возвращается false, то проверяем на наличие исключения
+                            //else if (exception != null)
+                            //    result.Add(exception);
+
+                            //break;
                         }
                     }
                 }
@@ -189,6 +241,34 @@ namespace FileSearch
 
             if (fileExtension == ".rtf")
                 if (Properties.Settings.Default.chkbRtf)
+                    result = true;
+
+            if (fileExtension == ".xls")
+                if (Properties.Settings.Default.chkbXls)
+                    result = true;
+
+            if (fileExtension == ".xlsx")
+                if (Properties.Settings.Default.chkbXlsx)
+                    result = true;
+
+            if (fileExtension == ".xlsm")
+                if (Properties.Settings.Default.chkbXlsm)
+                    result = true;
+
+            if (fileExtension == ".xlsb")
+                if (Properties.Settings.Default.chkbXlsb)
+                    result = true;
+
+            if (fileExtension == ".rar")
+                if (Properties.Settings.Default.chkbRar)
+                    result = true;
+
+            if (fileExtension == ".zip")
+                if (Properties.Settings.Default.chkbZip)
+                    result = true;
+
+            if (fileExtension == ".7z")
+                if (Properties.Settings.Default.chkb7z)
                     result = true;
 
             return result;

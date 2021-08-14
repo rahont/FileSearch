@@ -1,15 +1,35 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace FileSearch
 {
-    static class StaticMethods
+    class ErrorLogMethods
     {
-        /// <summary>
+        public static int errorNumber;
+        private static List<string> errorList = new List<string>();
+        public static List<string> ErrorList
+        {
+            get { return errorList; }
+            set { errorList = value; }
+        }
+
+        public static void SetErrorLog(string value, Button btn)
+        {
+            errorNumber++;
+
+            ErrorList.Add(value);
+            ErrorList.Add("-----------------------------------------------");
+
+            btn.Text = "Количество ошибок: " + errorNumber;
+        }
+
+        /*/// <summary>
         /// Проверяет наличие DLL
         /// </summary>
         /// <returns>Возвращает List<string> с именами отсутствующих DLL</returns>
@@ -22,7 +42,8 @@ namespace FileSearch
                 "Aspose.Words.dll",
                 "Microsoft.Bcl.AsyncInterfaces.dll",
                 "System.Runtime.CompilerServices.Unsafe.dll",
-                "System.Threading.Tasks.Extensions.dll"
+                "System.Threading.Tasks.Extensions.dll",
+                "NLog.dll"
             };
 
             List<string> result = new List<string>();
@@ -71,6 +92,6 @@ namespace FileSearch
             }
 
             return result;
-        }
+        }*/
     }
 }

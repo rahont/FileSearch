@@ -24,6 +24,11 @@ namespace FileSearch
             chkboxDocx.Checked = Properties.Settings.Default.chkbDocx;
             chkboxDocm.Checked = Properties.Settings.Default.chkbDocm;
             chkboxRtf.Checked = Properties.Settings.Default.chkbRtf;
+
+            chkboxXls.Checked = Properties.Settings.Default.chkbXls;
+            chkboxXlsx.Checked = Properties.Settings.Default.chkbXlsx;
+            chkboxXlsm.Checked = Properties.Settings.Default.chkbXlsm;
+            chkboxXlsb.Checked = Properties.Settings.Default.chkbXlsb;
         }
 
         private void btnSaveAll_Click(object sender, EventArgs e)
@@ -40,6 +45,11 @@ namespace FileSearch
             Properties.Settings.Default.chkbDocx = (chkboxDocx.Checked);
             Properties.Settings.Default.chkbDocm = (chkboxDocm.Checked);
             Properties.Settings.Default.chkbRtf = (chkboxRtf.Checked);
+
+            Properties.Settings.Default.chkbXls = (chkboxXls.Checked);
+            Properties.Settings.Default.chkbXlsx = (chkboxXlsx.Checked);
+            Properties.Settings.Default.chkbXlsm = (chkboxXlsm.Checked);
+            Properties.Settings.Default.chkbXlsb = (chkboxXlsb.Checked);
 
             Properties.Settings.Default.Save();
             this.Close();
@@ -59,6 +69,11 @@ namespace FileSearch
             chkboxDocx.Checked = false;
             chkboxDocm.Checked = false;
             chkboxRtf.Checked = false;
+
+            chkboxXls.Checked = false;
+            chkboxXlsx.Checked = false;
+            chkboxXlsm.Checked = false;
+            chkboxXlsb.Checked = false;
         }
     }
 }
