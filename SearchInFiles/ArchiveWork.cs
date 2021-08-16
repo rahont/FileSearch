@@ -21,7 +21,7 @@ namespace FileSearch.SearchInFiles
             Stream streamArchive = File.OpenRead(pathFile);
             var reader = ReaderFactory.Open(streamArchive);
             WordWork wordW = new WordWork();
-            
+
             try
             {
                 while (reader.MoveToNextEntry())

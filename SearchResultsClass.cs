@@ -106,12 +106,13 @@ namespace FileSearch
                         }
                     }
 
+                    continue;
+
                     //Поиск внутри архива
                     foreach (var fileExt in archiveFileExtension)
                     {
                         //Если вернется true, то пропустить поиск в файле
-                        //if (SkipCheckInFile(fileExt)) break;
-                        if (true) break;
+                        if (SkipCheckInFile(fileExt)) break;
 
                         //Если вернется true, то пропустить поиск в файле
                         if (SkipCheckInFile(fileExt)) continue;
@@ -214,6 +215,10 @@ namespace FileSearch
                 catch (PathTooLongException)
                 {
                     continue;
+                }
+                catch (IOException ex)
+                {
+                    ErrorLogMethods.SetErrorLog(ex.Message, null);
                 }
 
                 foreach (string filePath in files)

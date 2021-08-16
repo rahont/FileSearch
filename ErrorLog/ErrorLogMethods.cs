@@ -26,7 +26,8 @@ namespace FileSearch
             ErrorList.Add(value);
             ErrorList.Add("-----------------------------------------------");
 
-            btn.Text = "Количество ошибок: " + errorNumber;
+            if (btn != null)
+                btn.Text = "Количество ошибок: " + errorNumber;
         }
 
         /*/// <summary>

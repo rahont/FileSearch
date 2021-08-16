@@ -63,6 +63,7 @@ namespace FileSearch
             this.ToolStripMenuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemUserName = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.button2 = new System.Windows.Forms.Button();
             this.tbWhatSearch = new ALLinONE.MyTextBox();
             this.gboxFoundList.SuspendLayout();
             this.pnlWhereSearch.SuspendLayout();
@@ -121,6 +122,7 @@ namespace FileSearch
             // 
             this.gboxFoundList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.gboxFoundList.Controls.Add(this.button2);
             this.gboxFoundList.Controls.Add(this.button1);
             this.gboxFoundList.Controls.Add(this.btnSettings);
             this.gboxFoundList.Controls.Add(this.lblFile);
@@ -141,7 +143,6 @@ namespace FileSearch
             this.button1.TabIndex = 4;
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // btnSettings
@@ -394,6 +395,16 @@ namespace FileSearch
             this.toolStripMenuItemUserName.Text = "UserName";
             this.toolStripMenuItemUserName.ToolTipText = "Имя пользователя";
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(278, 4);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 5;
+            this.button2.Text = "button2";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // tbWhatSearch
             // 
             this.tbWhatSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -478,6 +489,7 @@ namespace FileSearch
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemExit;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemUserName;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
     }
 }
 

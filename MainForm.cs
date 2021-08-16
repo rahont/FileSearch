@@ -657,5 +657,13 @@ namespace FileSearch
             SearchInFiles.ArchiveWork aw = new SearchInFiles.ArchiveWork();
             aw.CheckInArchive("E:\\ExcelTestWord\\ExcelTestWord.rar", tbWhatSearch.Text, out string exception);
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            WordWork ww = new WordWork();
+            Stream stream = File.OpenRead(@"E:\ExcelTestWord\Документ Microsoft Word.docx");
+            if (ww.CheckInStreamWordFile(stream, tbWhatSearch.Text, out string exception))
+                MessageBox.Show("Test");
+        }
     }
 }
