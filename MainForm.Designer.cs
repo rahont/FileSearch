@@ -36,6 +36,7 @@ namespace FileSearch
             this.lbSearchResult = new System.Windows.Forms.ListBox();
             this.lblSearchResult = new System.Windows.Forms.Label();
             this.gboxFoundList = new System.Windows.Forms.GroupBox();
+            this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.btnSettings = new System.Windows.Forms.Button();
             this.lblFile = new System.Windows.Forms.Label();
@@ -45,6 +46,7 @@ namespace FileSearch
             this.cboxWhereSearch = new System.Windows.Forms.ComboBox();
             this.pnlWhereSearch = new System.Windows.Forms.Panel();
             this.pnlWhatSearch = new System.Windows.Forms.Panel();
+            this.tbWhatSearch = new ALLinONE.MyTextBox();
             this.pnlResult = new System.Windows.Forms.Panel();
             this.lblSearchFileInProgress = new System.Windows.Forms.Label();
             this.btnStop = new System.Windows.Forms.Button();
@@ -63,8 +65,6 @@ namespace FileSearch
             this.ToolStripMenuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemUserName = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.button2 = new System.Windows.Forms.Button();
-            this.tbWhatSearch = new ALLinONE.MyTextBox();
             this.gboxFoundList.SuspendLayout();
             this.pnlWhereSearch.SuspendLayout();
             this.pnlWhatSearch.SuspendLayout();
@@ -134,6 +134,16 @@ namespace FileSearch
             this.gboxFoundList.Size = new System.Drawing.Size(415, 54);
             this.gboxFoundList.TabIndex = 8;
             this.gboxFoundList.TabStop = false;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(278, 4);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 5;
+            this.button2.Text = "button2";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button1
             // 
@@ -234,6 +244,21 @@ namespace FileSearch
             this.pnlWhatSearch.Size = new System.Drawing.Size(423, 84);
             this.pnlWhatSearch.TabIndex = 1;
             // 
+            // tbWhatSearch
+            // 
+            this.tbWhatSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbWhatSearch.Location = new System.Drawing.Point(3, 3);
+            this.tbWhatSearch.MaximumSize = new System.Drawing.Size(10000, 20);
+            this.tbWhatSearch.MinimumSize = new System.Drawing.Size(1, 20);
+            this.tbWhatSearch.Name = "tbWhatSearch";
+            this.tbWhatSearch.PasswordChar = '\0';
+            this.tbWhatSearch.Size = new System.Drawing.Size(415, 20);
+            this.tbWhatSearch.TabIndex = 2;
+            this.tbWhatSearch.TextMaxLength = 1024;
+            this.tbWhatSearch.TextTitle = "Что ищем? Имя или часть имени файла/папки";
+            this.tbWhatSearch.KeyDownEvent += new System.Windows.Forms.KeyEventHandler(this.tbWhatSearch_KeyDownEvent);
+            // 
             // pnlResult
             // 
             this.pnlResult.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -282,6 +307,7 @@ namespace FileSearch
             this.btnErrorLog.Size = new System.Drawing.Size(79, 34);
             this.btnErrorLog.TabIndex = 5;
             this.btnErrorLog.TabStop = false;
+            this.btnErrorLog.Tag = "btnTagTest";
             this.btnErrorLog.Text = "Количество ошибок: 0";
             this.btnErrorLog.UseVisualStyleBackColor = true;
             this.btnErrorLog.Visible = false;
@@ -394,31 +420,6 @@ namespace FileSearch
             this.toolStripMenuItemUserName.Size = new System.Drawing.Size(74, 20);
             this.toolStripMenuItemUserName.Text = "UserName";
             this.toolStripMenuItemUserName.ToolTipText = "Имя пользователя";
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(278, 4);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 5;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // tbWhatSearch
-            // 
-            this.tbWhatSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbWhatSearch.Location = new System.Drawing.Point(3, 3);
-            this.tbWhatSearch.MaximumSize = new System.Drawing.Size(10000, 20);
-            this.tbWhatSearch.MinimumSize = new System.Drawing.Size(1, 20);
-            this.tbWhatSearch.Name = "tbWhatSearch";
-            this.tbWhatSearch.PasswordChar = '\0';
-            this.tbWhatSearch.Size = new System.Drawing.Size(415, 20);
-            this.tbWhatSearch.TabIndex = 2;
-            this.tbWhatSearch.TextMaxLength = 1024;
-            this.tbWhatSearch.TextTitle = "Что ищем? Имя или часть имени файла/папки";
-            this.tbWhatSearch.KeyDownEvent += new System.Windows.Forms.KeyEventHandler(this.tbWhatSearch_KeyDownEvent);
             // 
             // MainForm
             // 

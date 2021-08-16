@@ -49,13 +49,13 @@ namespace FileSearch
             string[] excelFileExtension = { ".xls", ".xlsx", ".xlsm", ".xlsb" };
             string[] archiveFileExtension = { ".rar", ".zip", ".7z" };
 
-            var q = SafeEnumerateFiles(namePC, "*.*", SearchOption.AllDirectories);
+            var enumerateFiles = SafeEnumerateFiles(namePC, "*.*", SearchOption.AllDirectories);
 
             DelActiveFileSearch delAFS = new DelActiveFileSearch(MethActiveFileSearch);
 
             await Task.Run(() =>
             {
-                foreach (var filePath in q)
+                foreach (var filePath in enumerateFiles)
                 {
                     if (IsStopSearch) break;
 
@@ -191,6 +191,7 @@ namespace FileSearch
                     catch (Exception ex)
                     {
                         //MessageBox.Show(ex.Message, "Exception (SafeEnumerateFiles)");
+                        ErrorLogMethods.SetErrorLog(ex.Message);
                         break;
                     }
                 }
@@ -216,10 +217,10 @@ namespace FileSearch
                 {
                     continue;
                 }
-                catch (IOException ex)
-                {
-                    ErrorLogMethods.SetErrorLog(ex.Message, null);
-                }
+                //catch (IOException ex)
+                //{
+                //    ErrorLogMethods.SetErrorLog(ex.Message, null);
+                //}
 
                 foreach (string filePath in files)
                 {

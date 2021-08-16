@@ -19,9 +19,10 @@ namespace FileSearch
             set { errorList = value; }
         }
 
-        public static void SetErrorLog(string value, Button btn)
+        public static void SetErrorLog(string value, Button btn = null)
         {
             errorNumber++;
+
 
             ErrorList.Add(value);
             ErrorList.Add("-----------------------------------------------");
