@@ -93,6 +93,8 @@ namespace FileSearch
 
                     foreach (var listPC in cboxWhereSearch.Items) //Перебираем все ПК по списку
                     {
+                        if (RefSearchResultsClass.IsStopSearch) break; //Если true, то останавливаем поиск
+
                         if (await IsReadyPC(listPC.ToString())) //Проверяем доступность ПК
                         {
                             foreach (var listDrive in DriveName(listPC.ToString())) //Перебираем диски ПК
@@ -171,12 +173,11 @@ namespace FileSearch
         private void AfterSearch()
         {
             lblSearchFileInProgress.Visible = false;
-            lblActiveFileSearch.Text = "ПОИСК ЗАВЕРШЕН!";
+            lblActiveFileSearch.Text = RefSearchResultsClass.IsStopSearch ? "ПОИСК ОСТАНОВЛЕН!" : "ПОИСК ЗАВЕРШЕН!";
 
             //lbSearchResult.Enabled = true;
             lbSearchResult.UseWaitCursor = false;
             lbSearchResult.BackColor = Color.FromArgb(255, 255, 255, 255);
-
 
             tbWhatSearch.Enabled = true;
 
@@ -512,9 +513,10 @@ namespace FileSearch
             }
             catch (UnauthorizedAccessException ex)
             {
+                string exModif = ex.Message.TrimEnd('\r', '\n');
                 Logger logger = LogManager.GetCurrentClassLogger();
-                logger.Error("DriveName | " + namePC + " : " + ex.ToString());
-                ErrorLogMethods.SetErrorLog("DriveName | " + namePC + " : " + ex.ToString(), btnErrorLog);
+                logger.Error("DriveName | " + namePC + " : " + exModif);
+                ErrorLogMethods.SetErrorLog("DriveName | " + namePC + " : " + ex.Message, btnErrorLog);
                 //ErrorLogMethods.ErrorList.Add("DriveName | " + namePC + " : " + ex.ToString());
                 //ErrorLogMethods.ErrorList.Add("-----------------------------------------------");
 
