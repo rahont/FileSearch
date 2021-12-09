@@ -47,6 +47,9 @@ namespace FileSearch
             dgvList.Columns[2].Width = 90;
             dgvList.Columns[3].Width = 115;
 
+            //Ассоциируем контекстное меню с dgv
+            dgvList.ContextMenuStrip = contextMenuDGV;
+
             
             //for (int i = 0; i < 7; i++)
             //{
@@ -101,23 +104,22 @@ namespace FileSearch
         {
             if (cboxWhereSearch.Items.Count > 0 || !cboxWhereSearch.Text.Contains("В списке")) //Проверяем, что список ПК не пуст
             {
-                while (true) //Удаляем все "\" в начале строки, если есть
-                {
-                    if (cboxWhereSearch.Text.StartsWith(@"\"))
-                        cboxWhereSearch.Text = cboxWhereSearch.Text.Substring(1);
-                    else break;
-                }
-
                 if (tbWhatSearch.Text.Length > 0) //Проверяем, что указан критерий поиска
                 {
+                    //Проверяем наличие строк в Заявках
+                    if (dgvList.Rows.Count > 0)
+                    {
+                        //Перебираем все строки в Заявках
+                        while (dgvList.Rows.Count > 0)
+                            dgvList.Rows.RemoveAt(0);
+                    }
+
                     StartSearch();
                 }
                 else MessageBox.Show("Что ищем?");
             }
             else
                 MessageBox.Show("Где ищем?");
-
-            //AfterSearch(); //Действия после поиска
         }
 
         private void StartSearch()
@@ -181,45 +183,49 @@ namespace FileSearch
                 foreach (var namePC in cboxWhereSearch.Items) //Перебираем все ПК по списку
                 {
                     if (RefSearchResultsClass.IsStopSearch) break; //Если true, то останавливаем поиск
-                    SearchInProgress(namePC);
+                    SearchInPC(namePC);
                 }
             }
             else
-                SearchInProgress(cboxWhereSearch.Text);
+                SearchInPath(cboxWhereSearch.Text);
         }
 
-        private async void SearchInProgress(object namePC)
+        private async void SearchInPC(object pc)
         {
             SearchResultsClass src = new SearchResultsClass(lblActiveFileSearch, FindForm(), tbWhatSearch.Text);
             RefSearchResultsClass = src;
-
-            string pc =
-
-            if (await IsReadyPC(namePC.ToString())) //Проверяем доступность ПК
+            
+            if (await IsReadyPC(pc.ToString())) //Проверяем доступность ПК
             {
-                foreach (var listDrive in DriveName(namePC.ToString())) //Перебираем диски ПК
+                foreach (var listDrive in DriveName(pc.ToString())) //Перебираем диски ПК
                 {
+                    if (RefSearchResultsClass.IsStopSearch) break; //Если true, то останавливаем поиск
+
                     if (listDrive == '0') //Если пришел символ 0, то где-то в переборе дисков появилась ошибка
                     {
                         //lbSearchResult.Items.Add($"При переборе дисков на ПК {namePC} произошла какая-то ошибка");
+                        dgvList.Rows.Insert(dgvList.RowCount, 1);
+                        dgvList.Rows[dgvList.Rows.Count - 1].Cells[0].Value = pc.ToString();
+                        dgvList.Rows[dgvList.Rows.Count - 1].Cells[1].Value = $"При переборе дисков на ПК {pc} произошла какая-то ошибка";
                         continue;
                     }
                     else if (listDrive == '9') //Если пришел символ 9, то в переборе дисков нет доступа
                     {
                         //lbSearchResult.Items.Add($"К дискам на ПК {namePC} нету доступа");
+                        dgvList.Rows.Insert(dgvList.RowCount, 1);
+                        dgvList.Rows[dgvList.Rows.Count - 1].Cells[0].Value = pc.ToString();
+                        dgvList.Rows[dgvList.Rows.Count - 1].Cells[1].Value = $"К дискам на ПК {pc} нету доступа";
                         continue;
                     }
                     else
                     {
                         if (RefSearchResultsClass.IsStopSearch) break; //Если true, то останавливаем поиск
 
-                        await foreach (var item in src.SearchResults(namePC.ToString() + $@"\{listDrive}$"))
+                        await foreach (var item in src.SearchResults(pc.ToString() + $@"\{listDrive}$"))
                         {
-                            dgvList.Rows.Insert(dgvList.RowCount, 1);
-                            dgvList.Rows[dgvList.Rows.Count - 1].Cells[0].Value = namePC;
-                            dgvList.Rows[dgvList.Rows.Count - 1].Cells[1].Value = item;
-                            dgvList.Rows[dgvList.Rows.Count - 1].Cells[2].Value = 2;
-                            dgvList.Rows[dgvList.Rows.Count - 1].Cells[3].Value = File.GetLastWriteTime(item);
+                            if (RefSearchResultsClass.IsStopSearch) break; //Если true, то останавливаем поиск
+
+                            WriteInDGV(pc.ToString(), item);
                         }
                     }
                 }
@@ -230,32 +236,86 @@ namespace FileSearch
             {
                 //lbSearchResult.Items.Add(namePC + ": НЕ ДОСТУПЕН");
                 dgvList.Rows.Insert(dgvList.RowCount, 1);
+                dgvList.Rows[dgvList.Rows.Count - 1].Cells[0].Value = pc.ToString();
+                dgvList.Rows[dgvList.Rows.Count - 1].Cells[1].Value = "ПК НЕ ДОСТУПЕН";
+            }
+        }
+
+        private async void SearchInPath(object path)
+        {
+            SearchResultsClass src = new SearchResultsClass(lblActiveFileSearch, FindForm(), tbWhatSearch.Text);
+            RefSearchResultsClass = src;
+
+            while (true) //Удаляем все "\" в начале строки, если есть
+            {
+                if (path.ToString().StartsWith(@"\"))
+                    path = path.ToString().Substring(1);
+                else break;
+            }
+
+            string namePC = path.ToString();
+
+            //Проверка имени ПК; если присутствует путь к папке, то он обрезается
+            if (namePC.Contains("\\"))
+            {
+                namePC = namePC.Substring(0, namePC.IndexOf('\\'));
+            }
+
+            if (await IsReadyPC(namePC)) //Проверяем доступность ПК
+            {
+                await foreach (var item in src.SearchResults(path.ToString()))
+                {
+                    if (RefSearchResultsClass.IsStopSearch) break; //Если true, то останавливаем поиск
+
+                    WriteInDGV(namePC, item);
+                }
+
+                AfterSearch(); //Действия после поиска
+            }
+            else
+            {
+                dgvList.Rows.Insert(dgvList.RowCount, 1);
                 dgvList.Rows[dgvList.Rows.Count - 1].Cells[0].Value = namePC;
                 dgvList.Rows[dgvList.Rows.Count - 1].Cells[1].Value = "ПК НЕ ДОСТУПЕН";
             }
         }
 
+        private void WriteInDGV(string namePC, string item)
+        {
+            int tmp = Convert.ToInt32(item.Substring(0, 1));
+
+            dgvList.Rows.Insert(dgvList.RowCount, 1);
+            dgvList.Rows[dgvList.Rows.Count - 1].Cells[0].Value = namePC;
+            dgvList.Rows[dgvList.Rows.Count - 1].Cells[1].Value = item.Substring(1);
+
+            if (tmp == 1) dgvList.Rows[dgvList.Rows.Count - 1].Cells[2].Value = "В имени";
+            if (tmp == 2) dgvList.Rows[dgvList.Rows.Count - 1].Cells[2].Value = "В файле";
+
+            dgvList.Rows[dgvList.Rows.Count - 1].Cells[3].Value = File.GetLastWriteTime(item.Substring(1));
+        }
+
         private void BeforeSearch()
         {
-            lbSearchResult.Items.Clear();
+            //lbSearchResult.Items.Clear();
 
             lblFileFolderFoundCount.Text = "0";
             lblInFileFoundCount.Text = "0";
             lblSearchFileInProgress.Visible = true;
 
             //lbSearchResult.Enabled = false;
-            lbSearchResult.UseWaitCursor = true;
-            lbSearchResult.BackColor = Color.FromArgb(255, 240, 240, 240);
+            //lbSearchResult.UseWaitCursor = true;
+            //lbSearchResult.BackColor = Color.FromArgb(255, 240, 240, 240);
 
             tbWhatSearch.Enabled = false;
 
             btnSelectList.Enabled = false;
             btnGO.Enabled = false;
-            btnSettings.Enabled = false;
+            //btnSettings.Enabled = false;
             btnUnload.Enabled = false;
 
             Text = "Идет поиск...";
 
+            btnGO.Visible = false;
             btnStop.Visible = true;
 
             ErrorLogMethods.ErrorList.Clear();
@@ -268,18 +328,19 @@ namespace FileSearch
             lblActiveFileSearch.Text = RefSearchResultsClass.IsStopSearch ? "ПОИСК ОСТАНОВЛЕН!" : "ПОИСК ЗАВЕРШЕН!";
 
             //lbSearchResult.Enabled = true;
-            lbSearchResult.UseWaitCursor = false;
-            lbSearchResult.BackColor = Color.FromArgb(255, 255, 255, 255);
+            //lbSearchResult.UseWaitCursor = false;
+            //lbSearchResult.BackColor = Color.FromArgb(255, 255, 255, 255);
 
             tbWhatSearch.Enabled = true;
 
             btnSelectList.Enabled = true;
             btnGO.Enabled = true;
-            btnSettings.Enabled = true;
+            //btnSettings.Enabled = true;
             btnUnload.Enabled = true;
 
             Text = FormText;
 
+            btnGO.Visible = true;
             btnStop.Visible = false;
         }
 
@@ -772,6 +833,38 @@ namespace FileSearch
         private void button4_Click(object sender, EventArgs e)
         {
             dgvList.Rows.Insert(dgvList.RowCount, 1);
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //RefSearchResultsClass.IsStopSearch = true;
+        }
+
+        private void contextMenuDGV_Delete_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show
+                    ("Удалить выделенные файлы?\n\r" +
+                    $"Всего: шт.",
+                    "Удалить?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                //foreach (var item in dgvList.SelectedRows)
+                //{
+                //    //string path = item.;
+                //    //path = dgvList.Rows[item].Cells[1].Value;
+                //    //item.
+                //}
+
+                for (int i = 0; i < dgvList.SelectedRows.Count; i++)
+                {
+                    string path = dgvList.SelectedRows[i].Cells[1].Value.ToString();
+                    if (File.Exists(path))
+                        File.Delete(path);
+                    else if (Directory.Exists(path))
+                        Directory.Delete(path);
+                }
+            }
         }
     }
 }

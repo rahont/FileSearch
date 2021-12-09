@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using NLog;
 
 namespace FileSearch
 {
@@ -59,12 +60,23 @@ namespace FileSearch
                 {
                     if (IsStopSearch) break;
 
-                    //Устанавливает в Label текущий файл поиска
-                    mainForm.Invoke(delAFS, filePath);
-
+                    try
+                    {
+                        //Устанавливает в Label текущий файл поиска
+                        mainForm.Invoke(delAFS, filePath);
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex.HResult != -2146232798)
+                        {
+                            Logger logger = LogManager.GetCurrentClassLogger();
+                            logger.Error("IAsyncEnumerable | " + ex.Message);
+                        }
+                    }
+                    
                     //Поиск текста в имени файла/папки
                     if (filePath.ToLower().IndexOf(tbWhatSearchText.ToLower()) > -1)
-                        result.Add(filePath);
+                        result.Add("1" + filePath); //1 - указывает на то, что совпадение найдено в имени файла/папки
 
                     //Поиск внутри Word файла
                     foreach (var fileExt in wordFileExtension)
@@ -77,7 +89,8 @@ namespace FileSearch
                         {
                             //Если вернется true, то добавить путь файла в List
                             if (wordW.CheckInWordFile(filePath, tbWhatSearchText, out string exception))
-                                result.Add("НАЙДЕНО СОВПАДЕНИЕ В ФАЙЛЕ: " + filePath);
+                                result.Add("2" + filePath); //2 - указывает на то, что совпадение найдено в файле
+                            //result.Add("НАЙДЕНО СОВПАДЕНИЕ В ФАЙЛЕ: " + filePath);
                             //Если возвращается false, то проверяем на наличие исключения
                             else if (exception != null)
                                 result.Add(exception);
@@ -97,7 +110,8 @@ namespace FileSearch
                         {
                             //Если вернется true, то добавить путь файла в List
                             if (excelW.CheckInExcelFile(filePath, tbWhatSearchText, out string exception))
-                                result.Add("НАЙДЕНО СОВПАДЕНИЕ В ФАЙЛЕ: " + filePath);
+                                result.Add("2" + filePath); //2 - указывает на то, что совпадение найдено в файле
+                            //result.Add("НАЙДЕНО СОВПАДЕНИЕ В ФАЙЛЕ: " + filePath);
                             //Если возвращается false, то проверяем на наличие исключения
                             else if (exception != null)
                                 result.Add(exception);
@@ -136,7 +150,8 @@ namespace FileSearch
             //return result;
             foreach (string item in result.Reverse<string>())
             {
-
+                //1 - найдено в имени файла/папки
+                //2 - найдено в файле
                 yield return item;
             }
         }

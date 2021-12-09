@@ -36,6 +36,8 @@ namespace FileSearch
             this.lbSearchResult = new System.Windows.Forms.ListBox();
             this.lblSearchResult = new System.Windows.Forms.Label();
             this.gboxFoundList = new System.Windows.Forms.GroupBox();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.btnSettings = new System.Windows.Forms.Button();
@@ -69,9 +71,9 @@ namespace FileSearch
             this.ToolStripMenuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemUserName = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
             this.tbWhatSearch = new ALLinONE.MyTextBox();
+            this.contextMenuDGV = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.contextMenuDGV_Delete = new System.Windows.Forms.ToolStripMenuItem();
             this.gboxFoundList.SuspendLayout();
             this.pnlWhereSearch.SuspendLayout();
             this.pnlWhatSearch.SuspendLayout();
@@ -79,6 +81,7 @@ namespace FileSearch
             ((System.ComponentModel.ISupportInitialize)(this.dgvList)).BeginInit();
             this.pnlActiveFileSearch.SuspendLayout();
             this.menuStrip.SuspendLayout();
+            this.contextMenuDGV.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnSelectList
@@ -145,6 +148,26 @@ namespace FileSearch
             this.gboxFoundList.Size = new System.Drawing.Size(415, 54);
             this.gboxFoundList.TabIndex = 8;
             this.gboxFoundList.TabStop = false;
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(174, 0);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.TabIndex = 7;
+            this.button4.Text = "button4";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(174, 29);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.TabIndex = 6;
+            this.button3.Text = "button3";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button2
             // 
@@ -276,6 +299,7 @@ namespace FileSearch
             // dgvList
             // 
             this.dgvList.AllowUserToAddRows = false;
+            this.dgvList.AllowUserToResizeRows = false;
             this.dgvList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -464,26 +488,6 @@ namespace FileSearch
             this.toolStripMenuItemUserName.Text = "UserName";
             this.toolStripMenuItemUserName.ToolTipText = "Имя пользователя";
             // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(174, 29);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 6;
-            this.button3.Text = "button3";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(174, 0);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 7;
-            this.button4.Text = "button4";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
             // tbWhatSearch
             // 
             this.tbWhatSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -498,6 +502,20 @@ namespace FileSearch
             this.tbWhatSearch.TextMaxLength = 1024;
             this.tbWhatSearch.TextTitle = "Что ищем? Имя или часть имени файла/папки";
             this.tbWhatSearch.KeyDownEvent += new System.Windows.Forms.KeyEventHandler(this.tbWhatSearch_KeyDownEvent);
+            // 
+            // contextMenuDGV
+            // 
+            this.contextMenuDGV.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.contextMenuDGV_Delete});
+            this.contextMenuDGV.Name = "contextMenuDGV";
+            this.contextMenuDGV.Size = new System.Drawing.Size(191, 48);
+            // 
+            // contextMenuDGV_Delete
+            // 
+            this.contextMenuDGV_Delete.Name = "contextMenuDGV_Delete";
+            this.contextMenuDGV_Delete.Size = new System.Drawing.Size(190, 22);
+            this.contextMenuDGV_Delete.Text = "Удалить выделенные";
+            this.contextMenuDGV_Delete.Click += new System.EventHandler(this.contextMenuDGV_Delete_Click);
             // 
             // MainForm
             // 
@@ -518,6 +536,7 @@ namespace FileSearch
             this.MinimumSize = new System.Drawing.Size(384, 424);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.gboxFoundList.ResumeLayout(false);
             this.gboxFoundList.PerformLayout();
@@ -529,6 +548,7 @@ namespace FileSearch
             this.pnlActiveFileSearch.ResumeLayout(false);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
+            this.contextMenuDGV.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -577,6 +597,8 @@ namespace FileSearch
         private System.Windows.Forms.DataGridViewTextBoxColumn colDateChange;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.ContextMenuStrip contextMenuDGV;
+        private System.Windows.Forms.ToolStripMenuItem contextMenuDGV_Delete;
     }
 }
 
