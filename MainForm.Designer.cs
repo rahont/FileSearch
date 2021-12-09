@@ -50,10 +50,6 @@ namespace FileSearch
             this.pnlWhatSearch = new System.Windows.Forms.Panel();
             this.pnlResult = new System.Windows.Forms.Panel();
             this.dgvList = new System.Windows.Forms.DataGridView();
-            this.colNamePC = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colFilePath = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colFoundIn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDateChange = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lblSearchFileInProgress = new System.Windows.Forms.Label();
             this.btnStop = new System.Windows.Forms.Button();
             this.btnErrorLog = new System.Windows.Forms.Button();
@@ -71,9 +67,14 @@ namespace FileSearch
             this.ToolStripMenuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemUserName = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.tbWhatSearch = new ALLinONE.MyTextBox();
             this.contextMenuDGV = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.contextMenuDGV_Delete = new System.Windows.Forms.ToolStripMenuItem();
+            this.tbWhatSearch = new ALLinONE.MyTextBox();
+            this.colID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colNamePC = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFilePath = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFoundIn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDateChange = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gboxFoundList.SuspendLayout();
             this.pnlWhereSearch.SuspendLayout();
             this.pnlWhatSearch.SuspendLayout();
@@ -305,6 +306,7 @@ namespace FileSearch
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colID,
             this.colNamePC,
             this.colFilePath,
             this.colFoundIn,
@@ -316,30 +318,6 @@ namespace FileSearch
             this.dgvList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvList.Size = new System.Drawing.Size(495, 283);
             this.dgvList.TabIndex = 14;
-            // 
-            // colNamePC
-            // 
-            this.colNamePC.HeaderText = "Имя/Адрес ПК";
-            this.colNamePC.Name = "colNamePC";
-            this.colNamePC.ReadOnly = true;
-            // 
-            // colFilePath
-            // 
-            this.colFilePath.HeaderText = "Путь к файлу";
-            this.colFilePath.Name = "colFilePath";
-            this.colFilePath.ReadOnly = true;
-            // 
-            // colFoundIn
-            // 
-            this.colFoundIn.HeaderText = "Найдено в";
-            this.colFoundIn.Name = "colFoundIn";
-            this.colFoundIn.ReadOnly = true;
-            // 
-            // colDateChange
-            // 
-            this.colDateChange.HeaderText = "Дата изменения";
-            this.colDateChange.Name = "colDateChange";
-            this.colDateChange.ReadOnly = true;
             // 
             // lblSearchFileInProgress
             // 
@@ -488,6 +466,20 @@ namespace FileSearch
             this.toolStripMenuItemUserName.Text = "UserName";
             this.toolStripMenuItemUserName.ToolTipText = "Имя пользователя";
             // 
+            // contextMenuDGV
+            // 
+            this.contextMenuDGV.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.contextMenuDGV_Delete});
+            this.contextMenuDGV.Name = "contextMenuDGV";
+            this.contextMenuDGV.Size = new System.Drawing.Size(191, 26);
+            // 
+            // contextMenuDGV_Delete
+            // 
+            this.contextMenuDGV_Delete.Name = "contextMenuDGV_Delete";
+            this.contextMenuDGV_Delete.Size = new System.Drawing.Size(190, 22);
+            this.contextMenuDGV_Delete.Text = "Удалить выделенные";
+            this.contextMenuDGV_Delete.Click += new System.EventHandler(this.contextMenuDGV_Delete_Click);
+            // 
             // tbWhatSearch
             // 
             this.tbWhatSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -503,19 +495,36 @@ namespace FileSearch
             this.tbWhatSearch.TextTitle = "Что ищем? Имя или часть имени файла/папки";
             this.tbWhatSearch.KeyDownEvent += new System.Windows.Forms.KeyEventHandler(this.tbWhatSearch_KeyDownEvent);
             // 
-            // contextMenuDGV
+            // colID
             // 
-            this.contextMenuDGV.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.contextMenuDGV_Delete});
-            this.contextMenuDGV.Name = "contextMenuDGV";
-            this.contextMenuDGV.Size = new System.Drawing.Size(191, 48);
+            this.colID.HeaderText = "id";
+            this.colID.Name = "colID";
+            this.colID.ReadOnly = true;
+            this.colID.Width = 50;
             // 
-            // contextMenuDGV_Delete
+            // colNamePC
             // 
-            this.contextMenuDGV_Delete.Name = "contextMenuDGV_Delete";
-            this.contextMenuDGV_Delete.Size = new System.Drawing.Size(190, 22);
-            this.contextMenuDGV_Delete.Text = "Удалить выделенные";
-            this.contextMenuDGV_Delete.Click += new System.EventHandler(this.contextMenuDGV_Delete_Click);
+            this.colNamePC.HeaderText = "Имя/Адрес ПК";
+            this.colNamePC.Name = "colNamePC";
+            this.colNamePC.ReadOnly = true;
+            // 
+            // colFilePath
+            // 
+            this.colFilePath.HeaderText = "Путь к файлу";
+            this.colFilePath.Name = "colFilePath";
+            this.colFilePath.ReadOnly = true;
+            // 
+            // colFoundIn
+            // 
+            this.colFoundIn.HeaderText = "Найдено в";
+            this.colFoundIn.Name = "colFoundIn";
+            this.colFoundIn.ReadOnly = true;
+            // 
+            // colDateChange
+            // 
+            this.colDateChange.HeaderText = "Дата изменения";
+            this.colDateChange.Name = "colDateChange";
+            this.colDateChange.ReadOnly = true;
             // 
             // MainForm
             // 
@@ -591,14 +600,15 @@ namespace FileSearch
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.DataGridView dgvList;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colNamePC;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colFilePath;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colFoundIn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colDateChange;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.ContextMenuStrip contextMenuDGV;
         private System.Windows.Forms.ToolStripMenuItem contextMenuDGV_Delete;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colNamePC;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colFilePath;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colFoundIn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDateChange;
     }
 }
 

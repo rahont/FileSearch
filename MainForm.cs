@@ -42,27 +42,16 @@ namespace FileSearch
 
             toolStripMenuItemUserName.Text = Environment.UserName;
 
-            dgvList.Columns[0].Width = 113;
-            dgvList.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill; //Автоподстройка длины столбца
-            dgvList.Columns[2].Width = 90;
-            dgvList.Columns[3].Width = 115;
+            dgvList.Columns[0].Width = 50;
+            dgvList.Columns[1].Width = 113;
+            dgvList.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill; //Автоподстройка длины столбца
+            dgvList.Columns[3].Width = 90;
+            dgvList.Columns[4].Width = 115;
 
             //Ассоциируем контекстное меню с dgv
             dgvList.ContextMenuStrip = contextMenuDGV;
 
-            
-            //for (int i = 0; i < 7; i++)
-            //{
-            //    dgvList.Rows.Add();
-            //    dgvList.Rows[dgvList.Rows.Count - 1].Cells[0].Value = 0;
-            //    dgvList.Rows[dgvList.Rows.Count - 1].Cells[1].Value = 1;
-            //    dgvList.Rows[dgvList.Rows.Count - 1].Cells[2].Value = 2;
-            //    dgvList.Rows[dgvList.Rows.Count - 1].Cells[3].Value = File.GetLastWriteTime(@"\\192.168.1.23\e$\qqq.txt");
-            //}
-            //dgvList.Rows.RemoveAt(dgvList.RowCount);
-            
-
-            Logger logger = LogManager.GetCurrentClassLogger();
+            //Logger logger = LogManager.GetCurrentClassLogger();
             //logger.Info("Запуск ПО");
         }
 
@@ -205,16 +194,18 @@ namespace FileSearch
                     {
                         //lbSearchResult.Items.Add($"При переборе дисков на ПК {namePC} произошла какая-то ошибка");
                         dgvList.Rows.Insert(dgvList.RowCount, 1);
-                        dgvList.Rows[dgvList.Rows.Count - 1].Cells[0].Value = pc.ToString();
-                        dgvList.Rows[dgvList.Rows.Count - 1].Cells[1].Value = $"При переборе дисков на ПК {pc} произошла какая-то ошибка";
+                        dgvList.Rows[dgvList.Rows.Count - 1].Cells[0].Value = dgvList.Rows.Count;
+                        dgvList.Rows[dgvList.Rows.Count - 1].Cells[1].Value = pc.ToString();
+                        dgvList.Rows[dgvList.Rows.Count - 1].Cells[2].Value = $"При переборе дисков на ПК {pc} произошла какая-то ошибка";
                         continue;
                     }
                     else if (listDrive == '9') //Если пришел символ 9, то в переборе дисков нет доступа
                     {
                         //lbSearchResult.Items.Add($"К дискам на ПК {namePC} нету доступа");
                         dgvList.Rows.Insert(dgvList.RowCount, 1);
-                        dgvList.Rows[dgvList.Rows.Count - 1].Cells[0].Value = pc.ToString();
-                        dgvList.Rows[dgvList.Rows.Count - 1].Cells[1].Value = $"К дискам на ПК {pc} нету доступа";
+                        dgvList.Rows[dgvList.Rows.Count - 1].Cells[0].Value = dgvList.Rows.Count;
+                        dgvList.Rows[dgvList.Rows.Count - 1].Cells[1].Value = pc.ToString();
+                        dgvList.Rows[dgvList.Rows.Count - 1].Cells[2].Value = $"К дискам на ПК {pc} нету доступа";
                         continue;
                     }
                     else
@@ -236,8 +227,9 @@ namespace FileSearch
             {
                 //lbSearchResult.Items.Add(namePC + ": НЕ ДОСТУПЕН");
                 dgvList.Rows.Insert(dgvList.RowCount, 1);
-                dgvList.Rows[dgvList.Rows.Count - 1].Cells[0].Value = pc.ToString();
-                dgvList.Rows[dgvList.Rows.Count - 1].Cells[1].Value = "ПК НЕ ДОСТУПЕН";
+                dgvList.Rows[dgvList.Rows.Count - 1].Cells[0].Value = dgvList.Rows.Count;
+                dgvList.Rows[dgvList.Rows.Count - 1].Cells[1].Value = pc.ToString();
+                dgvList.Rows[dgvList.Rows.Count - 1].Cells[2].Value = "ПК НЕ ДОСТУПЕН";
             }
         }
 
@@ -275,8 +267,9 @@ namespace FileSearch
             else
             {
                 dgvList.Rows.Insert(dgvList.RowCount, 1);
-                dgvList.Rows[dgvList.Rows.Count - 1].Cells[0].Value = namePC;
-                dgvList.Rows[dgvList.Rows.Count - 1].Cells[1].Value = "ПК НЕ ДОСТУПЕН";
+                dgvList.Rows[dgvList.Rows.Count - 1].Cells[0].Value = dgvList.Rows.Count;
+                dgvList.Rows[dgvList.Rows.Count - 1].Cells[1].Value = namePC;
+                dgvList.Rows[dgvList.Rows.Count - 1].Cells[2].Value = "ПК НЕ ДОСТУПЕН";
             }
         }
 
@@ -285,13 +278,14 @@ namespace FileSearch
             int tmp = Convert.ToInt32(item.Substring(0, 1));
 
             dgvList.Rows.Insert(dgvList.RowCount, 1);
-            dgvList.Rows[dgvList.Rows.Count - 1].Cells[0].Value = namePC;
-            dgvList.Rows[dgvList.Rows.Count - 1].Cells[1].Value = item.Substring(1);
+            dgvList.Rows[dgvList.Rows.Count - 1].Cells[0].Value = dgvList.Rows.Count;
+            dgvList.Rows[dgvList.Rows.Count - 1].Cells[1].Value = namePC;
+            dgvList.Rows[dgvList.Rows.Count - 1].Cells[2].Value = item.Substring(1);
 
-            if (tmp == 1) dgvList.Rows[dgvList.Rows.Count - 1].Cells[2].Value = "В имени";
-            if (tmp == 2) dgvList.Rows[dgvList.Rows.Count - 1].Cells[2].Value = "В файле";
+            if (tmp == 1) dgvList.Rows[dgvList.Rows.Count - 1].Cells[3].Value = "В имени";
+            if (tmp == 2) dgvList.Rows[dgvList.Rows.Count - 1].Cells[3].Value = "В файле";
 
-            dgvList.Rows[dgvList.Rows.Count - 1].Cells[3].Value = File.GetLastWriteTime(item.Substring(1));
+            dgvList.Rows[dgvList.Rows.Count - 1].Cells[4].Value = File.GetLastWriteTime(item.Substring(1));
         }
 
         private void BeforeSearch()
@@ -844,26 +838,55 @@ namespace FileSearch
         {
             DialogResult result = MessageBox.Show
                     ("Удалить выделенные файлы?\n\r" +
-                    $"Всего: шт.",
+                    $"Всего: {dgvList.SelectedRows.Count}шт.",
                     "Удалить?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
-                //foreach (var item in dgvList.SelectedRows)
-                //{
-                //    //string path = item.;
-                //    //path = dgvList.Rows[item].Cells[1].Value;
-                //    //item.
-                //}
-
                 for (int i = 0; i < dgvList.SelectedRows.Count; i++)
                 {
-                    string path = dgvList.SelectedRows[i].Cells[1].Value.ToString();
-                    if (File.Exists(path))
-                        File.Delete(path);
-                    else if (Directory.Exists(path))
-                        Directory.Delete(path);
+                    string path = dgvList.SelectedRows[i].Cells[2].Value.ToString();
+                    try
+                    {
+                        if (File.Exists(path))
+                            File.Delete(path);
+                        else if (Directory.Exists(path))
+                            Directory.Delete(path);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"При удалении файла/папки произошла ошибка\r\n{path}", "Ошибка");
+                        Logger logger = LogManager.GetCurrentClassLogger();
+                        logger.Error("DGV_Delete | При удалении файла/папки произошла ошибка" +
+                            path + "\r\n" + ex.ToString());
+                        break;
+                    }
+
+                    dgvList.Rows.RemoveAt(i);
                 }
+
+                //while (dgvList.SelectedRows.Count > 0)
+                //{
+                //    int dgvCount = dgvList.SelectedRows.Count - 1;
+                //    string path = dgvList.SelectedRows[dgvCount].Cells[1].Value.ToString();
+                //    try
+                //    {
+                //        if (File.Exists(path))
+                //            File.Delete(path);
+                //        else if (Directory.Exists(path))
+                //            Directory.Delete(path);
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        MessageBox.Show($"При удалении файла/папки произошла ошибка\r\n{path}", "Ошибка");
+                //        Logger logger = LogManager.GetCurrentClassLogger();
+                //        logger.Error("DGV_Delete | При удалении файла/папки произошла ошибка" +
+                //            path + "\r\n" + ex.ToString());
+                //        break;
+                //    }
+
+                //    dgvList.Rows.RemoveAt(dgvList.SelectedRows[dgvCount].Index);
+                //}
             }
         }
     }
