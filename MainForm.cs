@@ -42,6 +42,23 @@ namespace FileSearch
 
             toolStripMenuItemUserName.Text = Environment.UserName;
 
+            dgvList.Columns[0].Width = 113;
+            dgvList.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill; //Автоподстройка длины столбца
+            dgvList.Columns[2].Width = 90;
+            dgvList.Columns[3].Width = 115;
+
+            
+            //for (int i = 0; i < 7; i++)
+            //{
+            //    dgvList.Rows.Add();
+            //    dgvList.Rows[dgvList.Rows.Count - 1].Cells[0].Value = 0;
+            //    dgvList.Rows[dgvList.Rows.Count - 1].Cells[1].Value = 1;
+            //    dgvList.Rows[dgvList.Rows.Count - 1].Cells[2].Value = 2;
+            //    dgvList.Rows[dgvList.Rows.Count - 1].Cells[3].Value = File.GetLastWriteTime(@"\\192.168.1.23\e$\qqq.txt");
+            //}
+            //dgvList.Rows.RemoveAt(dgvList.RowCount);
+            
+
             Logger logger = LogManager.GetCurrentClassLogger();
             //logger.Info("Запуск ПО");
         }
@@ -82,65 +99,140 @@ namespace FileSearch
 
         private async void btnGO_Click(object sender, EventArgs e)
         {
-            if (cboxWhereSearch.Items.Count > 0) //Проверяем, что список ПК не пуст
+            if (cboxWhereSearch.Items.Count > 0 || !cboxWhereSearch.Text.Contains("В списке")) //Проверяем, что список ПК не пуст
             {
+                while (true) //Удаляем все "\" в начале строки, если есть
+                {
+                    if (cboxWhereSearch.Text.StartsWith(@"\"))
+                        cboxWhereSearch.Text = cboxWhereSearch.Text.Substring(1);
+                    else break;
+                }
+
                 if (tbWhatSearch.Text.Length > 0) //Проверяем, что указан критерий поиска
                 {
-                    BeforeSearch(); //Действия до начала поиска
-
-                    SearchResultsClass src = new SearchResultsClass(lblActiveFileSearch, FindForm(), tbWhatSearch.Text);
-                    RefSearchResultsClass = src;
-
-                    foreach (var listPC in cboxWhereSearch.Items) //Перебираем все ПК по списку
-                    {
-                        if (RefSearchResultsClass.IsStopSearch) break; //Если true, то останавливаем поиск
-
-                        if (await IsReadyPC(listPC.ToString())) //Проверяем доступность ПК
-                        {
-                            foreach (var listDrive in DriveName(listPC.ToString())) //Перебираем диски ПК
-                            {
-                                if (listDrive == '0') //Если пришел символ 0, то где-то в переборе дисков появилась ошибка
-                                {
-                                    lbSearchResult.Items.Add($"При переборе дисков на ПК {listPC} произошла какая-то ошибка");
-                                    continue;
-                                }
-                                else if (listDrive == '9') //Если пришел символ 9, то в переборе дисков нет доступа
-                                {
-                                    lbSearchResult.Items.Add($"К дискам на ПК {listPC} нету доступа");
-                                    continue;
-                                }
-                                else
-                                {
-                                    if (RefSearchResultsClass.IsStopSearch) break; //Если true, то останавливаем поиск
-
-                                    string dt1 = DateTime.Now.ToLongTimeString();
-                                    lbSearchResult.Items.Add(listPC + $": НАЧАЛО ПОИСКА НА ДИСКЕ {listDrive}:\\ В {dt1}");
-
-                                    await foreach (var item in src.SearchResults(listPC.ToString() + $@"\{listDrive}$"))
-                                    {
-                                        lbSearchResult.Items.Add(item);
-                                    }
-
-                                    DateTime dt2 = DateTime.Parse(DateTime.Now.ToLongTimeString());
-                                    lbSearchResult.Items.Add(listPC + $": ПОИСК НА ДИСКЕ {listDrive}:\\ ЗАВЕРШЕН ЗА {dt2 - DateTime.Parse(dt1)}");
-                                    lbSearchResult.Items.Add("-------------------------------------------------------");
-                                    CountFoundResult();
-                                }
-                            }
-                            
-                            AfterSearch(); //Действия после поиска
-                        }
-                        else
-                        {
-                            lbSearchResult.Items.Add(listPC + ": НЕ ДОСТУПЕН");
-                        }
-                    }
+                    StartSearch();
                 }
                 else MessageBox.Show("Что ищем?");
             }
-            else MessageBox.Show("Где ищем?");
+            else
+                MessageBox.Show("Где ищем?");
 
             //AfterSearch(); //Действия после поиска
+        }
+
+        private void StartSearch()
+        {
+            #region OldCode
+            //BeforeSearch(); //Действия до начала поиска
+
+            //SearchResultsClass src = new SearchResultsClass(lblActiveFileSearch, FindForm(), tbWhatSearch.Text);
+            //RefSearchResultsClass = src;
+
+            //foreach (var listPC in cboxWhereSearch.Items) //Перебираем все ПК по списку
+            //{
+            //    if (RefSearchResultsClass.IsStopSearch) break; //Если true, то останавливаем поиск
+
+            //    if (await IsReadyPC(listPC.ToString())) //Проверяем доступность ПК
+            //    {
+            //        foreach (var listDrive in DriveName(listPC.ToString())) //Перебираем диски ПК
+            //        {
+            //            if (listDrive == '0') //Если пришел символ 0, то где-то в переборе дисков появилась ошибка
+            //            {
+            //                lbSearchResult.Items.Add($"При переборе дисков на ПК {listPC} произошла какая-то ошибка");
+            //                continue;
+            //            }
+            //            else if (listDrive == '9') //Если пришел символ 9, то в переборе дисков нет доступа
+            //            {
+            //                lbSearchResult.Items.Add($"К дискам на ПК {listPC} нету доступа");
+            //                continue;
+            //            }
+            //            else
+            //            {
+            //                if (RefSearchResultsClass.IsStopSearch) break; //Если true, то останавливаем поиск
+
+            //                string dt1 = DateTime.Now.ToLongTimeString();
+            //                lbSearchResult.Items.Add(listPC + $": НАЧАЛО ПОИСКА НА ДИСКЕ {listDrive}:\\ В {dt1}");
+
+            //                await foreach (var item in src.SearchResults(listPC.ToString() + $@"\{listDrive}$"))
+            //                {
+            //                    lbSearchResult.Items.Add(item);
+            //                }
+
+            //                DateTime dt2 = DateTime.Parse(DateTime.Now.ToLongTimeString());
+            //                lbSearchResult.Items.Add(listPC + $": ПОИСК НА ДИСКЕ {listDrive}:\\ ЗАВЕРШЕН ЗА {dt2 - DateTime.Parse(dt1)}");
+            //                lbSearchResult.Items.Add("-------------------------------------------------------");
+            //                CountFoundResult();
+            //            }
+            //        }
+
+            //        AfterSearch(); //Действия после поиска
+            //    }
+            //    else
+            //    {
+            //        lbSearchResult.Items.Add(listPC + ": НЕ ДОСТУПЕН");
+            //    }
+            //}
+            #endregion
+
+            BeforeSearch(); //Действия до начала поиска
+
+            if (cboxWhereSearch.Text.Contains("В списке"))
+            {
+                foreach (var namePC in cboxWhereSearch.Items) //Перебираем все ПК по списку
+                {
+                    if (RefSearchResultsClass.IsStopSearch) break; //Если true, то останавливаем поиск
+                    SearchInProgress(namePC);
+                }
+            }
+            else
+                SearchInProgress(cboxWhereSearch.Text);
+        }
+
+        private async void SearchInProgress(object namePC)
+        {
+            SearchResultsClass src = new SearchResultsClass(lblActiveFileSearch, FindForm(), tbWhatSearch.Text);
+            RefSearchResultsClass = src;
+
+            string pc =
+
+            if (await IsReadyPC(namePC.ToString())) //Проверяем доступность ПК
+            {
+                foreach (var listDrive in DriveName(namePC.ToString())) //Перебираем диски ПК
+                {
+                    if (listDrive == '0') //Если пришел символ 0, то где-то в переборе дисков появилась ошибка
+                    {
+                        //lbSearchResult.Items.Add($"При переборе дисков на ПК {namePC} произошла какая-то ошибка");
+                        continue;
+                    }
+                    else if (listDrive == '9') //Если пришел символ 9, то в переборе дисков нет доступа
+                    {
+                        //lbSearchResult.Items.Add($"К дискам на ПК {namePC} нету доступа");
+                        continue;
+                    }
+                    else
+                    {
+                        if (RefSearchResultsClass.IsStopSearch) break; //Если true, то останавливаем поиск
+
+                        await foreach (var item in src.SearchResults(namePC.ToString() + $@"\{listDrive}$"))
+                        {
+                            dgvList.Rows.Insert(dgvList.RowCount, 1);
+                            dgvList.Rows[dgvList.Rows.Count - 1].Cells[0].Value = namePC;
+                            dgvList.Rows[dgvList.Rows.Count - 1].Cells[1].Value = item;
+                            dgvList.Rows[dgvList.Rows.Count - 1].Cells[2].Value = 2;
+                            dgvList.Rows[dgvList.Rows.Count - 1].Cells[3].Value = File.GetLastWriteTime(item);
+                        }
+                    }
+                }
+
+                AfterSearch(); //Действия после поиска
+            }
+            else
+            {
+                //lbSearchResult.Items.Add(namePC + ": НЕ ДОСТУПЕН");
+                dgvList.Rows.Insert(dgvList.RowCount, 1);
+                dgvList.Rows[dgvList.Rows.Count - 1].Cells[0].Value = namePC;
+                dgvList.Rows[dgvList.Rows.Count - 1].Cells[1].Value = "ПК НЕ ДОСТУПЕН";
+            }
         }
 
         private void BeforeSearch()
@@ -666,6 +758,20 @@ namespace FileSearch
             Stream stream = File.OpenRead(@"E:\ExcelTestWord\Документ Microsoft Word.docx");
             if (ww.CheckInStreamWordFile(stream, tbWhatSearch.Text, out string exception))
                 MessageBox.Show("Test");
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            dgvList.Rows.Insert(dgvList.RowCount, 1);
+            dgvList.Rows[dgvList.Rows.Count - 1].Cells[0].Value = 0;
+            dgvList.Rows[dgvList.Rows.Count - 1].Cells[1].Value = 1;
+            dgvList.Rows[dgvList.Rows.Count - 1].Cells[2].Value = 2;
+            dgvList.Rows[dgvList.Rows.Count - 1].Cells[3].Value = File.GetLastWriteTime(@"");
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            dgvList.Rows.Insert(dgvList.RowCount, 1);
         }
     }
 }

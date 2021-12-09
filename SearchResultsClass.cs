@@ -136,6 +136,7 @@ namespace FileSearch
             //return result;
             foreach (string item in result.Reverse<string>())
             {
+
                 yield return item;
             }
         }

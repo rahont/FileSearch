@@ -46,8 +46,12 @@ namespace FileSearch
             this.cboxWhereSearch = new System.Windows.Forms.ComboBox();
             this.pnlWhereSearch = new System.Windows.Forms.Panel();
             this.pnlWhatSearch = new System.Windows.Forms.Panel();
-            this.tbWhatSearch = new ALLinONE.MyTextBox();
             this.pnlResult = new System.Windows.Forms.Panel();
+            this.dgvList = new System.Windows.Forms.DataGridView();
+            this.colNamePC = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFilePath = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFoundIn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDateChange = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lblSearchFileInProgress = new System.Windows.Forms.Label();
             this.btnStop = new System.Windows.Forms.Button();
             this.btnErrorLog = new System.Windows.Forms.Button();
@@ -65,10 +69,14 @@ namespace FileSearch
             this.ToolStripMenuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemUserName = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.tbWhatSearch = new ALLinONE.MyTextBox();
             this.gboxFoundList.SuspendLayout();
             this.pnlWhereSearch.SuspendLayout();
             this.pnlWhatSearch.SuspendLayout();
             this.pnlResult.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvList)).BeginInit();
             this.pnlActiveFileSearch.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -107,6 +115,7 @@ namespace FileSearch
             this.lbSearchResult.Name = "lbSearchResult";
             this.lbSearchResult.Size = new System.Drawing.Size(496, 285);
             this.lbSearchResult.TabIndex = 6;
+            this.lbSearchResult.Visible = false;
             this.lbSearchResult.DoubleClick += new System.EventHandler(this.lbSearchResult_DoubleClick);
             // 
             // lblSearchResult
@@ -122,6 +131,8 @@ namespace FileSearch
             // 
             this.gboxFoundList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.gboxFoundList.Controls.Add(this.button4);
+            this.gboxFoundList.Controls.Add(this.button3);
             this.gboxFoundList.Controls.Add(this.button2);
             this.gboxFoundList.Controls.Add(this.button1);
             this.gboxFoundList.Controls.Add(this.btnSettings);
@@ -246,27 +257,13 @@ namespace FileSearch
             this.pnlWhatSearch.Size = new System.Drawing.Size(423, 84);
             this.pnlWhatSearch.TabIndex = 1;
             // 
-            // tbWhatSearch
-            // 
-            this.tbWhatSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbWhatSearch.Location = new System.Drawing.Point(3, 3);
-            this.tbWhatSearch.MaximumSize = new System.Drawing.Size(10000, 20);
-            this.tbWhatSearch.MinimumSize = new System.Drawing.Size(1, 20);
-            this.tbWhatSearch.Name = "tbWhatSearch";
-            this.tbWhatSearch.PasswordChar = '\0';
-            this.tbWhatSearch.Size = new System.Drawing.Size(415, 20);
-            this.tbWhatSearch.TabIndex = 2;
-            this.tbWhatSearch.TextMaxLength = 1024;
-            this.tbWhatSearch.TextTitle = "Что ищем? Имя или часть имени файла/папки";
-            this.tbWhatSearch.KeyDownEvent += new System.Windows.Forms.KeyEventHandler(this.tbWhatSearch_KeyDownEvent);
-            // 
             // pnlResult
             // 
             this.pnlResult.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlResult.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlResult.Controls.Add(this.dgvList);
             this.pnlResult.Controls.Add(this.lblSearchFileInProgress);
             this.pnlResult.Controls.Add(this.lbSearchResult);
             this.pnlResult.Controls.Add(this.lblSearchResult);
@@ -275,6 +272,50 @@ namespace FileSearch
             this.pnlResult.Size = new System.Drawing.Size(508, 308);
             this.pnlResult.TabIndex = 5;
             this.pnlResult.TabStop = true;
+            // 
+            // dgvList
+            // 
+            this.dgvList.AllowUserToAddRows = false;
+            this.dgvList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colNamePC,
+            this.colFilePath,
+            this.colFoundIn,
+            this.colDateChange});
+            this.dgvList.Location = new System.Drawing.Point(6, 18);
+            this.dgvList.Name = "dgvList";
+            this.dgvList.ReadOnly = true;
+            this.dgvList.RowHeadersVisible = false;
+            this.dgvList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvList.Size = new System.Drawing.Size(495, 283);
+            this.dgvList.TabIndex = 14;
+            // 
+            // colNamePC
+            // 
+            this.colNamePC.HeaderText = "Имя/Адрес ПК";
+            this.colNamePC.Name = "colNamePC";
+            this.colNamePC.ReadOnly = true;
+            // 
+            // colFilePath
+            // 
+            this.colFilePath.HeaderText = "Путь к файлу";
+            this.colFilePath.Name = "colFilePath";
+            this.colFilePath.ReadOnly = true;
+            // 
+            // colFoundIn
+            // 
+            this.colFoundIn.HeaderText = "Найдено в";
+            this.colFoundIn.Name = "colFoundIn";
+            this.colFoundIn.ReadOnly = true;
+            // 
+            // colDateChange
+            // 
+            this.colDateChange.HeaderText = "Дата изменения";
+            this.colDateChange.Name = "colDateChange";
+            this.colDateChange.ReadOnly = true;
             // 
             // lblSearchFileInProgress
             // 
@@ -423,6 +464,41 @@ namespace FileSearch
             this.toolStripMenuItemUserName.Text = "UserName";
             this.toolStripMenuItemUserName.ToolTipText = "Имя пользователя";
             // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(174, 29);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.TabIndex = 6;
+            this.button3.Text = "button3";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(174, 0);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.TabIndex = 7;
+            this.button4.Text = "button4";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // tbWhatSearch
+            // 
+            this.tbWhatSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbWhatSearch.Location = new System.Drawing.Point(3, 3);
+            this.tbWhatSearch.MaximumSize = new System.Drawing.Size(10000, 20);
+            this.tbWhatSearch.MinimumSize = new System.Drawing.Size(1, 20);
+            this.tbWhatSearch.Name = "tbWhatSearch";
+            this.tbWhatSearch.PasswordChar = '\0';
+            this.tbWhatSearch.Size = new System.Drawing.Size(415, 20);
+            this.tbWhatSearch.TabIndex = 2;
+            this.tbWhatSearch.TextMaxLength = 1024;
+            this.tbWhatSearch.TextTitle = "Что ищем? Имя или часть имени файла/папки";
+            this.tbWhatSearch.KeyDownEvent += new System.Windows.Forms.KeyEventHandler(this.tbWhatSearch_KeyDownEvent);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -449,6 +525,7 @@ namespace FileSearch
             this.pnlWhatSearch.ResumeLayout(false);
             this.pnlResult.ResumeLayout(false);
             this.pnlResult.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvList)).EndInit();
             this.pnlActiveFileSearch.ResumeLayout(false);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
@@ -493,6 +570,13 @@ namespace FileSearch
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemUserName;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.DataGridView dgvList;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colNamePC;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colFilePath;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colFoundIn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDateChange;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button4;
     }
 }
 

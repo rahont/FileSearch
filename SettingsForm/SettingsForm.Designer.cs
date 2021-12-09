@@ -35,22 +35,24 @@ namespace FileSearch
             this.chkbox123 = new System.Windows.Forms.CheckBox();
             this.chkboxProgram86Folder = new System.Windows.Forms.CheckBox();
             this.chkboxProgramFolder = new System.Windows.Forms.CheckBox();
-            this.tbAnyFolders = new ALLinONE.MyTextBox();
             this.chkboxTempFolder = new System.Windows.Forms.CheckBox();
             this.chkboxRecycleFolder = new System.Windows.Forms.CheckBox();
             this.chkboxWindowsFolder = new System.Windows.Forms.CheckBox();
             this.btnSaveAll = new System.Windows.Forms.Button();
             this.btnDefault = new System.Windows.Forms.Button();
             this.gboxFiles = new System.Windows.Forms.GroupBox();
+            this.chkboxXlsm = new System.Windows.Forms.CheckBox();
+            this.chkboxXlsb = new System.Windows.Forms.CheckBox();
+            this.chkboxXlsx = new System.Windows.Forms.CheckBox();
+            this.chkboxXls = new System.Windows.Forms.CheckBox();
             this.chkboxDocm = new System.Windows.Forms.CheckBox();
             this.chkboxRtf = new System.Windows.Forms.CheckBox();
             this.chkboxDocx = new System.Windows.Forms.CheckBox();
             this.chkboxDoc = new System.Windows.Forms.CheckBox();
             this.ttSettings = new System.Windows.Forms.ToolTip(this.components);
-            this.chkboxXlsm = new System.Windows.Forms.CheckBox();
-            this.chkboxXlsb = new System.Windows.Forms.CheckBox();
-            this.chkboxXlsx = new System.Windows.Forms.CheckBox();
-            this.chkboxXls = new System.Windows.Forms.CheckBox();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.tbAnyFolders = new ALLinONE.MyTextBox();
             this.gboxFolders.SuspendLayout();
             this.gboxFiles.SuspendLayout();
             this.SuspendLayout();
@@ -105,19 +107,6 @@ namespace FileSearch
             this.chkboxProgramFolder.TabIndex = 3;
             this.chkboxProgramFolder.Text = "Program Files";
             this.chkboxProgramFolder.UseVisualStyleBackColor = true;
-            // 
-            // tbAnyFolders
-            // 
-            this.tbAnyFolders.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tbAnyFolders.Location = new System.Drawing.Point(3, 93);
-            this.tbAnyFolders.MaximumSize = new System.Drawing.Size(10000, 20);
-            this.tbAnyFolders.MinimumSize = new System.Drawing.Size(1, 20);
-            this.tbAnyFolders.Name = "tbAnyFolders";
-            this.tbAnyFolders.PasswordChar = '\0';
-            this.tbAnyFolders.Size = new System.Drawing.Size(224, 20);
-            this.tbAnyFolders.TabIndex = 5;
-            this.tbAnyFolders.TextMaxLength = 1024;
-            this.tbAnyFolders.TextTitle = "Доп. папки через ; (точка с запятой)";
             // 
             // chkboxTempFolder
             // 
@@ -194,6 +183,46 @@ namespace FileSearch
             this.gboxFiles.TabStop = false;
             this.gboxFiles.Text = "Не производить поиск в файлах:";
             // 
+            // chkboxXlsm
+            // 
+            this.chkboxXlsm.AutoSize = true;
+            this.chkboxXlsm.Location = new System.Drawing.Point(119, 42);
+            this.chkboxXlsm.Name = "chkboxXlsm";
+            this.chkboxXlsm.Size = new System.Drawing.Size(49, 17);
+            this.chkboxXlsm.TabIndex = 7;
+            this.chkboxXlsm.Text = ".xlsm";
+            this.chkboxXlsm.UseVisualStyleBackColor = true;
+            // 
+            // chkboxXlsb
+            // 
+            this.chkboxXlsb.AutoSize = true;
+            this.chkboxXlsb.Location = new System.Drawing.Point(180, 42);
+            this.chkboxXlsb.Name = "chkboxXlsb";
+            this.chkboxXlsb.Size = new System.Drawing.Size(47, 17);
+            this.chkboxXlsb.TabIndex = 6;
+            this.chkboxXlsb.Text = ".xlsb";
+            this.chkboxXlsb.UseVisualStyleBackColor = true;
+            // 
+            // chkboxXlsx
+            // 
+            this.chkboxXlsx.AutoSize = true;
+            this.chkboxXlsx.Location = new System.Drawing.Point(61, 42);
+            this.chkboxXlsx.Name = "chkboxXlsx";
+            this.chkboxXlsx.Size = new System.Drawing.Size(46, 17);
+            this.chkboxXlsx.TabIndex = 5;
+            this.chkboxXlsx.Text = ".xlsx";
+            this.chkboxXlsx.UseVisualStyleBackColor = true;
+            // 
+            // chkboxXls
+            // 
+            this.chkboxXls.AutoSize = true;
+            this.chkboxXls.Location = new System.Drawing.Point(8, 42);
+            this.chkboxXls.Name = "chkboxXls";
+            this.chkboxXls.Size = new System.Drawing.Size(41, 17);
+            this.chkboxXls.TabIndex = 4;
+            this.chkboxXls.Text = ".xls";
+            this.chkboxXls.UseVisualStyleBackColor = true;
+            // 
             // chkboxDocm
             // 
             this.chkboxDocm.AutoSize = true;
@@ -240,51 +269,43 @@ namespace FileSearch
             this.ttSettings.InitialDelay = 500;
             this.ttSettings.ReshowDelay = 100;
             // 
-            // chkboxXlsm
+            // listBox1
             // 
-            this.chkboxXlsm.AutoSize = true;
-            this.chkboxXlsm.Location = new System.Drawing.Point(119, 42);
-            this.chkboxXlsm.Name = "chkboxXlsm";
-            this.chkboxXlsm.Size = new System.Drawing.Size(49, 17);
-            this.chkboxXlsm.TabIndex = 7;
-            this.chkboxXlsm.Text = ".xlsm";
-            this.chkboxXlsm.UseVisualStyleBackColor = true;
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Items.AddRange(new object[] {
+            "Исключения"});
+            this.listBox1.Location = new System.Drawing.Point(344, 12);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(140, 290);
+            this.listBox1.TabIndex = 4;
             // 
-            // chkboxXlsb
+            // panel1
             // 
-            this.chkboxXlsb.AutoSize = true;
-            this.chkboxXlsb.Location = new System.Drawing.Point(180, 42);
-            this.chkboxXlsb.Name = "chkboxXlsb";
-            this.chkboxXlsb.Size = new System.Drawing.Size(47, 17);
-            this.chkboxXlsb.TabIndex = 6;
-            this.chkboxXlsb.Text = ".xlsb";
-            this.chkboxXlsb.UseVisualStyleBackColor = true;
+            this.panel1.Location = new System.Drawing.Point(490, 12);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(368, 290);
+            this.panel1.TabIndex = 5;
             // 
-            // chkboxXlsx
+            // tbAnyFolders
             // 
-            this.chkboxXlsx.AutoSize = true;
-            this.chkboxXlsx.Location = new System.Drawing.Point(61, 42);
-            this.chkboxXlsx.Name = "chkboxXlsx";
-            this.chkboxXlsx.Size = new System.Drawing.Size(46, 17);
-            this.chkboxXlsx.TabIndex = 5;
-            this.chkboxXlsx.Text = ".xlsx";
-            this.chkboxXlsx.UseVisualStyleBackColor = true;
-            // 
-            // chkboxXls
-            // 
-            this.chkboxXls.AutoSize = true;
-            this.chkboxXls.Location = new System.Drawing.Point(8, 42);
-            this.chkboxXls.Name = "chkboxXls";
-            this.chkboxXls.Size = new System.Drawing.Size(41, 17);
-            this.chkboxXls.TabIndex = 4;
-            this.chkboxXls.Text = ".xls";
-            this.chkboxXls.UseVisualStyleBackColor = true;
+            this.tbAnyFolders.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tbAnyFolders.Location = new System.Drawing.Point(3, 93);
+            this.tbAnyFolders.MaximumSize = new System.Drawing.Size(10000, 20);
+            this.tbAnyFolders.MinimumSize = new System.Drawing.Size(1, 20);
+            this.tbAnyFolders.Name = "tbAnyFolders";
+            this.tbAnyFolders.PasswordChar = '\0';
+            this.tbAnyFolders.Size = new System.Drawing.Size(224, 20);
+            this.tbAnyFolders.TabIndex = 5;
+            this.tbAnyFolders.TextMaxLength = 1024;
+            this.tbAnyFolders.TextTitle = "Доп. папки через ; (точка с запятой)";
             // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(254, 237);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.gboxFiles);
             this.Controls.Add(this.btnDefault);
             this.Controls.Add(this.btnSaveAll);
@@ -326,5 +347,7 @@ namespace FileSearch
         private System.Windows.Forms.CheckBox chkboxXlsb;
         private System.Windows.Forms.CheckBox chkboxXlsx;
         private System.Windows.Forms.CheckBox chkboxXls;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Panel panel1;
     }
 }
